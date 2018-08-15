@@ -1,4 +1,4 @@
 package com.wolverineteam.ngpuppies.models;
 
-public class Bill {
+public class Subscriber {
 }
