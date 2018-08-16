@@ -2,8 +2,10 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.Service;
+import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.CurrencyService;
 import com.wolverineteam.ngpuppies.services.base.ServiceService;
+import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +21,12 @@ public class Controller {
     private CurrencyService currencyService;
 
     @Autowired
-    private ServiceService serviceService;
+    private UserService userService;
 
 
-    public Controller(CurrencyService currencyService, ServiceService serviceService) {
+    public Controller(CurrencyService currencyService, UserService userService) {
         this.currencyService = currencyService;
-        this.serviceService = serviceService;
+        this.userService = userService;
     }
 
     @GetMapping("currencies/{id}")
@@ -55,8 +57,34 @@ public class Controller {
         currencyService.delete((id));
     }
 
-    /** -------------------------------------------------  SERVICE METHODS*/
+    /** -------------------------------------------------  USER METHODS*/
 
+    @GetMapping("users/{id}")
+    public User getUserById(@PathVariable("id") String userId) {
+        int id = Integer.parseInt(userId);
+        return userService.getById(id);
+    }
 
+    @GetMapping("users/")
+    public List<User> getAllUsers() {
+        return userService.getAll();
+    }
+
+    @PostMapping("users/create")
+    public void createUser(@RequestBody User user) {
+        userService.create(user);
+    }
+
+    @PutMapping("users/update/{id}")
+    public void updateUser(@PathVariable("id") String currencyId, @RequestBody User user) {
+        int id = Integer.parseInt(currencyId);
+        userService.update(id, user);
+    }
+
+    @DeleteMapping("users/delete/{id}")
+    public void deleteUser(@PathVariable("id") String currencyId) {
+        int id = Integer.parseInt(currencyId);
+        userService.delete((id));
+    }
 
 }
