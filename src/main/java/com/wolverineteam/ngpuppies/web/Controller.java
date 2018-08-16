@@ -76,14 +76,14 @@ public class Controller {
     }
 
     @PutMapping("users/update/{id}")
-    public void updateUser(@PathVariable("id") String currencyId, @RequestBody User user) {
-        int id = Integer.parseInt(currencyId);
+    public void updateUser(@PathVariable("id") String userId, @RequestBody User user) {
+        int id = Integer.parseInt(userId);
         userService.update(id, user);
     }
 
     @DeleteMapping("users/delete/{id}")
-    public void deleteUser(@PathVariable("id") String currencyId) {
-        int id = Integer.parseInt(currencyId);
+    public void deleteUser(@PathVariable("id") String userId) {
+        int id = Integer.parseInt(userId);
         userService.delete((id));
     }
 
