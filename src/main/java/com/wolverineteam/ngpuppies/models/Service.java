@@ -1,5 +1,7 @@
 package com.wolverineteam.ngpuppies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public class Service {
     @Column(name = "Service")
     private String service;
 
-    @OneToMany(mappedBy = "service")
+    @JsonIgnore
+    @OneToMany(mappedBy = "service",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Bill> bills;
 
     public Service() {
