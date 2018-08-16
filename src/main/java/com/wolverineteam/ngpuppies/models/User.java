@@ -1,5 +1,7 @@
 package com.wolverineteam.ngpuppies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class User {
     @Column(name = "EIK")
     private String eik;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bank")
     private List<Subscriber> subscribers;
 
