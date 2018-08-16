@@ -10,9 +10,9 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    void update(int id, User currency);
+    void update(int id, User user);
 
-    void create(User currency);
+    void create(User user);
 
     void delete(int id);
 }
