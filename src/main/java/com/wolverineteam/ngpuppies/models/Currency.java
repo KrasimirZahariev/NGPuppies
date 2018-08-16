@@ -1,10 +1,12 @@
 package com.wolverineteam.ngpuppies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Currencies")
+@Table(name = "currencies")
 public class Currency {
 
     @Id
@@ -18,6 +20,7 @@ public class Currency {
     @Column(name = "ExchangeRate")
     private double exchangeRate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "currency")
     private List<Bill> bills;
 
