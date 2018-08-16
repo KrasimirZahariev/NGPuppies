@@ -18,7 +18,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
     }
 
     @Override
-    public Subscriber getById(int id) {
+    public Subscriber getById(String id) {
         Subscriber subscriber = null;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

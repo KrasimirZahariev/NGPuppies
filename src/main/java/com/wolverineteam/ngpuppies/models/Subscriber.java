@@ -1,5 +1,7 @@
 package com.wolverineteam.ngpuppies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Subscriber {
     @JoinColumn(name = "BankID")
     private User bank;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "subscriber")
     private List<Bill> bills;
 

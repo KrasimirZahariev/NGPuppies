@@ -1,10 +1,10 @@
 package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.models.Currency;
-import com.wolverineteam.ngpuppies.models.Service;
+import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.CurrencyService;
-import com.wolverineteam.ngpuppies.services.base.ServiceService;
+import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,17 @@ import java.util.List;
 @RequestMapping("/api/")
 public class Controller {
 
+    private CurrencyService currencyService;
+    private UserService userService;
+    private SubscriberService subscriberService;
+
     /** ---------------------------------------  CURRENCY METHODS*/
 
     @Autowired
-    private CurrencyService currencyService;
-
-    @Autowired
-    private UserService userService;
-
-
-    public Controller(CurrencyService currencyService, UserService userService) {
+    public Controller(CurrencyService currencyService, UserService userService, SubscriberService subscriberService) {
         this.currencyService = currencyService;
         this.userService = userService;
+        this.subscriberService = subscriberService;
     }
 
     @GetMapping("currencies/{id}")
@@ -87,4 +86,12 @@ public class Controller {
         userService.delete((id));
     }
 
+    /**
+     * ----------------------------------------------  SUBSCRIBER METHODS
+     */
+
+    @GetMapping("subscribers/{id}")
+    public Subscriber getSubscriberById(@PathVariable("id") String subscriberId) {
+        return subscriberService.getById(subscriberId);
+    }
 }
