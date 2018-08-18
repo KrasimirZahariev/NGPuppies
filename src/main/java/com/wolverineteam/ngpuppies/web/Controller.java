@@ -38,7 +38,7 @@ public class Controller {
         return currencyService.getAll();
     }
 
-    @PostMapping("currencies/create")
+    @PostMapping("currencies/create/")
     public void createCurrency(@RequestBody Currency currency) {
         currencyService.create(currency);
     }
@@ -68,7 +68,7 @@ public class Controller {
         return userService.getAll();
     }
 
-    @PostMapping("users/create")
+    @PostMapping("users/create/")
     public void createUser(@RequestBody User user) {
         userService.create(user);
     }
@@ -97,6 +97,11 @@ public class Controller {
     /**
      * ------------------------------- BILL METHODS--------------------------
      */
+
+    @PostMapping("bills/create/")
+    public void create(@RequestBody Bill bill) {
+        billService.createBill(bill);
+    }
 
     @GetMapping("bills/unpaid/{id}")
     public List<Bill> getUnpaidBillsByBankId(@PathVariable("id") String bankId) {

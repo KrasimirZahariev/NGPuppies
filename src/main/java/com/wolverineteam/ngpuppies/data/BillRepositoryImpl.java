@@ -34,7 +34,18 @@ public class BillRepositoryImpl implements BillRepository{
 
         return bill;
     }
-    
+
+    @Override
+    public void createBill(Bill bill) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(bill);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Bill> getUnpaidBillsByBankId(int bankId) {
@@ -60,10 +71,10 @@ public class BillRepositoryImpl implements BillRepository{
 
     @Override
     public void pay(List<Integer> bills) {
-        Bill paidBill = null;
+        Bill paidBill;
         try (Session session = sessionFactory.openSession()) {
-            for (int i = 0; i < bills.size(); i++) {
-                paidBill = getById(bills.get(i));
+            for (Integer bill : bills) {
+                paidBill = getById(bill);
                 paidBill.setPaymentDate(new Date(System.currentTimeMillis()));
                 session.beginTransaction();
                 session.update(paidBill);

@@ -25,6 +25,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public void createBill(Bill bill) {
+        billRepository.createBill(bill);
+    }
+
+    @Override
     public void pay(List<String> bills) {
         List<Integer> billsToBePaid = new ArrayList<>(bills.size());
         for (String bill : bills) {

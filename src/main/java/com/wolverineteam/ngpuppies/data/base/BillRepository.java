@@ -8,6 +8,8 @@ public interface BillRepository {
 
     Bill getById(int id);
 
+    void createBill(Bill bill);
+
     //They must have access to bill payment module where they can pay a particular bill
     // (or selected list of bills) for their subscribers
     List<Bill> getUnpaidBillsByBankId(int bankId);
