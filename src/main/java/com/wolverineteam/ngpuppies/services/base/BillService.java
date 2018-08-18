@@ -11,4 +11,6 @@ public interface BillService {
     void pay(List<Bill> bills);
 
     List<Bill> getAllPaidSorted(int bankId);
+
+    List<Bill> getTenMostRecentPayments(int bankId);
 }

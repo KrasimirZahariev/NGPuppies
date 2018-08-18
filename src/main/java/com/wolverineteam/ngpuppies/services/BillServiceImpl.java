@@ -32,4 +32,9 @@ public class BillServiceImpl implements BillService {
     public List<Bill> getAllPaidSorted(int bankId) {
         return billRepository.getAllPaidSorted(bankId);
     }
+
+    @Override
+    public List<Bill> getTenMostRecentPayments(int bankId) {
+        return billRepository.GetTenMostRecentPaymentsByBankId(bankId);
+    }
 }

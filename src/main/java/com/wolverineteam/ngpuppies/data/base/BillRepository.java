@@ -32,4 +32,5 @@ public interface BillRepository {
 
 
     //The 10 most recent payments for the particular client for all the subscribers
+    List<Bill> GetTenMostRecentPaymentsByBankId(int bankId);
 }

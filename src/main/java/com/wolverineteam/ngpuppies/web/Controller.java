@@ -114,4 +114,10 @@ public class Controller {
         int id = Integer.parseInt(bankId);
         return billService.getAllPaidSorted(id);
     }
+
+    @GetMapping("bills/recentPayments/{id}")
+    public List<Bill> getTenRecentPayments(@PathVariable("id") String bankId){
+        int id = Integer.parseInt(bankId);
+        return billService.getTenMostRecentPayments(id);
+    }
 }
