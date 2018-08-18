@@ -1,18 +1,16 @@
 package com.wolverineteam.ngpuppies.data.base;
 
 import com.wolverineteam.ngpuppies.models.Bill;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 
 
 public interface BillRepository {
 
+    Bill getById(int id);
+
     //They must have access to bill payment module where they can pay a particular bill
     // (or selected list of bills) for their subscribers
-    List<Bill> getAllNotPaid(int bankId);
+    List<Bill> getUnpaidBillsByBankId(int bankId);
     void pay(List<Bill> bills);
 
 

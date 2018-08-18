@@ -1,11 +1,7 @@
 package com.wolverineteam.ngpuppies.web;
 
-import com.wolverineteam.ngpuppies.models.Currency;
-import com.wolverineteam.ngpuppies.models.Subscriber;
-import com.wolverineteam.ngpuppies.models.User;
-import com.wolverineteam.ngpuppies.services.base.CurrencyService;
-import com.wolverineteam.ngpuppies.services.base.SubscriberService;
-import com.wolverineteam.ngpuppies.services.base.UserService;
+import com.wolverineteam.ngpuppies.models.*;
+import com.wolverineteam.ngpuppies.services.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +14,18 @@ public class Controller {
     private CurrencyService currencyService;
     private UserService userService;
     private SubscriberService subscriberService;
-
-    /** ---------------------------------------  CURRENCY METHODS*/
+    private BillService billService;
 
     @Autowired
-    public Controller(CurrencyService currencyService, UserService userService, SubscriberService subscriberService) {
+    public Controller(CurrencyService currencyService, UserService userService, SubscriberService subscriberService,
+                      BillService billService) {
         this.currencyService = currencyService;
         this.userService = userService;
         this.subscriberService = subscriberService;
+        this.billService = billService;
     }
+
+    /** ---------------------------------------  CURRENCY METHODS*/
 
     @GetMapping("currencies/{id}")
     public Currency getCurrencyById(@PathVariable("id") String currencyId) {
@@ -93,5 +92,20 @@ public class Controller {
     @GetMapping("subscribers/{id}")
     public Subscriber getSubscriberById(@PathVariable("id") String subscriberId) {
         return subscriberService.getById(subscriberId);
+    }
+
+    /**
+     * ------------------------------- BILL METHODS--------------------------
+     */
+
+    @GetMapping("bills/unpaid/{id}")
+    public List<Bill> getUnpaidBillsByBankId(@PathVariable("id") String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billService.getUnpaidBillsByBankId(id);
+    }
+
+    @PutMapping("bills/pay/{bills}")
+    public void payBills(@PathVariable("bills") List<Bill> bills, @RequestBody Bill bill) {
+        billService.pay(bills);
     }
 }
