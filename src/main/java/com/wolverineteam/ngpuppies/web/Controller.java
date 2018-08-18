@@ -124,6 +124,6 @@ public class Controller {
     @GetMapping("bills/paidServices/{id}")
     public List<Bill> getAllPaidServices(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);
-        return billService.getAllBillForParticularSubscriber(id);
+        return billService.getAllPaidServices(id);
     }
 }

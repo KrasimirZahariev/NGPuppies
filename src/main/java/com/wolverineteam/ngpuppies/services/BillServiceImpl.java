@@ -40,7 +40,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> getAllPaidServices(int bankId) {
-        return billRepository.getAllBillForParticularSubscriber(bankId);
+        return billRepository.getAllPaidServices(bankId);
     }
 
     @Override
