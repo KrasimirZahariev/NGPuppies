@@ -30,6 +30,6 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> getAllPaidSorted(int bankId) {
-        return null;
+        return billRepository.getAllPaidSorted(bankId);
     }
 }

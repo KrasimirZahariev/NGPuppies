@@ -74,6 +74,23 @@ public class BillRepositoryImpl implements BillRepository{
 
     @Override
     public List<Bill> getAllPaidSorted(int bankId) {
-        return null;
+        List<Bill> bills = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "select b.id, b.service, b.subscriber, b.startDate, " +
+                    "b.endDate, b.amount, b.currency, b.paymentDate " +
+                    "from Bill as b " +
+                    "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
+                    "join fetch User as u on s.bank.userId = u.userId " +
+                    "where s.bank.userId = :bankId and b.paymentDate is Not NULL";
+            bills =  session.createQuery(query)
+                    .setParameter("bankId", bankId)
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return bills;
     }
 }

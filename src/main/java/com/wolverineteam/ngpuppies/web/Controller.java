@@ -108,4 +108,10 @@ public class Controller {
     public void payBills(@PathVariable("bills") List<Bill> bills, @RequestBody Bill bill) {
         billService.pay(bills);
     }
+
+    @GetMapping("bills/paid/sorted/{id}")
+    public List<Bill> getAllPaidBillsSortedByBankId(@PathVariable("id") String bankId){
+        int id = Integer.parseInt(bankId);
+        return billService.getAllPaidSorted(id);
+    }
 }
