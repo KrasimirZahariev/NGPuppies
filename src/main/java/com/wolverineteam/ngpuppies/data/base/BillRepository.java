@@ -25,7 +25,7 @@ public interface BillRepository {
 
 
     //A client should be able to see a list of the services the client has paid for
-
+    List<Bill> getAllPaidServices(int bankId);
     //Top 10 subscribers with the biggest amount of money payed.
     // If there are payments with amounts in different currencies,
     // they should be all converted to BGN (using a static conversion rate) and summed
