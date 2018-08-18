@@ -24,7 +24,7 @@ public interface BillRepository {
 
     //A client should be able to see the average and max amount of money
     // payed for a subscriber for a defined period of time
-
+    List<String> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval);
 
     //A client should be able to see a list of the services the client has paid for
     List<Bill> getAllPaidServices(int bankId);

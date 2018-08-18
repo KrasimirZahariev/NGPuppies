@@ -114,6 +114,11 @@ public class Controller {
         billService.pay(bills);
     }
 
+    @GetMapping("bills/{timeInterval}")
+    public List<String> getMinAndAvgPaymentInTimeInterval(@PathVariable("timeInterval") List<String> timeInterval) {
+        return billService.getMinAndAvgPaymentInTimeInterval(timeInterval);
+    }
+
     @GetMapping("bills/paid/sorted/{id}")
     public List<Bill> getAllPaidBillsSortedByBankId(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);

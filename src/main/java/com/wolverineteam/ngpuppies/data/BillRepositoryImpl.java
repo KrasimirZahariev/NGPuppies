@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,6 +108,35 @@ public class BillRepositoryImpl implements BillRepository{
         }
 
         return bills;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<String> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
+        List<String> records = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try (Session session = sessionFactory.openSession()) {
+            Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
+            Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
+
+            session.beginTransaction();
+            String query = "select s.firstName, s.lastName, s.phoneNumber, c.currency, avg(b.amount), max(b.amount), b.paymentDate " +
+                    "from Bill as b " +
+                    "join Subscriber as s on b.subscriber = s.phoneNumber " +
+                    "join User as u on s.bank.userId = u.userId " +
+                    "join Currency as c on b.currency = c.currency " +
+                    "where b.paymentDate >= :startDate and b.paymentDate <= :endDate " +
+                    "group by b.subscriber";
+            records =  session.createQuery(query)
+                    .setParameter("startDate", startDate)
+                    .setParameter("endDate", endDate)
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return records;
     }
 
     @Override
