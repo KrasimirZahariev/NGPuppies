@@ -8,7 +8,7 @@ public interface BillService {
 
     List<Bill> getUnpaidBillsByBankId(int bankId);
 
-    void pay(List<Bill> bills);
+    void pay(List<String> bills);
 
     List<Bill> getAllPaidSorted(int bankId);
 

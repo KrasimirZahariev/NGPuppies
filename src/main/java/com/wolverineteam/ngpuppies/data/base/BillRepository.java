@@ -11,7 +11,7 @@ public interface BillRepository {
     //They must have access to bill payment module where they can pay a particular bill
     // (or selected list of bills) for their subscribers
     List<Bill> getUnpaidBillsByBankId(int bankId);
-    void pay(List<Bill> bills);
+    void pay(List<Integer> bills);
 
 
 

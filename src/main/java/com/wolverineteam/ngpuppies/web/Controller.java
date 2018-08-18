@@ -105,7 +105,7 @@ public class Controller {
     }
 
     @PutMapping("bills/pay/{bills}")
-    public void payBills(@PathVariable("bills") List<Bill> bills, @RequestBody Bill bill) {
+    public void payBills(@PathVariable("bills") List<String> bills) {
         billService.pay(bills);
     }
 

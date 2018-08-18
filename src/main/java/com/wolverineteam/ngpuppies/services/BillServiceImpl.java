@@ -6,6 +6,7 @@ import com.wolverineteam.ngpuppies.services.base.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,8 +25,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void pay(List<Bill> bills) {
-        billRepository.pay(bills);
+    public void pay(List<String> bills) {
+        List<Integer> billsToBePaid = new ArrayList<>(bills.size());
+        for (String bill : bills) {
+            billsToBePaid.add(Integer.parseInt(bill));
+        }
+        billRepository.pay(billsToBePaid);
     }
 
     @Override

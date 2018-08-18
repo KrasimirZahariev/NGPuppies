@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +59,12 @@ public class BillRepositoryImpl implements BillRepository{
     }
 
     @Override
-    public void pay(List<Bill> bills) {
+    public void pay(List<Integer> bills) {
         Bill paidBill = null;
         try (Session session = sessionFactory.openSession()) {
             for (int i = 0; i < bills.size(); i++) {
-                paidBill = bills.get(i);
+                paidBill = getById(bills.get(i));
+                paidBill.setPaymentDate(new Date(System.currentTimeMillis()));
                 session.beginTransaction();
                 session.update(paidBill);
                 session.getTransaction().commit();
