@@ -82,7 +82,8 @@ public class BillRepositoryImpl implements BillRepository{
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
-                    "where s.bank.userId = :bankId and b.paymentDate is Not NULL";
+                    "where s.bank.userId = :bankId and b.paymentDate is Not NULL " +
+                    "order by b.paymentDate DESC ";
             bills =  session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .list();
