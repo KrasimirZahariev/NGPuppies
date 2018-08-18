@@ -73,6 +73,7 @@ public class BillRepositoryImpl implements BillRepository{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Bill> getAllPaidSorted(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
