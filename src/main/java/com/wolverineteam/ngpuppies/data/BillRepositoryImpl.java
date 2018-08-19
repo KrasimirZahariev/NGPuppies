@@ -53,8 +53,8 @@ public class BillRepositoryImpl implements BillRepository{
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service, b.subscriber, b.startDate, " +
-                    "b.endDate, b.amount, b.currency, b.paymentDate " +
+            String query = "select b.id, b.service.service,b.subscriber.phoneNumber, b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+                    "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
@@ -91,8 +91,8 @@ public class BillRepositoryImpl implements BillRepository{
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service, b.subscriber, b.startDate, " +
-                    "b.endDate, b.amount, b.currency, b.paymentDate " +
+            String query = "select b.id, b.service.service, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+                    "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
@@ -119,7 +119,7 @@ public class BillRepositoryImpl implements BillRepository{
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
             
             session.beginTransaction();
-            String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank, " +
+            String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank.username, " +
                     "avg(b.amount), max(b.amount), b.paymentDate " +
                     "from Bill as b " +
                     "join Subscriber as s on b.subscriber = s.phoneNumber " +
@@ -167,8 +167,8 @@ public class BillRepositoryImpl implements BillRepository{
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service, b.subscriber, b.startDate, " +
-                    "b.endDate, b.amount, b.currency, b.paymentDate " +
+            String query = "select b.id, b.service.service, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+                    "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
