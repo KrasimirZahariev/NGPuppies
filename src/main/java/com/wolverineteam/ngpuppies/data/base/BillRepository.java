@@ -15,7 +15,7 @@ public interface BillRepository {
 
     void payBills(List<Integer> bills);
 
-    List<Bill> getPaymentsHistoryDescendingByBankId(int bankId);
+    List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, int subscriberId);
 
     List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 

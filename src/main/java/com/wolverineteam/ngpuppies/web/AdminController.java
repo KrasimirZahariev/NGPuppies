@@ -3,8 +3,6 @@ package com.wolverineteam.ngpuppies.web;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
-import com.wolverineteam.ngpuppies.services.base.CurrencyService;
-import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

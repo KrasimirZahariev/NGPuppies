@@ -22,6 +22,11 @@ public class ClientController {
         this.billService = billService;
     }
 
+    @GetMapping("bills/unpaid/{id}")
+    public List<Bill> getUnpaidBillsByBankId(@PathVariable("id") String bankId) {
+        return billService.getUnpaidBillsByBankId(bankId);
+    }
+
     @PutMapping("bills/pay/{bills}")
     public void payBills(@PathVariable("bills") List<String> bills) {
         billService.payBills(bills);
@@ -32,9 +37,9 @@ public class ClientController {
         return subscriberService.getById(subscriberId);
     }
 
-    @GetMapping("bills/paymentHistory/descending/{id}")
-    public List<Bill> getPaymentsHistoryDescendingByBankId(@PathVariable("id") String bankId) {
-        return billService.getPaymentsHistoryDescendingByBankId(bankId);
+    @GetMapping("bills/paymentHistoryDescending/{bankId}/{subscriberId}")
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(@PathVariable("bankId") String bankId, @PathVariable("subscriberId") String subscriberId) {
+        return billService.getSubscriberPaymentsHistoryDescendingByBankId(bankId, subscriberId);
     }
 
     @GetMapping("bills/{timeInterval}")

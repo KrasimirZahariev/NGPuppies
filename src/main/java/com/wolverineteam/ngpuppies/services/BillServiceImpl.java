@@ -20,8 +20,9 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getUnpaidBillsByBankId(int bankId) {
-        return billRepository.getUnpaidBillsByBankId(bankId);
+    public List<Bill> getUnpaidBillsByBankId(String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billRepository.getUnpaidBillsByBankId(id);
     }
 
     @Override
@@ -44,9 +45,10 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getPaymentsHistoryDescendingByBankId(String bankId) {
-        int id = Integer.parseInt(bankId);
-        return billRepository.getPaymentsHistoryDescendingByBankId(id);
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(String bankId, String subscriberId) {
+        int parsedBankId = Integer.parseInt(bankId);
+        int parsedSubscriberId = Integer.parseInt(subscriberId);
+        return billRepository.getSubscriberPaymentsHistoryDescendingByBankId(parsedBankId, parsedSubscriberId);
     }
 
     @Override

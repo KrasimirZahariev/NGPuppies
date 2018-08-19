@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BillService {
 
-    List<Bill> getUnpaidBillsByBankId(int bankId);
+    List<Bill> getUnpaidBillsByBankId(String bankId);
 
     void createBill(Bill bill);
 
@@ -14,7 +14,7 @@ public interface BillService {
 
     List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 
-    List<Bill> getPaymentsHistoryDescendingByBankId(String bankId);
+    List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(String bankId, String subscriberId);
 
     List<Bill> getPaidServicesByBankId(String bankId);
 
