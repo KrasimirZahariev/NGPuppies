@@ -117,8 +117,7 @@ public class BillRepositoryImpl implements BillRepository{
         try (Session session = sessionFactory.openSession()) {
             Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
-            System.out.println(startDate);
-            System.out.println(endDate);
+            
             session.beginTransaction();
             String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank, " +
                     "avg(b.amount), max(b.amount), b.paymentDate " +
