@@ -23,11 +23,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getById(int id) {
         User user = null;
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             user = session.get(User.class, id);
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

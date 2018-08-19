@@ -15,17 +15,12 @@ import java.util.List;
 @RequestMapping("/admin/")
 public class AdminController {
 
-    private CurrencyService currencyService;
     private UserService userService;
-    private SubscriberService subscriberService;
     private BillService billService;
 
     @Autowired
-    public AdminController(CurrencyService currencyService, UserService userService, SubscriberService subscriberService,
-                      BillService billService) {
-        this.currencyService = currencyService;
+    public AdminController(UserService userService, BillService billService) {
         this.userService = userService;
-        this.subscriberService = subscriberService;
         this.billService = billService;
     }
 
@@ -55,5 +50,4 @@ public class AdminController {
     public void createBill(@RequestBody Bill bill) {
         billService.createBill(bill);
     }
-
 }

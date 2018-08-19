@@ -18,7 +18,7 @@ public class Service {
     private String service;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "service",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bill> bills;
 
     public Service() {

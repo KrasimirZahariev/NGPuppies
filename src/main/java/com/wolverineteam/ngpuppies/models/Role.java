@@ -19,7 +19,7 @@ public class Role {
     private String role;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "role",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role", cascade = CascadeType.ALL)
     private List<User> users;
 
     public Role() {

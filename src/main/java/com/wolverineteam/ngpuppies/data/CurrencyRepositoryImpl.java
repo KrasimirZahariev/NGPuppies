@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public class CurrencyRepositoryImpl implements CurrencyRepository {
 
-    @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
     public CurrencyRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -23,11 +23,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     @Override
     public Currency getById(int id) {
         Currency currency = null;
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             currency = session.get(Currency.class, id);
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

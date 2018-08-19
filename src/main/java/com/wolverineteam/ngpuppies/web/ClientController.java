@@ -17,8 +17,7 @@ public class ClientController {
     private BillService billService;
 
     @Autowired
-    public ClientController(SubscriberService subscriberService,BillService billService){
-
+    public ClientController(SubscriberService subscriberService, BillService billService) {
         this.subscriberService = subscriberService;
         this.billService = billService;
     }
@@ -34,7 +33,7 @@ public class ClientController {
     }
 
     @GetMapping("bills/paymentHistory/descending/{id}")
-    public List<Bill> getPaymentsHistoryDescendingByBankId(@PathVariable("id") String bankId){
+    public List<Bill> getPaymentsHistoryDescendingByBankId(@PathVariable("id") String bankId) {
         int id = Integer.parseInt(bankId);
         return billService.getPaymentsHistoryDescendingByBankId(id);
     }
@@ -46,21 +45,20 @@ public class ClientController {
     }
 
     @GetMapping("bills/paidServices/{id}")
-    public List<Bill> getPaidServicesByBankId(@PathVariable("id") String bankId){
+    public List<Bill> getPaidServicesByBankId(@PathVariable("id") String bankId) {
         int id = Integer.parseInt(bankId);
         return billService.getPaidServicesByBankId(id);
     }
 
     @GetMapping("bills/topPayers/{id}")
-    public List<Object[]> getTenBiggestPaymentsByBankId(@PathVariable("id") String bankId){
+    public List<Object[]> getTenBiggestPaymentsByBankId(@PathVariable("id") String bankId) {
         int id = Integer.parseInt(bankId);
         return billService.getTenBiggestPaymentsByBankId(id);
     }
 
     @GetMapping("bills/recentPayments/{id}")
-    public List<Bill> getTenMostRecentPaymentsByBankId(@PathVariable("id") String bankId){
+    public List<Bill> getTenMostRecentPaymentsByBankId(@PathVariable("id") String bankId) {
         int id = Integer.parseInt(bankId);
         return billService.getTenMostRecentPaymentsByBankId(id);
     }
-
 }

@@ -10,16 +10,16 @@ import java.util.List;
 public class Subscriber {
 
     @Id
-    @Column(name="PhoneNumber")
+    @Column(name = "PhoneNumber")
     private String phoneNumber;
 
-    @Column(name="FirstName")
+    @Column(name = "FirstName")
     private String firstName;
 
-    @Column(name="LastName")
+    @Column(name = "LastName")
     private String lastName;
 
-    @Column(name="EGN")
+    @Column(name = "EGN")
     private String egn;
 
     @ManyToOne
