@@ -99,7 +99,7 @@ public class Controller {
      */
 
     @PostMapping("bills/create/")
-    public void create(@RequestBody Bill bill) {
+    public void createBill(@RequestBody Bill bill) {
         billService.createBill(bill);
     }
 
@@ -111,35 +111,36 @@ public class Controller {
 
     @PutMapping("bills/pay/{bills}")
     public void payBills(@PathVariable("bills") List<String> bills) {
-        billService.pay(bills);
+        billService.payBills(bills);
     }
 
     @GetMapping("bills/{timeInterval}")
-    public List<Object[]> getMinAndAvgPaymentInTimeInterval(@PathVariable("timeInterval") List<String> timeInterval) {
-        return billService.getMinAndAvgPaymentInTimeInterval(timeInterval);
+    public List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(
+            @PathVariable("timeInterval") List<String> timeInterval) {
+        return billService.getMinAndAvgPaymentInTimeIntervalByBankId(timeInterval);
     }
 
     @GetMapping("bills/paid/sorted/{id}")
-    public List<Bill> getAllPaidBillsSortedByBankId(@PathVariable("id") String bankId){
+    public List<Bill> getDescendingPaymentsByBankId(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);
-        return billService.getAllPaidSorted(id);
+        return billService.getDescendingPaymentsByBankId(id);
     }
 
     @GetMapping("bills/recentPayments/{id}")
-    public List<Bill> getTenRecentPayments(@PathVariable("id") String bankId){
+    public List<Bill> getTenMostRecentPaymentsByBankId(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);
-        return billService.getTenMostRecentPayments(id);
+        return billService.getTenMostRecentPaymentsByBankId(id);
     }
 
     @GetMapping("bills/paidServices/{id}")
-    public List<Bill> getAllPaidServices(@PathVariable("id") String bankId){
+    public List<Bill> getPaidServicesByBankId(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);
-        return billService.getAllPaidServices(id);
+        return billService.getPaidServicesByBankId(id);
     }
 
     @GetMapping("bills/topPayers/{id}")
-    public List<Object[]> getTopPayers(@PathVariable("id") String bankId){
+    public List<Object[]> getTenBiggestPaymentsByBankId(@PathVariable("id") String bankId){
         int id = Integer.parseInt(bankId);
-        return billService.getTopPayers(id);
+        return billService.getTenBiggestPaymentsByBankId(id);
     }
 }

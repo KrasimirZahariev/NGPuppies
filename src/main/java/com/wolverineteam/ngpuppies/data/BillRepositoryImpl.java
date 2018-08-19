@@ -70,7 +70,7 @@ public class BillRepositoryImpl implements BillRepository {
     }
 
     @Override
-    public void pay(List<Integer> bills) {
+    public void payBills(List<Integer> bills) {
         Bill paidBill;
         try (Session session = sessionFactory.openSession()) {
             for (Integer bill : bills) {
@@ -87,7 +87,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getAllPaidSorted(int bankId) {
+    public List<Bill> getDescendingPaymentsByBankId(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -111,7 +111,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
+    public List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
         List<Object[]> records = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try (Session session = sessionFactory.openSession()) {
@@ -140,7 +140,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getAllPaidServices(int bankId) {
+    public List<Bill> getPaidServicesByBankId(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -162,7 +162,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Object[]> getTopPayers(int bankId) {
+    public List<Object[]> getTenBiggestPaymentsByBankId(int bankId) {
         List<Object[]> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

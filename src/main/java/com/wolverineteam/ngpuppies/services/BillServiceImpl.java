@@ -30,36 +30,36 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void pay(List<String> bills) {
+    public void payBills(List<String> bills) {
         List<Integer> billsToBePaid = new ArrayList<>(bills.size());
         for (String bill : bills) {
             billsToBePaid.add(Integer.parseInt(bill));
         }
-        billRepository.pay(billsToBePaid);
+        billRepository.payBills(billsToBePaid);
     }
 
     @Override
-    public List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
-        return billRepository.getMinAndAvgPaymentInTimeInterval(timeInterval);
+    public List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
+        return billRepository.getMinAndAvgPaymentInTimeIntervalByBankId(timeInterval);
     }
 
     @Override
-    public List<Bill> getAllPaidSorted(int bankId) {
-        return billRepository.getAllPaidSorted(bankId);
+    public List<Bill> getDescendingPaymentsByBankId(int bankId) {
+        return billRepository.getDescendingPaymentsByBankId(bankId);
     }
 
     @Override
-    public List<Bill> getAllPaidServices(int bankId) {
-        return billRepository.getAllPaidServices(bankId);
+    public List<Bill> getPaidServicesByBankId(int bankId) {
+        return billRepository.getPaidServicesByBankId(bankId);
     }
 
     @Override
-    public List<Object[]> getTopPayers(int bankId) {
-        return billRepository.getTopPayers(bankId);
+    public List<Object[]> getTenBiggestPaymentsByBankId(int bankId) {
+        return billRepository.getTenBiggestPaymentsByBankId(bankId);
     }
 
     @Override
-    public List<Bill> getTenMostRecentPayments(int bankId) {
+    public List<Bill> getTenMostRecentPaymentsByBankId(int bankId) {
         return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }
 }

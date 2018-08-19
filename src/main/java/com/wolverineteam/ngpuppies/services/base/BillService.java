@@ -10,15 +10,15 @@ public interface BillService {
 
     void createBill(Bill bill);
 
-    void pay(List<String> bills);
+    void payBills(List<String> bills);
 
-    List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval);
+    List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 
-    List<Bill> getAllPaidSorted(int bankId);
+    List<Bill> getDescendingPaymentsByBankId(int bankId);
 
-    List<Bill> getAllPaidServices(int bankId);
+    List<Bill> getPaidServicesByBankId(int bankId);
 
-    List<Object[]> getTopPayers(int bankId);
+    List<Object[]> getTenBiggestPaymentsByBankId(int bankId);
 
-    List<Bill> getTenMostRecentPayments(int bankId);
+    List<Bill> getTenMostRecentPaymentsByBankId(int bankId);
 }
