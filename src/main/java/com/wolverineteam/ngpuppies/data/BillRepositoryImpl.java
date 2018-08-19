@@ -166,13 +166,12 @@ public class BillRepositoryImpl implements BillRepository {
         List<Object[]> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, " +
-                    " b.currency.currency, sum(b.amount), " +
-                    "case when b.currency.currency != 'bgn' then  b.amount * b.currency.exchangeRate else b.amount end " +
+            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, 'BGN' as Currency, " +
+                    "sum(b.amount*(case when b.currency.currency != 'bgn' then  b.currency.exchangeRate else 1 end)) as SumAmount " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "group by b.subscriber " +
-                    "order by sum(b.amount) DESC ";
+                    "order by SumAmount DESC";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
