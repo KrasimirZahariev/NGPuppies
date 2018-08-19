@@ -87,7 +87,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getDescendingPaymentsByBankId(int bankId) {
+    public List<Bill> getPaymentsHistoryDescendingByBankId(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -111,13 +111,14 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
+    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
         List<Object[]> records = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try (Session session = sessionFactory.openSession()) {
             Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
             int bankId = Integer.parseInt(timeInterval.get(2));
+
             session.beginTransaction();
             String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, " +
                     "avg(b.amount), max(b.amount), b.paymentDate " +
@@ -128,7 +129,7 @@ public class BillRepositoryImpl implements BillRepository {
             records = session.createQuery(query)
                     .setParameter("startDate", startDate)
                     .setParameter("endDate", endDate)
-                    .setParameter("bankId",bankId)
+                    .setParameter("bankId", bankId)
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {

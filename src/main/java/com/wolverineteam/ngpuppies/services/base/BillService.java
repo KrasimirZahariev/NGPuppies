@@ -12,9 +12,9 @@ public interface BillService {
 
     void payBills(List<String> bills);
 
-    List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
+    List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 
-    List<Bill> getDescendingPaymentsByBankId(int bankId);
+    List<Bill> getPaymentsHistoryDescendingByBankId(int bankId);
 
     List<Bill> getPaidServicesByBankId(int bankId);
 

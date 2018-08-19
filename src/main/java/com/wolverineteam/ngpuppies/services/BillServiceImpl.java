@@ -39,13 +39,13 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
-        return billRepository.getMinAndAvgPaymentInTimeIntervalByBankId(timeInterval);
+    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
+        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval);
     }
 
     @Override
-    public List<Bill> getDescendingPaymentsByBankId(int bankId) {
-        return billRepository.getDescendingPaymentsByBankId(bankId);
+    public List<Bill> getPaymentsHistoryDescendingByBankId(int bankId) {
+        return billRepository.getPaymentsHistoryDescendingByBankId(bankId);
     }
 
     @Override

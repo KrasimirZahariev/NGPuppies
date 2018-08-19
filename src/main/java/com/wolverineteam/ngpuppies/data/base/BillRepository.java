@@ -13,18 +13,19 @@ public interface BillRepository {
     //They must have access to bill payment module where they can pay a particular bill
     // (or selected list of bills) for their subscribers
     List<Bill> getUnpaidBillsByBankId(int bankId);
+
     void payBills(List<Integer> bills);
 
 
 
     //A client should be able to see a history of the payments for its subscribers sorted
     // descending by the date of payment
-    List<Bill> getDescendingPaymentsByBankId(int bankId);
+    List<Bill> getPaymentsHistoryDescendingByBankId(int bankId);
 
 
     //A client should be able to see the average and max amount of money
     // payed for a subscriber for a defined period of time
-    List<Object[]> getMinAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
+    List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 
     //A client should be able to see a list of the services the client has paid for
     List<Bill> getPaidServicesByBankId(int bankId);
