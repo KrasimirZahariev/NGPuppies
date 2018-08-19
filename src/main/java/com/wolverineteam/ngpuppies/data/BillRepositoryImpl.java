@@ -160,6 +160,32 @@ public class BillRepositoryImpl implements BillRepository{
         return bills;
     }
 
+    @Override
+    public List<Object[]> getTopPayers(int bankId) {
+        List<Object[]> bills = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, " +
+                    " b.currency.currency, sum(b.amount) " +
+                    "from Bill as b " +
+                    //"join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
+                    //"join fetch User as u on s.bank.userId = u.userId " +
+                    "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
+                    "group by b.subscriber.phoneNumber " +
+                    "(case when b.currency.currency !='bgn' then b.amount = b.amount *(select c.exchangerate from currencies c where b.currency.currency = c.currency) else 1 end )"  +
+                    "order by sum(b.amount) DESC ";
+            bills =  session.createQuery(query)
+                    .setParameter("bankId", bankId)
+                    .setMaxResults(10)
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return bills;
+    }
+
 
     @Override
     @SuppressWarnings("unchecked")

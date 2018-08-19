@@ -32,7 +32,7 @@ public interface BillRepository {
     //Top 10 subscribers with the biggest amount of money payed.
     // If there are payments with amounts in different currencies,
     // they should be all converted to BGN (using a static conversion rate) and summed
-
+    List<Object[]> getTopPayers(int bankId);
 
     //The 10 most recent payments for the particular client for all the subscribers
     List<Bill> getTenMostRecentPaymentsByBankId(int bankId);
