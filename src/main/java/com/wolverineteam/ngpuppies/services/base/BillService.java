@@ -18,5 +18,7 @@ public interface BillService {
 
     List<Bill> getAllPaidServices(int bankId);
 
+    List<Object[]> getTopPayers(int bankId);
+
     List<Bill> getTenMostRecentPayments(int bankId);
 }

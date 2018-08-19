@@ -136,4 +136,10 @@ public class Controller {
         int id = Integer.parseInt(bankId);
         return billService.getAllPaidServices(id);
     }
+
+    @GetMapping("bills/topPayers/{id}")
+    public List<Object[]> getTopPayers(@PathVariable("id") String bankId){
+        int id = Integer.parseInt(bankId);
+        return billService.getTopPayers(id);
+    }
 }

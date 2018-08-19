@@ -54,6 +54,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public List<Object[]> getTopPayers(int bankId) {
+        return billRepository.getTopPayers(bankId);
+    }
+
+    @Override
     public List<Bill> getTenMostRecentPayments(int bankId) {
         return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }

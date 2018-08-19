@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BillRepositoryImpl implements BillRepository{
+public class BillRepositoryImpl implements BillRepository {
 
     private SessionFactory sessionFactory;
 
@@ -25,11 +25,11 @@ public class BillRepositoryImpl implements BillRepository{
     @Override
     public Bill getById(int id) {
         Bill bill = null;
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             bill = session.get(Bill.class, id);
             session.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -59,7 +59,7 @@ public class BillRepositoryImpl implements BillRepository{
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
                     "where s.bank.userId = :bankId and b.paymentDate is NULL";
-            bills =  session.createQuery(query)
+            bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .list();
             session.getTransaction().commit();
@@ -98,7 +98,7 @@ public class BillRepositoryImpl implements BillRepository{
                     "join fetch User as u on s.bank.userId = u.userId " +
                     "where s.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "order by b.paymentDate DESC ";
-            bills =  session.createQuery(query)
+            bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .list();
             session.getTransaction().commit();
@@ -117,7 +117,7 @@ public class BillRepositoryImpl implements BillRepository{
         try (Session session = sessionFactory.openSession()) {
             Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
-            
+
             session.beginTransaction();
             String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank.username, " +
                     "avg(b.amount), max(b.amount), b.paymentDate " +
@@ -126,7 +126,7 @@ public class BillRepositoryImpl implements BillRepository{
                     //"join User as u on s.bank.userId = u.userId " +
                     "where b.paymentDate >= :startDate and b.paymentDate <= :endDate " +
                     "group by b.subscriber";
-            records =  session.createQuery(query)
+            records = session.createQuery(query)
                     .setParameter("startDate", startDate)
                     .setParameter("endDate", endDate)
                     .list();
@@ -149,7 +149,7 @@ public class BillRepositoryImpl implements BillRepository{
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch Service as se on b.service.serviceId = se.serviceId " +
                     "where s.bank.userId = :bankId and b.paymentDate is Not NULL";
-            bills =  session.createQuery(query)
+            bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .list();
             session.getTransaction().commit();
@@ -161,20 +161,19 @@ public class BillRepositoryImpl implements BillRepository{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Object[]> getTopPayers(int bankId) {
         List<Object[]> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, " +
-                    " b.currency.currency, sum(b.amount) " +
+                    " b.currency.currency, sum(b.amount), " +
+                    "case when b.currency.currency != 'bgn' then  b.amount * b.currency.exchangeRate else b.amount end " +
                     "from Bill as b " +
-                    //"join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
-                    //"join fetch User as u on s.bank.userId = u.userId " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
-                    "group by b.subscriber.phoneNumber " +
-                    "(case when b.currency.currency !='bgn' then b.amount = b.amount *(select c.exchangerate from currencies c where b.currency.currency = c.currency) else 1 end )"  +
+                    "group by b.subscriber " +
                     "order by sum(b.amount) DESC ";
-            bills =  session.createQuery(query)
+            bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
                     .list();
@@ -200,7 +199,7 @@ public class BillRepositoryImpl implements BillRepository{
                     "join fetch User as u on s.bank.userId = u.userId " +
                     "where s.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "order by b.paymentDate DESC";
-            bills =  session.createQuery(query)
+            bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
                     .list();
