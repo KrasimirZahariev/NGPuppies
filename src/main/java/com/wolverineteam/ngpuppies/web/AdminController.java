@@ -31,8 +31,7 @@ public class AdminController {
 
     @PutMapping("users/update/{id}")
     public void updateUser(@PathVariable("id") String userId, @RequestBody User user) {
-        int id = Integer.parseInt(userId);
-        userService.update(id, user);
+        userService.update(userId, user);
     }
 
     @GetMapping("users/")
@@ -42,8 +41,7 @@ public class AdminController {
 
     @DeleteMapping("users/delete/{id}")
     public void deleteUser(@PathVariable("id") String userId) {
-        int id = Integer.parseInt(userId);
-        userService.delete((id));
+        userService.delete(userId);
     }
 
     @PostMapping("bills/create/")

@@ -44,22 +44,26 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getPaymentsHistoryDescendingByBankId(int bankId) {
-        return billRepository.getPaymentsHistoryDescendingByBankId(bankId);
+    public List<Bill> getPaymentsHistoryDescendingByBankId(String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billRepository.getPaymentsHistoryDescendingByBankId(id);
     }
 
     @Override
-    public List<Bill> getPaidServicesByBankId(int bankId) {
-        return billRepository.getPaidServicesByBankId(bankId);
+    public List<Bill> getPaidServicesByBankId(String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billRepository.getPaidServicesByBankId(id);
     }
 
     @Override
-    public List<Object[]> getTenBiggestPaymentsByBankId(int bankId) {
-        return billRepository.getTenBiggestPaymentsByBankId(bankId);
+    public List<Object[]> getTenBiggestPaymentsByBankId(String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billRepository.getTenBiggestPaymentsByBankId(id);
     }
 
     @Override
-    public List<Bill> getTenMostRecentPaymentsByBankId(int bankId) {
-        return billRepository.getTenMostRecentPaymentsByBankId(bankId);
+    public List<Bill> getTenMostRecentPaymentsByBankId(String bankId) {
+        int id = Integer.parseInt(bankId);
+        return billRepository.getTenMostRecentPaymentsByBankId(id);
     }
 }

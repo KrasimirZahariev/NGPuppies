@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(int id, User user) {
+    public void update(String userId, User user) {
+        int id = Integer.parseInt(userId);
         userRepository.update(id, user);
     }
 
@@ -39,7 +40,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String userId) {
+        int id = Integer.parseInt(userId);
         userRepository.delete(id);
     }
 }

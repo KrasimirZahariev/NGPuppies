@@ -14,11 +14,11 @@ public interface BillService {
 
     List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval);
 
-    List<Bill> getPaymentsHistoryDescendingByBankId(int bankId);
+    List<Bill> getPaymentsHistoryDescendingByBankId(String bankId);
 
-    List<Bill> getPaidServicesByBankId(int bankId);
+    List<Bill> getPaidServicesByBankId(String bankId);
 
-    List<Object[]> getTenBiggestPaymentsByBankId(int bankId);
+    List<Object[]> getTenBiggestPaymentsByBankId(String bankId);
 
-    List<Bill> getTenMostRecentPaymentsByBankId(int bankId);
+    List<Bill> getTenMostRecentPaymentsByBankId(String bankId);
 }
