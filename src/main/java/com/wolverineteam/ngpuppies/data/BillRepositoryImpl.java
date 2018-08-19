@@ -117,18 +117,18 @@ public class BillRepositoryImpl implements BillRepository {
         try (Session session = sessionFactory.openSession()) {
             Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
-
+            int bankId = Integer.parseInt(timeInterval.get(2));
             session.beginTransaction();
-            String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank.username, " +
+            String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, " +
                     "avg(b.amount), max(b.amount), b.paymentDate " +
                     "from Bill as b " +
                     "join Subscriber as s on b.subscriber = s.phoneNumber " +
-                    //"join User as u on s.bank.userId = u.userId " +
-                    "where b.paymentDate >= :startDate and b.paymentDate <= :endDate " +
+                    "where b.paymentDate >= :startDate and b.paymentDate <= :endDate and s.bank.userId = :bankId " +
                     "group by b.subscriber";
             records = session.createQuery(query)
                     .setParameter("startDate", startDate)
                     .setParameter("endDate", endDate)
+                    .setParameter("bankId",bankId)
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
