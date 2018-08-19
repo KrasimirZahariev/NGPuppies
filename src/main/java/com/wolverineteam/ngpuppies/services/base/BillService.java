@@ -11,7 +11,8 @@ public interface BillService {
     void createBill(Bill bill);
 
     void pay(List<String> bills);
-    List<String> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval);
+
+    List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval);
 
     List<Bill> getAllPaidSorted(int bankId);
 

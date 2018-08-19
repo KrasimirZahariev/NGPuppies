@@ -39,7 +39,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<String> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
+    public List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
         return billRepository.getMinAndAvgPaymentInTimeInterval(timeInterval);
     }
 
@@ -55,6 +55,6 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> getTenMostRecentPayments(int bankId) {
-        return billRepository.GetTenMostRecentPaymentsByBankId(bankId);
+        return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }
 }

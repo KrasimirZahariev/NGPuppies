@@ -115,7 +115,7 @@ public class Controller {
     }
 
     @GetMapping("bills/{timeInterval}")
-    public List<String> getMinAndAvgPaymentInTimeInterval(@PathVariable("timeInterval") List<String> timeInterval) {
+    public List<Object[]> getMinAndAvgPaymentInTimeInterval(@PathVariable("timeInterval") List<String> timeInterval) {
         return billService.getMinAndAvgPaymentInTimeInterval(timeInterval);
     }
 

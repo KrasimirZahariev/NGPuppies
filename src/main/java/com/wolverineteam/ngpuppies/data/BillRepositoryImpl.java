@@ -66,7 +66,6 @@ public class BillRepositoryImpl implements BillRepository{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         return bills;
     }
 
@@ -112,19 +111,20 @@ public class BillRepositoryImpl implements BillRepository{
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<String> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
-        List<String> records = new ArrayList<>();
+    public List<Object[]> getMinAndAvgPaymentInTimeInterval(List<String> timeInterval) {
+        List<Object[]> records = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try (Session session = sessionFactory.openSession()) {
             Date startDate = new Date(format.parse(timeInterval.get(0)).getTime());
             Date endDate = new Date(format.parse(timeInterval.get(1)).getTime());
-
+            System.out.println(startDate);
+            System.out.println(endDate);
             session.beginTransaction();
-            String query = "select s.firstName, s.lastName, s.phoneNumber, c.currency, avg(b.amount), max(b.amount), b.paymentDate " +
+            String query = "select s.firstName, s.lastName, s.phoneNumber, b.currency.currency, s.bank, " +
+                    "avg(b.amount), max(b.amount), b.paymentDate " +
                     "from Bill as b " +
                     "join Subscriber as s on b.subscriber = s.phoneNumber " +
-                    "join User as u on s.bank.userId = u.userId " +
-                    "join Currency as c on b.currency = c.currency " +
+                    //"join User as u on s.bank.userId = u.userId " +
                     "where b.paymentDate >= :startDate and b.paymentDate <= :endDate " +
                     "group by b.subscriber";
             records =  session.createQuery(query)
@@ -164,7 +164,7 @@ public class BillRepositoryImpl implements BillRepository{
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> GetTenMostRecentPaymentsByBankId(int bankId) {
+    public List<Bill> getTenMostRecentPaymentsByBankId(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
