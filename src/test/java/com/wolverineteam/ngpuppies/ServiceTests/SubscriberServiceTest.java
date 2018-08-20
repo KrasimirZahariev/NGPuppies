@@ -4,6 +4,7 @@ import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
 import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.models.User;
+import com.wolverineteam.ngpuppies.services.SubscriberServiceImpl;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
 import junit.framework.Assert;
@@ -21,7 +22,7 @@ public class SubscriberServiceTest {
     SubscriberRepository mockSubscriberRepository;
 
     @InjectMocks
-    SubscriberService SubscriberService;
+    SubscriberServiceImpl SubscriberService;
 
     @Test
     public void getSubscriberWhenSubscriberIdGiven_ReturnCorrectSubscriber() {

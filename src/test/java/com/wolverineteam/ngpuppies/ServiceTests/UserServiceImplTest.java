@@ -3,7 +3,7 @@ package com.wolverineteam.ngpuppies.ServiceTests;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.User;
-import com.wolverineteam.ngpuppies.services.base.UserService;
+import com.wolverineteam.ngpuppies.services.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ public class UserServiceImplTest {
     UserRepository mockUserRepository;
 
     @InjectMocks
-    UserService userService;
+    UserServiceImpl userService;
 
     @Test
     public void getUserWhenUserIdGiven_ReturnCorrectUser() {
