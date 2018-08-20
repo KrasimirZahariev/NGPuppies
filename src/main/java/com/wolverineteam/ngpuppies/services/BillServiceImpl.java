@@ -6,8 +6,12 @@ import com.wolverineteam.ngpuppies.services.base.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -32,16 +36,26 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void payBills(List<String> bills) {
-        List<Integer> billsToBePaid = new ArrayList<>(bills.size());
-        for (String bill : bills) {
-            billsToBePaid.add(Integer.parseInt(bill));
-        }
+        List<Integer> billsToBePaid = bills.stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
         billRepository.payBills(billsToBePaid);
     }
 
     @Override
     public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
-        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval);
+        int bankId = Integer.parseInt(timeInterval.get(2));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null, endDate = null;
+        try {
+            startDate = new Date(format.parse(timeInterval.get(0)).getTime());
+            endDate = new Date(format.parse(timeInterval.get(1)).getTime());
+        } catch (ParseException pe) {
+            System.out.println(pe.getMessage());
+        }
+
+        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, startDate, endDate);
     }
 
     @Override
