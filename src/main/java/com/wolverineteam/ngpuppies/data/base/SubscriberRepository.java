@@ -4,5 +4,5 @@ import com.wolverineteam.ngpuppies.models.Subscriber;
 
 public interface SubscriberRepository {
 
-    Subscriber getById(int id);
+    Subscriber getById(String id);
 }
