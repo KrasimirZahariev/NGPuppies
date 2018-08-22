@@ -52,38 +52,38 @@ public class UserServiceImplTest {
 
         List<User> result = userService.getAll();
 
-        Assert.assertEquals(5,result.size());
+        Assert.assertEquals(5, result.size());
     }
 
     @Test
-    public void UpdateUserWhenUpdatedUserGiven_ReturnCorrectUpdatedUser(){
+    public void UpdateUserWhenUpdatedUserGiven_ReturnCorrectUpdatedUser() {
         User mockUser1 = new User("MockUser1", "UsersPass", new Role("Client"), "12345678");
         User mockUser2 = new User("MockUser2", "UsersPass", new Role("Client"), "12345678");
 
-        doNothing().when(mockUserRepository).update(isA(Integer.class),isA(User.class));
-        userService.update("1",mockUser2);
+        doNothing().when(mockUserRepository).update(isA(Integer.class), isA(User.class));
+        userService.update("1", mockUser2);
 
-        Mockito.verify(mockUserRepository,times(1)).update(1,mockUser2);
+        Mockito.verify(mockUserRepository, times(1)).update(1, mockUser2);
 
     }
 
     @Test
-    public void CreateNewUserWhenGivenUser_ReturnsCorrectNewUser(){
+    public void CreateNewUserWhenGivenUser_ReturnsCorrectNewUser() {
         User mockUser1 = new User("MockUser1", "UsersPass", new Role("Client"), "12345678");
 
         doNothing().when(mockUserRepository).create(isA(User.class));
         userService.create(mockUser1);
 
-        verify(mockUserRepository,times(1)).create(mockUser1);
+        verify(mockUserRepository, times(1)).create(mockUser1);
     }
 
     @Test
-    public void DeleteUserWhenGivenId_ReturnDeleteUser(){
+    public void DeleteUserWhenGivenId_ReturnDeleteUser() {
         User mockUser1 = new User("MockUser1", "UsersPass", new Role("Client"), "12345678");
 
         doNothing().when(mockUserRepository).delete(isA(Integer.class));
         userService.delete("1");
 
-        verify(mockUserRepository,times(1)).delete(1);
+        verify(mockUserRepository, times(1)).delete(1);
     }
 }

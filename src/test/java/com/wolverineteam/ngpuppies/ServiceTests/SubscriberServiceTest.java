@@ -27,7 +27,7 @@ public class SubscriberServiceTest {
     @Test
     public void getSubscriberWhenSubscriberIdGiven_ReturnCorrectSubscriber() {
         Mockito.when(mockSubscriberRepository.getById(1))
-                .thenReturn(new Subscriber("0123456789","TestSubscriber1","TestSubscriber1","12345678", new User("MockUser1", "UsersPass", new Role("Client"), "12345678")));
+                .thenReturn(new Subscriber("0123456789", "TestSubscriber1", "TestSubscriber1", "12345678", new User("MockUser1", "UsersPass", new Role("Client"), "12345678")));
 
         Subscriber result = SubscriberService.getById("1");
 

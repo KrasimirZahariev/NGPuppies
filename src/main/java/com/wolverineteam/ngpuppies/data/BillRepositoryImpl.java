@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
 import com.wolverineteam.ngpuppies.models.Bill;
+import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,11 +137,11 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getPaidServicesByBankId(int bankId) {
-        List<Bill> bills = new ArrayList<>();
+    public List<Service> getPaidServicesByBankId(int bankId) {
+        List<Service> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select distinct b.service.service " +
+            String query = "select distinct b.service " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch Service as se on b.service.serviceId = se.serviceId " +

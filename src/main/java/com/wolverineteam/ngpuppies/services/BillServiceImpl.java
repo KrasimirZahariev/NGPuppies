@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +65,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getPaidServicesByBankId(String bankId) {
+    public List<com.wolverineteam.ngpuppies.models.Service> getPaidServicesByBankId(String bankId) {
         int id = Integer.parseInt(bankId);
         return billRepository.getPaidServicesByBankId(id);
     }

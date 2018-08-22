@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.services.base;
 
 import com.wolverineteam.ngpuppies.models.Bill;
+import com.wolverineteam.ngpuppies.models.Service;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface BillService {
 
     List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(String bankId, String subscriberId);
 
-    List<Bill> getPaidServicesByBankId(String bankId);
+    List<Service> getPaidServicesByBankId(String bankId);
 
     List<Object[]> getTenBiggestPaymentsByBankId(String bankId);
 

@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.models.Bill;
+import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
@@ -48,7 +49,7 @@ public class ClientController {
     }
 
     @GetMapping("bills/paidServices/{id}")
-    public List<Bill> getPaidServicesByBankId(@PathVariable("id") String bankId) {
+    public List<Service> getPaidServicesByBankId(@PathVariable("id") String bankId) {
         return billService.getPaidServicesByBankId(bankId);
     }
 

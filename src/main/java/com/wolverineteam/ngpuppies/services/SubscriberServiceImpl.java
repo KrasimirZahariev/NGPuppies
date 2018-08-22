@@ -16,7 +16,8 @@ public class SubscriberServiceImpl implements SubscriberService {
         this.subscriberRepository = subscriberRepository;
     }
 
-    public Subscriber getById(String id) {
+    public Subscriber getById(String subscriberId) {
+        int id = Integer.parseInt(subscriberId);
         return subscriberRepository.getById(id);
     }
 }

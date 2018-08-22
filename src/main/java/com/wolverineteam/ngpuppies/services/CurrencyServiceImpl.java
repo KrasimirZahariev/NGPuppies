@@ -19,8 +19,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Currency getById(int id) {
-        return currencyRepository.getById(id);
+    public Currency getById(String id) {
+        int currencyId = Integer.parseInt(id);
+        return currencyRepository.getById(currencyId);
     }
 
     @Override
@@ -29,8 +30,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public void update(int id, Currency currency) {
-        currencyRepository.update(id, currency);
+    public void update(String id, Currency currency) {
+        int currencyId = Integer.parseInt(id);
+        currencyRepository.update(currencyId, currency);
     }
 
     @Override
@@ -39,7 +41,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public void delete(int id) {
-        currencyRepository.delete(id);
+    public void delete(String id) {
+        int currencyId = Integer.parseInt(id);
+        currencyRepository.delete(currencyId);
     }
 }
