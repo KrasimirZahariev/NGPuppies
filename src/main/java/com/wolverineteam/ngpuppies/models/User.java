@@ -20,10 +20,6 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "RoleID")
-    private Role role;
-
     @Column(name = "EIK")
     private String eik;
 
@@ -31,14 +27,21 @@ public class User {
     @OneToMany(mappedBy = "bank")
     private List<Subscriber> subscribers;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "UserID"),
+            inverseJoinColumns = @JoinColumn(name = "RoleID"))
+    private List<Role> roles;
+
     public User() {
 
     }
 
-    public User(String username, String password, Role role, String eik) {
+    public User(String username, String password, List<Role> roles, String eik) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
         this.eik = eik;
     }
 
@@ -66,12 +69,12 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getEik() {
