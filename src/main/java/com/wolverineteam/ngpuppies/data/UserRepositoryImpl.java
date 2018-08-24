@@ -4,6 +4,7 @@ import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,23 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public User loadUserByUsername(String username) {
+        User user = null;
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "from User as u " +
+                    "where  u.username = :username";
+            Query q = session.createQuery(query).setParameter("username", username);
+            user = (User)q.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return user;
     }
 
     @Override
@@ -64,6 +82,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
+            System.out.println("in repo " + user.getRoles().get(0).getRole());
             session.save(user);
             session.getTransaction().commit();
         } catch (Exception e) {

@@ -4,6 +4,7 @@ import com.wolverineteam.ngpuppies.models.*;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class AppConfig {
@@ -19,5 +20,10 @@ public class AppConfig {
                 .addAnnotatedClass(Subscriber.class)
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

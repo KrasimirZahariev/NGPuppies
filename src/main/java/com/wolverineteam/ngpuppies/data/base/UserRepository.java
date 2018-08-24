@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UserRepository {
 
+    User loadUserByUsername(String username);
+
     User getById(int id);
 
     List<User> getAll();

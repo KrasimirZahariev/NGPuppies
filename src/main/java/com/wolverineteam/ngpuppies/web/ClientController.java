@@ -3,11 +3,15 @@ package com.wolverineteam.ngpuppies.web;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.Subscriber;
+import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
+import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @RestController
@@ -16,11 +20,13 @@ public class ClientController {
 
     private SubscriberService subscriberService;
     private BillService billService;
+    private UserService userService;
 
     @Autowired
-    public ClientController(SubscriberService subscriberService, BillService billService) {
+    public ClientController(UserService userService, SubscriberService subscriberService, BillService billService) {
         this.subscriberService = subscriberService;
         this.billService = billService;
+        this.userService = userService;
     }
 
     @GetMapping("bills/unpaid/{id}")
@@ -61,5 +67,10 @@ public class ClientController {
     @GetMapping("bills/recentPayments/{id}")
     public List<Bill> getTenMostRecentPaymentsByBankId(@PathVariable("id") String bankId) {
         return billService.getTenMostRecentPaymentsByBankId(bankId);
+    }
+
+    @GetMapping("users/{username}")
+    public User getUser(@PathVariable("username") String username) {
+        return userService.loadUserByUsername(username);
     }
 }
