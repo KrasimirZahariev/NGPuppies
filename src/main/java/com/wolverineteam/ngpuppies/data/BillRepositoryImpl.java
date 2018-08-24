@@ -87,7 +87,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, int subscriberId) {
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, String subscriberId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

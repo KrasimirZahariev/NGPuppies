@@ -12,11 +12,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -24,7 +22,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -38,8 +36,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
                             user.getPassword(),
-
-//                            todo: authorities or empy array list
                             user.getAuthorities())
             );
         } catch(IOException e) {
@@ -51,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
+                                            Authentication authResult){
         String token = Jwts.builder()
                 .setSubject(((User) authResult.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DURATION))
@@ -60,7 +56,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println(token);
 
-       // response.getWriter().append("{\"Authorization\": \"Bearer " + token + "\"}");
+       //response.getWriter().append("{\"Authorization\": \"Bearer " + token + "\"}");
         response.setContentType("application/json");
         response.addHeader("Authorization", "Bearer " + token);
     }

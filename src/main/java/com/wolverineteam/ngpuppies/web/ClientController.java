@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -44,9 +45,9 @@ public class ClientController {
         return subscriberService.getById(subscriberId);
     }
 
-    @GetMapping("bills/paymentHistoryDescending/{bankId}/{subscriberId}")
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(@PathVariable("bankId") String bankId, @PathVariable("subscriberId") String subscriberId) {
-        return billService.getSubscriberPaymentsHistoryDescendingByBankId(bankId, subscriberId);
+    @GetMapping("bills/paymentHistoryDescending/{subscriberId}")
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, @PathVariable("subscriberId") String subscriberId) {
+        return billService.getSubscriberPaymentsHistoryDescendingByBankId(request, subscriberId);
     }
 
     @GetMapping("bills/{timeInterval}")

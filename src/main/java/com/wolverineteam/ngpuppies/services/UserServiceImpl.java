@@ -1,10 +1,12 @@
 package com.wolverineteam.ngpuppies.services;
 
+import com.wolverineteam.ngpuppies.config.JwtSecurityConstants;
 import com.wolverineteam.ngpuppies.data.base.RoleRepository;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.UserService;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,18 +23,27 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.roleRepository = roleRepository;
     }
 
     @Override
     public User getById(int id) {
         return userRepository.getById(id);
+    }
+
+    public String getUsernameFromToken(HttpServletRequest request) {
+
+        String header = request.getHeader("Authorization");
+
+        return Jwts.parser()
+                .setSigningKey(JwtSecurityConstants.SECRET.getBytes())
+                .parseClaimsJws(header.replace("Bearer ", ""))
+                .getBody()
+                .getSubject();
     }
 
     @Override
@@ -47,11 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-//        User newUser = new User();
-//        newUser.setUsername(user.getUsername());
-//        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        newUser.getRoles().add(roleRepository.loadRoleByRoleName(user.getRoles().get(0).getRole()));
-//        userRepository.create(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.create(user);
     }

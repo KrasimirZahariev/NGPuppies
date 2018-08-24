@@ -9,6 +9,7 @@ import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,20 +19,15 @@ public class AdminController {
 
     private UserService userService;
     private BillService billService;
-    private RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, BillService billService, RoleService roleService) {
+    public AdminController(UserService userService, BillService billService) {
         this.userService = userService;
         this.billService = billService;
-        this.roleService = roleService;
     }
 
     @PostMapping("users/create/")
     public void createUser(@RequestBody User user) {
-//        List<Role> roles = new ArrayList<>();
-//        roles.add(this.roleService.loadRoleByRoleName("ROLE_ADMIN"));
-//        User newUSer = new User("op", "op", roles, "3232");
         userService.create(user);
     }
 
@@ -41,7 +37,9 @@ public class AdminController {
     }
 
     @GetMapping("users/")
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(HttpServletRequest request) {
+        System.out.println(request.getRemoteAddr());
+        System.out.println();
         return userService.getAll();
     }
 

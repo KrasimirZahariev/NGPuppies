@@ -2,10 +2,13 @@ package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
 import com.wolverineteam.ngpuppies.models.Bill;
+import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
+import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,10 +19,12 @@ import java.util.stream.Collectors;
 public class BillServiceImpl implements BillService {
 
     private BillRepository billRepository;
+    private UserService userService;
 
     @Autowired
-    public BillServiceImpl(BillRepository billRepository) {
+    public BillServiceImpl(BillRepository billRepository, UserService userService) {
         this.billRepository = billRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -58,10 +63,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(String bankId, String subscriberId) {
-        int parsedBankId = Integer.parseInt(bankId);
-        int parsedSubscriberId = Integer.parseInt(subscriberId);
-        return billRepository.getSubscriberPaymentsHistoryDescendingByBankId(parsedBankId, parsedSubscriberId);
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, String subscriberId) {
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+        return billRepository.getSubscriberPaymentsHistoryDescendingByBankId(bankId, subscriberId);
     }
 
     @Override
