@@ -26,8 +26,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //FOR TESTING
-        //http.authorizeRequests().anyRequest().permitAll();
+                                    /** DISABLE TOKEN SECURITY */
+//        http
+//            .authorizeRequests()
+//            .anyRequest()
+//            .permitAll()
+//            .and()
+//            .cors()
+//            .and()
+//            .csrf()
+//            .disable();
+
+
+                                    /** ENABLE TOKEN SECURITY */
 
         http
             .cors()

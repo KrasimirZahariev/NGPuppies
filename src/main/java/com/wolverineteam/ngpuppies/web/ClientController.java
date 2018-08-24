@@ -30,9 +30,9 @@ public class ClientController {
         this.userService = userService;
     }
 
-    @GetMapping("bills/unpaid/{id}")
-    public List<Bill> getUnpaidBillsByBankId(@PathVariable("id") String bankId) {
-        return billService.getUnpaidBillsByBankId(bankId);
+    @GetMapping("bills/unpaid/")
+    public List<Bill> getUnpaidBillsByBankId(HttpServletRequest request) {
+        return billService.getUnpaidBillsByBankId(request);
     }
 
     @PutMapping("bills/pay/{bills}")
@@ -41,8 +41,8 @@ public class ClientController {
     }
 
     @GetMapping("subscribers/{id}")
-    public Subscriber getSubscriberById(@PathVariable("id") String subscriberId) {
-        return subscriberService.getById(subscriberId);
+    public Subscriber getSubscriberById(@PathVariable("id") String subscriberId, HttpServletRequest request) {
+        return subscriberService.getSubscriberById(subscriberId, request);
     }
 
     @GetMapping("bills/paymentHistoryDescending/{subscriberId}")

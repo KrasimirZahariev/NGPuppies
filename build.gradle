@@ -29,12 +29,9 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-
-    //compile("com.auth0:java-jwt:3.4.0")
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
     compile group: 'org.hibernate', name: 'hibernate-core'
-    //compile group: 'mysql', name: 'mysql-connector-java'
 }

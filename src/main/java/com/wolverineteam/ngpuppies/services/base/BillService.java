@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BillService {
 
-    List<Bill> getUnpaidBillsByBankId(String bankId);
+    List<Bill> getUnpaidBillsByBankId(HttpServletRequest request);
 
     void createBill(Bill bill);
 

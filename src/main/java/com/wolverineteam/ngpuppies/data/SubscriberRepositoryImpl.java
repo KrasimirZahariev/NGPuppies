@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SubscriberRepositoryImpl implements SubscriberRepository {
 
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Autowired
     public SubscriberRepositoryImpl(SessionFactory sessionFactory) {
@@ -18,11 +18,16 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
     }
 
     @Override
-    public Subscriber getById(int id) {
+    public Subscriber getSubscriberById(String subscriberId, int bankId) {
         Subscriber subscriber = null;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            subscriber = session.get(Subscriber.class, id);
+            String query = "from Subscriber s " +
+                    "where s.bank.id = :bankId and phoneNumber = :subscriberId";
+            subscriber = session.createQuery(query, Subscriber.class)
+                    .setParameter("subscriberId", subscriberId)
+                    .setParameter("bankId", bankId)
+                    .uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

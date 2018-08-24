@@ -28,9 +28,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> getUnpaidBillsByBankId(String bankId) {
-        int id = Integer.parseInt(bankId);
-        return billRepository.getUnpaidBillsByBankId(id);
+    public List<Bill> getUnpaidBillsByBankId(HttpServletRequest request) {
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+        return billRepository.getUnpaidBillsByBankId(bankId);
     }
 
     @Override
