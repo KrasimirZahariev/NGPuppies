@@ -32,6 +32,7 @@ public class BillServiceImpl implements BillService {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
+
         return billRepository.getUnpaidBillsByBankId(bankId);
     }
 
@@ -41,17 +42,23 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void payBills(List<String> bills) {
+    public void payBills(List<String> bills, HttpServletRequest request) {
         List<Integer> billsToBePaid = bills.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
+
+                //TODO:first get all unpaid bills by bank id and check if the given IDs are contained there
+
+//        String userName = userService.getUsernameFromToken(request);
+//        User user = userService.loadUserByUsername(userName);
+//        int bankId = user.getUserId();
 
         billRepository.payBills(billsToBePaid);
     }
 
     @Override
-    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval) {
-        int bankId = Integer.parseInt(timeInterval.get(2));
+    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval,
+                                                                    HttpServletRequest request) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null, endDate = null;
         try {
@@ -61,6 +68,10 @@ public class BillServiceImpl implements BillService {
             System.out.println(pe.getMessage());
         }
 
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+
         return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, startDate, endDate);
     }
 
@@ -69,24 +80,34 @@ public class BillServiceImpl implements BillService {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
+
         return billRepository.getSubscriberPaymentsHistoryDescendingByBankId(bankId, subscriberId);
     }
 
     @Override
-    public List<com.wolverineteam.ngpuppies.models.Service> getPaidServicesByBankId(String bankId) {
-        int id = Integer.parseInt(bankId);
-        return billRepository.getPaidServicesByBankId(id);
+    public List<com.wolverineteam.ngpuppies.models.Service> getPaidServicesByBankId(HttpServletRequest request) {
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+
+        return billRepository.getPaidServicesByBankId(bankId);
     }
 
     @Override
-    public List<Object[]> getTenBiggestPaymentsByBankId(String bankId) {
-        int id = Integer.parseInt(bankId);
-        return billRepository.getTenBiggestPaymentsByBankId(id);
+    public List<Object[]> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+
+        return billRepository.getTenBiggestPaymentsByBankId(bankId);
     }
 
     @Override
-    public List<Bill> getTenMostRecentPaymentsByBankId(String bankId) {
-        int id = Integer.parseInt(bankId);
-        return billRepository.getTenMostRecentPaymentsByBankId(id);
+    public List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
+        String userName = userService.getUsernameFromToken(request);
+        User user = userService.loadUserByUsername(userName);
+        int bankId = user.getUserId();
+
+        return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }
 }

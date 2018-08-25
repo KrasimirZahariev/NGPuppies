@@ -36,38 +36,40 @@ public class ClientController {
     }
 
     @PutMapping("bills/pay/{bills}")
-    public void payBills(@PathVariable("bills") List<String> bills) {
-        billService.payBills(bills);
+    public void payBills(@PathVariable("bills") List<String> bills, HttpServletRequest request) {
+        billService.payBills(bills, request);
     }
 
-    @GetMapping("subscribers/{id}")
-    public Subscriber getSubscriberById(@PathVariable("id") String subscriberId, HttpServletRequest request) {
+    @GetMapping("subscribers/{subscriberId}")
+    public Subscriber getSubscriberById(@PathVariable("subscriberId") String subscriberId, HttpServletRequest request) {
         return subscriberService.getSubscriberById(subscriberId, request);
     }
 
     @GetMapping("bills/paymentHistoryDescending/{subscriberId}")
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, @PathVariable("subscriberId") String subscriberId) {
+    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(
+            HttpServletRequest request, @PathVariable("subscriberId") String subscriberId) {
         return billService.getSubscriberPaymentsHistoryDescendingByBankId(request, subscriberId);
     }
 
     @GetMapping("bills/{timeInterval}")
-    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(@PathVariable("timeInterval") List<String> timeInterval) {
-        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval);
+    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(
+            @PathVariable("timeInterval") List<String> timeInterval, HttpServletRequest request) {
+        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, request);
     }
 
-    @GetMapping("bills/paidServices/{id}")
-    public List<Service> getPaidServicesByBankId(@PathVariable("id") String bankId) {
-        return billService.getPaidServicesByBankId(bankId);
+    @GetMapping("bills/paidservices/")
+    public List<Service> getPaidServicesByBankId(HttpServletRequest request) {
+        return billService.getPaidServicesByBankId(request);
     }
 
-    @GetMapping("bills/topPayers/{id}")
-    public List<Object[]> getTenBiggestPaymentsByBankId(@PathVariable("id") String bankId) {
-        return billService.getTenBiggestPaymentsByBankId(bankId);
+    @GetMapping("bills/toppayers/")
+    public List<Object[]> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+        return billService.getTenBiggestPaymentsByBankId(request);
     }
 
-    @GetMapping("bills/recentPayments/{id}")
-    public List<Bill> getTenMostRecentPaymentsByBankId(@PathVariable("id") String bankId) {
-        return billService.getTenMostRecentPaymentsByBankId(bankId);
+    @GetMapping("bills/recentpayments/")
+    public List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
+        return billService.getTenMostRecentPaymentsByBankId(request);
     }
 
     @GetMapping("users/{username}")
