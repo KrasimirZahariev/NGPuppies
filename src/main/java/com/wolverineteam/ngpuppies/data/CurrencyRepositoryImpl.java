@@ -4,6 +4,7 @@ import com.wolverineteam.ngpuppies.data.base.CurrencyRepository;
 import com.wolverineteam.ngpuppies.models.Currency;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,22 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             currency = session.get(Currency.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return currency;
+    }
+
+    @Override
+    public Currency loadCurrencyByCurrencyName(String currencyName) {
+        Currency currency = null;
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "from Currency as r where  r.currency = :currencyName";
+            Query q = session.createQuery(query).setParameter("currencyName", currencyName);
+            currency = (Currency)q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -8,6 +8,8 @@ public interface CurrencyRepository {
 
     Currency getById(int id);
 
+    Currency loadCurrencyByCurrencyName(String currencyName);
+
     List<Currency> getAll();
 
     void update(int id, Currency currency);
