@@ -71,9 +71,4 @@ public class ClientController {
     public List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
         return billService.getTenMostRecentPaymentsByBankId(request);
     }
-
-    @GetMapping("users/{username}")
-    public User getUser(@PathVariable("username") String username) {
-        return userService.loadUserByUsername(username);
-    }
 }

@@ -26,6 +26,11 @@ public class AdminController {
         this.billService = billService;
     }
 
+    @GetMapping("users/{username}")
+    public User getUserByUsername(@PathVariable("username") String username) {
+        return userService.loadUserByUsername(username);
+    }
+
     @PostMapping("users/create/")
     public void createUser(@RequestBody User user) {
         userService.create(user);
