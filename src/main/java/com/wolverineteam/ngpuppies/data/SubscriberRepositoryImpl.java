@@ -22,8 +22,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
         Subscriber subscriber = null;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "from Subscriber s " +
-                    "where s.bank.id = :bankId and phoneNumber = :subscriberId";
+            String query = "from Subscriber s where s.bank.id = :bankId and phoneNumber = :subscriberId";
             subscriber = session.createQuery(query, Subscriber.class)
                     .setParameter("subscriberId", subscriberId)
                     .setParameter("bankId", bankId)
@@ -32,7 +31,6 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         return subscriber;
     }
 }
