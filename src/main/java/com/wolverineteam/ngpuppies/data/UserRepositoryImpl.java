@@ -66,12 +66,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(int id, User user) {
-        User oldUser = getById(id);
-        oldUser.setUsername(user.getUsername());
+    public void update(int id, User modifiedUser) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(oldUser);
+            session.update(modifiedUser);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -82,7 +80,6 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            System.out.println("in repo " + user.getRoles().get(0).getRole());
             session.save(user);
             session.getTransaction().commit();
         } catch (Exception e) {

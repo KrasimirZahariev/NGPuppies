@@ -54,7 +54,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(String userId, User user) {
         int id = Integer.parseInt(userId);
-        userRepository.update(id, user);
+        User modifiedUser = getById(id);
+        modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        modifiedUser.setUsername(user.getUsername());
+        modifiedUser.setEik(user.getEik());
+        modifiedUser.setRoles(user.getRoles());
+        userRepository.update(id, modifiedUser);
     }
 
     @Override
