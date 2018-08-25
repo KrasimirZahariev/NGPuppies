@@ -53,7 +53,8 @@ public class BillRepositoryImpl implements BillRepository {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service.service,b.subscriber.phoneNumber, b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+            String query = "select b.id, b.service.service,b.subscriber.phoneNumber, " +
+                    "b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
                     "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
@@ -91,12 +92,14 @@ public class BillRepositoryImpl implements BillRepository {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service.service, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+            String query = "select b.id, b.service.service, b.subscriber.phoneNumber, b.subscriber.firstName, " +
+                    "b.subscriber.lastName, b.startDate, " +
                     "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
                     "join fetch User as u on s.bank.userId = u.userId " +
-                    "where s.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId and b.paymentDate is Not NULL " +
+                    "where s.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId " +
+                    "and b.paymentDate is Not NULL " +
                     "order by b.paymentDate DESC ";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
@@ -163,8 +166,10 @@ public class BillRepositoryImpl implements BillRepository {
         List<Object[]> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, 'BGN' as Currency, " +
-                    "sum(b.amount*(case when b.currency.currency != 'bgn' then  b.currency.exchangeRate else 1 end)) as SumAmount " +
+            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, " +
+                    "'BGN' as Currency, " +
+                    "sum(b.amount*(case when b.currency.currency != 'bgn' " +
+                    "then  b.currency.exchangeRate else 1 end)) as SumAmount " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "group by b.subscriber " +
@@ -188,7 +193,8 @@ public class BillRepositoryImpl implements BillRepository {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service.service, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
+            String query = "select b.id, b.service.service, b.subscriber.phoneNumber, " +
+                    "b.subscriber.firstName, b.subscriber.lastName, b.startDate, " +
                     "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +

@@ -21,13 +21,11 @@ public class ClientController {
 
     private SubscriberService subscriberService;
     private BillService billService;
-    private UserService userService;
 
     @Autowired
-    public ClientController(UserService userService, SubscriberService subscriberService, BillService billService) {
+    public ClientController(SubscriberService subscriberService, BillService billService) {
         this.subscriberService = subscriberService;
         this.billService = billService;
-        this.userService = userService;
     }
 
     @GetMapping("bills/unpaid/")
