@@ -68,7 +68,7 @@ public class ClientController {
     }
 
     @GetMapping("bills/recentpayments/")
-    public List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDTO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
         return billService.getTenMostRecentPaymentsByBankId(request);
     }
 }

@@ -24,5 +24,5 @@ public interface BillService {
 
     List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request);
 
-    List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request);
+    List<BillDTO> getTenMostRecentPaymentsByBankId(HttpServletRequest request);
 }
