@@ -3,22 +3,30 @@ package com.wolverineteam.ngpuppies.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "subscribers")
 public class Subscriber {
 
+    @NotNull
+    @Digits(integer = 20,fraction = 0, message = "Thephone number can contain only digits!")
     @Id
     @Column(name = "PhoneNumber")
     private String phoneNumber;
 
+    @NotNull
     @Column(name = "FirstName")
     private String firstName;
 
+    @NotNull
     @Column(name = "LastName")
     private String lastName;
 
+    @NotNull
+    @Digits(integer = 15,fraction = 0, message = "EGN can contatin only digits!")
     @Column(name = "EGN")
     private String egn;
 

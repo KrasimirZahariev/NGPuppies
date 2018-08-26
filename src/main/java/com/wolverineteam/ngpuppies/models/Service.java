@@ -3,6 +3,7 @@ package com.wolverineteam.ngpuppies.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,7 @@ public class Service {
     @Column(name = "ServiceID")
     private int serviceId;
 
+    @NotNull
     @Column(name = "Service")
     private String service;
 
