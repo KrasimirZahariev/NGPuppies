@@ -22,7 +22,7 @@ public interface BillService {
 
     List<Service> getPaidServicesByBankId(HttpServletRequest request);
 
-    List<Object[]> getTenBiggestPaymentsByBankId(HttpServletRequest request);
+    List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request);
 
     List<Bill> getTenMostRecentPaymentsByBankId(HttpServletRequest request);
 }

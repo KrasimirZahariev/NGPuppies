@@ -4,12 +4,13 @@ import java.sql.Date;
 
 public class BillDTO {
 
+    private String phoneNumber;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
     private String currency;
     private Double avg;
     private Double max;
+    private Double summ;
     private Date paymentDate;
 
     public BillDTO() {
@@ -72,5 +73,13 @@ public class BillDTO {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Double getSumm() {
+        return summ;
+    }
+
+    public void setSumm(Double summ) {
+        this.summ = summ;
     }
 }

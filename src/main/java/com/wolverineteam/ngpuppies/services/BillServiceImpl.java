@@ -95,7 +95,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Object[]> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();

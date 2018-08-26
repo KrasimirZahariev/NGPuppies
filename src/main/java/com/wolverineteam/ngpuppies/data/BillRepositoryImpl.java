@@ -170,21 +170,24 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Object[]> getTenBiggestPaymentsByBankId(int bankId) {
-        List<Object[]> bills = new ArrayList<>();
+    public List<BillDTO> getTenBiggestPaymentsByBankId(int bankId) {
+        List<BillDTO> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.subscriber.phoneNumber,b.subscriber.firstName,b.subscriber.lastName, " +
-                    "'BGN' as Currency, " +
-                    "sum(b.amount*(case when b.currency.currency != 'bgn' " +
-                    "then  b.currency.exchangeRate else 1 end)) as SumAmount " +
+            String query = "select b.subscriber.phoneNumber as phoneNumber, " +
+                    "b.subscriber.firstName as firstName, " +
+                    "b.subscriber.lastName as lastName, " +
+                    "'BGN' as currency, " +
+                    "sum(b.amount*(case when b.currency.currency != 'BGN' " +
+                    "then  b.currency.exchangeRate else 1 end)) as summ " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "group by b.subscriber " +
-                    "order by SumAmount DESC";
+                    "order by summ DESC";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
+                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {

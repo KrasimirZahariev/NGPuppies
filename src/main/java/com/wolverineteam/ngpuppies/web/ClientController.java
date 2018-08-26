@@ -63,7 +63,7 @@ public class ClientController {
     }
 
     @GetMapping("bills/toppayers/")
-    public List<Object[]> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
         return billService.getTenBiggestPaymentsByBankId(request);
     }
 

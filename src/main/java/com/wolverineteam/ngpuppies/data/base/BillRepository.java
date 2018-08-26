@@ -25,7 +25,7 @@ public interface BillRepository {
 
     List<Service> getPaidServicesByBankId(int bankId);
 
-    List<Object[]> getTenBiggestPaymentsByBankId(int bankId);
+    List<BillDTO> getTenBiggestPaymentsByBankId(int bankId);
 
     List<Bill> getTenMostRecentPaymentsByBankId(int bankId);
 }
