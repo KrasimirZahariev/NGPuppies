@@ -58,7 +58,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval,
+    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String phoneNumber,
                                                                    HttpServletRequest request) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null, endDate = null;
@@ -73,7 +73,7 @@ public class BillServiceImpl implements BillService {
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
 
-        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, startDate, endDate);
+        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, phoneNumber, startDate, endDate);
     }
 
     @Override

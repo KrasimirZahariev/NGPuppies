@@ -51,11 +51,13 @@ public class ClientController {
         return billService.getSubscriberPaymentsHistoryDescendingByBankId(request, subscriberId);
     }
 
-    //TODO:change this display result for a given subscriber
-    @GetMapping("bills/{timeInterval}")
+    @GetMapping("bills/{phoneNumber}/{timeInterval}")
     public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(
-            @PathVariable("timeInterval") List<String> timeInterval, HttpServletRequest request) {
-        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, request);
+            @PathVariable("timeInterval") List<String> timeInterval,
+            @PathVariable("phoneNumber") String phoneNumber,
+            HttpServletRequest request) {
+
+        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, phoneNumber, request);
     }
 
     //TODO:change this to return what a subscriber has paid for

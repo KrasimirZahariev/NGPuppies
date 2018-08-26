@@ -6,11 +6,12 @@ import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,23 +119,26 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, Date startDate, Date endDate) {
+    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String phoneNumber,
+                                                                   Date startDate, Date endDate) {
         List<BillDTO> records = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select s.firstName as firstName, s.lastName as lastName, " +
                     "s.phoneNumber as phoneNumber, b.currency.currency as currency, " +
-                    "avg(b.amount) as avg, max(b.amount) as max, b.paymentDate as paymentDate " +
+                    "avg(b.amount) as avg, max(b.amount) as max " +
                     "from Bill as b " +
                     "join Subscriber as s on b.subscriber = s.phoneNumber " +
                     "where b.paymentDate >= :startDate and b.paymentDate <= :endDate and s.bank.userId = :bankId " +
+                    "and s.phoneNumber = :phoneNumber and b.paymentDate is not null " +
                     "group by b.subscriber";
-            Query q = session.createQuery(query)
+            records  = session.createQuery(query)
                     .setParameter("startDate", startDate)
                     .setParameter("endDate", endDate)
-                    .setParameter("bankId", bankId);
-
-            records = ((org.hibernate.query.Query) q).setResultTransformer(Transformers.aliasToBean(BillDTO.class)).list();
+                    .setParameter("bankId", bankId)
+                    .setParameter("phoneNumber", phoneNumber)
+                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -20,7 +20,8 @@ public interface BillRepository {
 
     List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, String subscriberId);
 
-    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, Date startDate, Date endDate);
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String phoneNumber,
+                                                            Date startDate, Date endDate);
 
     List<Service> getPaidServicesByBankId(int bankId);
 

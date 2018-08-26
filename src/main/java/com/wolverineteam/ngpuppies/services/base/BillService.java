@@ -15,7 +15,8 @@ public interface BillService {
 
     void payBills(List<String> bills, HttpServletRequest request);
 
-    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, HttpServletRequest request);
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String phoneNumber,
+                                                            HttpServletRequest request);
 
     List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, String subscriberId);
 
