@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.data.base;
 
+import com.wolverineteam.ngpuppies.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 
@@ -19,7 +20,7 @@ public interface BillRepository {
 
     List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, String subscriberId);
 
-    List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, Date startDate, Date endDate);
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, Date startDate, Date endDate);
 
     List<Service> getPaidServicesByBankId(int bankId);
 

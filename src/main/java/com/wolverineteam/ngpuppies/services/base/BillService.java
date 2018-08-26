@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.services.base;
 
+import com.wolverineteam.ngpuppies.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 
@@ -14,7 +15,7 @@ public interface BillService {
 
     void payBills(List<String> bills, HttpServletRequest request);
 
-    List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, HttpServletRequest request);
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, HttpServletRequest request);
 
     List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, String subscriberId);
 

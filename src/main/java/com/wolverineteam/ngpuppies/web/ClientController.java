@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.web;
 
+import com.wolverineteam.ngpuppies.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.Subscriber;
@@ -49,12 +50,14 @@ public class ClientController {
         return billService.getSubscriberPaymentsHistoryDescendingByBankId(request, subscriberId);
     }
 
+    //TODO:change this display result for a given subscriber
     @GetMapping("bills/{timeInterval}")
-    public List<Object[]> getMaxAndAvgPaymentInTimeIntervalByBankId(
+    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(
             @PathVariable("timeInterval") List<String> timeInterval, HttpServletRequest request) {
         return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, request);
     }
 
+    //TODO:change this to return what a subscriber has paid for
     @GetMapping("bills/paidservices/")
     public List<Service> getPaidServicesByBankId(HttpServletRequest request) {
         return billService.getPaidServicesByBankId(request);
