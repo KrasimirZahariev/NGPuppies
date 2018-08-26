@@ -1,6 +1,6 @@
 package com.wolverineteam.ngpuppies.data.base;
 
-import com.wolverineteam.ngpuppies.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 
