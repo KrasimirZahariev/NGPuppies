@@ -3,6 +3,8 @@ package com.wolverineteam.ngpuppies.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,9 +16,12 @@ public class Currency {
     @Column(name = "CurrencyID")
     private int currencyId;
 
+    @NotNull
     @Column(name = "Currency")
     private String currency;
 
+    @NotNull
+    @Digits(integer = 20,fraction = 2,message = "Exchange rate can contain only digits and it must be this format 0.00!")
     @Column(name = "ExchangeRate")
     private double exchangeRate;
 

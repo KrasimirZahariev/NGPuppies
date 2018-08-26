@@ -7,9 +7,11 @@ import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.RoleService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +33,15 @@ public class AdminController {
         return userService.loadUserByUsername(username);
     }
 
+    //when we create front-end we should check this one for retrieving the error messages in the form
     @PostMapping("users/create/")
-    public void createUser(@RequestBody User user) {
+    public void createUser(@Valid @RequestBody User user) {
         userService.create(user);
     }
 
+    //this front-end form should be tested too
     @PutMapping("users/update/{id}")
-    public void updateUser(@PathVariable("id") String userId, @RequestBody User user) {
+    public void updateUser(@PathVariable("id") String userId,@Valid @RequestBody User user) {
         userService.update(userId, user);
     }
 
@@ -53,8 +57,9 @@ public class AdminController {
         userService.delete(userId);
     }
 
+    //front-end for testing
     @PostMapping("bills/create/")
-    public void createBill(@RequestBody Bill bill) {
+    public void createBill(@Valid @RequestBody Bill bill) {
         billService.createBill(bill);
     }
 }

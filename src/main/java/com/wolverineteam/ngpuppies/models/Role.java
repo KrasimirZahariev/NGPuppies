@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "RoleID")
     private int roleId;
 
+    @NotNull
     @Column(name = "Role")
     private String role;
 

@@ -44,6 +44,7 @@ public class ClientController {
         return subscriberService.getSubscriberById(subscriberId, request);
     }
 
+    //front-end probably for validation
     @GetMapping("bills/paymentHistoryDescending/{subscriberId}")
     public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(
             HttpServletRequest request, @PathVariable("subscriberId") String subscriberId) {

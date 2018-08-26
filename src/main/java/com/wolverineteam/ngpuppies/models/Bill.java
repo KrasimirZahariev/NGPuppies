@@ -1,6 +1,9 @@
 package com.wolverineteam.ngpuppies.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Entity
@@ -20,12 +23,16 @@ public class Bill {
     @JoinColumn(name = "SubscriberID")
     private Subscriber subscriber;
 
+    @NotNull
     @Column(name = "StartDate")
     private Date startDate;
 
+    @NotNull
     @Column(name = "EndDate")
     private Date endDate;
 
+    @NotNull
+    @Digits(integer = 20,fraction = 2,message = "Amount of the bill can contain only digits and must be this format 0.00!")
     @Column(name = "Amount")
     private double amount;
 
