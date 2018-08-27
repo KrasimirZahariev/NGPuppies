@@ -55,15 +55,16 @@ public class BillRepositoryImpl implements BillRepository {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service.service,b.subscriber.phoneNumber, " +
-                    "b.subscriber.firstName,b.subscriber.lastName, b.startDate, " +
-                    "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
+            String query = "select b.id as billId, b.service.service as service, " +
+                    "b.subscriber.phoneNumber as phoneNumber, b.subscriber.firstName as firstName, " +
+                    "b.subscriber.lastName as lastName, b.startDate as startDate, " +
+                    "b.endDate as endDate, b.amount as amount, " +
+                    "b.currency.currency as currency " +
                     "from Bill as b " +
-                    "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
-                    "join fetch User as u on s.bank.userId = u.userId " +
-                    "where s.bank.userId = :bankId and b.paymentDate is NULL";
+                    "where b.subscriber.bank.userId = :bankId and b.paymentDate is NULL";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
+                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
