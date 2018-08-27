@@ -10,7 +10,6 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-//import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,18 +94,18 @@ public class BillRepositoryImpl implements BillRepository {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            String query = "select b.id, b.service.service, b.subscriber.phoneNumber, b.subscriber.firstName, " +
-                    "b.subscriber.lastName, b.startDate, " +
-                    "b.endDate, b.amount, b.currency.currency, b.paymentDate " +
+            String query = "select b.id as billId, b.service.service as service, " +
+                    "b.subscriber.phoneNumber as phoneNumber, b.subscriber.firstName as firstName, " +
+                    "b.subscriber.lastName as lastName, b.amount as amount, " +
+                    "b.currency.currency as currency, b.paymentDate as paymentDate " +
                     "from Bill as b " +
-                    "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
-                    "join fetch User as u on s.bank.userId = u.userId " +
-                    "where s.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId " +
+                    "where b.subscriber.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId " +
                     "and b.paymentDate is Not NULL " +
                     "order by b.paymentDate DESC ";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setParameter("subscriberId", subscriberId)
+                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
