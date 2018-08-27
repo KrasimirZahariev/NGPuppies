@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.SubscriberDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.Subscriber;
@@ -36,8 +37,8 @@ public class ClientController {
     }
 
     @GetMapping("subscribers/{subscriberId}")
-    public Subscriber getSubscriberById(@PathVariable("subscriberId") String subscriberId,
-                                        HttpServletRequest request) {
+    public SubscriberDTO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
+                                           HttpServletRequest request) {
         return subscriberService.getSubscriberById(subscriberId, request);
     }
 

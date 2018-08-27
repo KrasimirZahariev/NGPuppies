@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
+import com.wolverineteam.ngpuppies.data.dto.SubscriberDTO;
 import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
@@ -22,7 +23,7 @@ public class SubscriberServiceImpl implements SubscriberService {
         this.userService = userService;
     }
 
-    public Subscriber getSubscriberById(String subscriberId, HttpServletRequest request) {
+    public SubscriberDTO getSubscriberById(String subscriberId, HttpServletRequest request) {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
