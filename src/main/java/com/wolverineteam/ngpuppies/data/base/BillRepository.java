@@ -18,12 +18,12 @@ public interface BillRepository {
 
     void payBills(List<Integer> bills);
 
-    List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, String subscriberId);
+    List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(int bankId);
 
-    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String phoneNumber,
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String subscriberId,
                                                             Date startDate, Date endDate);
 
-    List<Service> getPaidServicesByBankId(int bankId);
+    List<Service> getSubscriberPaidServicesByBankId(int bankId, String subscriberId);
 
     List<BillDTO> getTenBiggestPaymentsByBankId(int bankId);
 

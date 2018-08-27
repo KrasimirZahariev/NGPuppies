@@ -58,7 +58,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String phoneNumber,
+    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
                                                                    HttpServletRequest request) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null, endDate = null;
@@ -73,25 +73,26 @@ public class BillServiceImpl implements BillService {
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
 
-        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, phoneNumber, startDate, endDate);
+        return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, subscriberId, startDate, endDate);
     }
 
     @Override
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, String subscriberId) {
+    public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
 
-        return billRepository.getSubscriberPaymentsHistoryDescendingByBankId(bankId, subscriberId);
+        return billRepository.getSubscribersPaymentsHistoryDescendingByBankId(bankId);
     }
 
     @Override
-    public List<com.wolverineteam.ngpuppies.models.Service> getPaidServicesByBankId(HttpServletRequest request) {
+    public List<com.wolverineteam.ngpuppies.models.Service> getSubscriberPaidServicesByBankId(String subscriberId,
+                                                                                    HttpServletRequest request) {
         String userName = userService.getUsernameFromToken(request);
         User user = userService.loadUserByUsername(userName);
         int bankId = user.getUserId();
 
-        return billRepository.getPaidServicesByBankId(bankId);
+        return billRepository.getSubscriberPaidServicesByBankId(bankId, subscriberId);
     }
 
     @Override

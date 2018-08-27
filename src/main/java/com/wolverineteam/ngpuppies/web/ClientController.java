@@ -36,30 +36,30 @@ public class ClientController {
     }
 
     @GetMapping("subscribers/{subscriberId}")
-    public Subscriber getSubscriberById(@PathVariable("subscriberId") String subscriberId, HttpServletRequest request) {
+    public Subscriber getSubscriberById(@PathVariable("subscriberId") String subscriberId,
+                                        HttpServletRequest request) {
         return subscriberService.getSubscriberById(subscriberId, request);
     }
 
     //front-end probably for validation
-    @GetMapping("bills/paymentHistoryDescending/{subscriberId}")
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(
-            HttpServletRequest request, @PathVariable("subscriberId") String subscriberId) {
-        return billService.getSubscriberPaymentsHistoryDescendingByBankId(request, subscriberId);
+    @GetMapping("bills/paymentsdescending/")
+    public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
+        return billService.getSubscribersPaymentsHistoryDescendingByBankId(request);
     }
 
-    @GetMapping("bills/{phoneNumber}/{timeInterval}")
+    @GetMapping("bills/{subscriberId}/{timeInterval}")
     public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(
             @PathVariable("timeInterval") List<String> timeInterval,
-            @PathVariable("phoneNumber") String phoneNumber,
+            @PathVariable("subscriberId") String subscriberId,
             HttpServletRequest request) {
 
-        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, phoneNumber, request);
+        return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, subscriberId, request);
     }
 
-    //TODO:change this to return what a subscriber has paid for
-    @GetMapping("bills/paidservices/")
-    public List<Service> getPaidServicesByBankId(HttpServletRequest request) {
-        return billService.getPaidServicesByBankId(request);
+    @GetMapping("bills/paidservices/{subscriberId}")
+    public List<Service> getSubscriberPaidServicesByBankId(@PathVariable("subscriberId") String subscriberId,
+                                                           HttpServletRequest request) {
+        return billService.getSubscriberPaidServicesByBankId(subscriberId, request);
     }
 
     @GetMapping("bills/toppayers/")

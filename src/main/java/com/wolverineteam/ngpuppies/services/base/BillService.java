@@ -15,12 +15,12 @@ public interface BillService {
 
     void payBills(List<String> bills, HttpServletRequest request);
 
-    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String phoneNumber,
+    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
                                                             HttpServletRequest request);
 
-    List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(HttpServletRequest request, String subscriberId);
+    List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request);
 
-    List<Service> getPaidServicesByBankId(HttpServletRequest request);
+    List<Service> getSubscriberPaidServicesByBankId(String subscriberId, HttpServletRequest request);
 
     List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request);
 

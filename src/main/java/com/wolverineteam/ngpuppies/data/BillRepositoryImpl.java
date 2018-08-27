@@ -90,7 +90,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Bill> getSubscriberPaymentsHistoryDescendingByBankId(int bankId, String subscriberId) {
+    public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(int bankId) {
         List<Bill> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -99,12 +99,11 @@ public class BillRepositoryImpl implements BillRepository {
                     "b.subscriber.lastName as lastName, b.amount as amount, " +
                     "b.currency.currency as currency, b.paymentDate as paymentDate " +
                     "from Bill as b " +
-                    "where b.subscriber.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId " +
+                    "where b.subscriber.bank.userId = :bankId " +
                     "and b.paymentDate is Not NULL " +
                     "order by b.paymentDate DESC ";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
-                    .setParameter("subscriberId", subscriberId)
                     .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
                     .list();
             session.getTransaction().commit();
@@ -147,17 +146,17 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Service> getPaidServicesByBankId(int bankId) {
+    public List<Service> getSubscriberPaidServicesByBankId(int bankId, String subscriberId) {
         List<Service> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select distinct b.service " +
                     "from Bill as b " +
-                    "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
-                    "join fetch Service as se on b.service.serviceId = se.serviceId " +
-                    "where s.bank.userId = :bankId and b.paymentDate is Not NULL";
+                    "where b.subscriber.bank.userId = :bankId and b.subscriber.phoneNumber = :subscriberId " +
+                    "and b.paymentDate is Not NULL";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
+                    .setParameter("subscriberId", subscriberId)
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
