@@ -12,8 +12,6 @@ public interface UserService extends UserDetailsService {
 
     User loadUserByUsername(String username);
 
-    String getUsernameFromToken(HttpServletRequest request);
-
     List<User> getAll();
 
     void update(String userId, User user);

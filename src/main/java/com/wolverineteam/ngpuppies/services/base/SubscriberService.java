@@ -7,5 +7,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface SubscriberService {
 
-    SubscriberDTO getSubscriberById(String id, HttpServletRequest request);
+    SubscriberDTO getSubscriberById(String id, int bankId);
 }

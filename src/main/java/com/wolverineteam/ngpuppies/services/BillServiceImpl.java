@@ -3,13 +3,10 @@ package com.wolverineteam.ngpuppies.services;
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
-import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
-import com.wolverineteam.ngpuppies.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,20 +17,14 @@ import java.util.stream.Collectors;
 public class BillServiceImpl implements BillService {
 
     private BillRepository billRepository;
-    private UserService userService;
 
     @Autowired
-    public BillServiceImpl(BillRepository billRepository, UserService userService) {
+    public BillServiceImpl(BillRepository billRepository) {
         this.billRepository = billRepository;
-        this.userService = userService;
     }
 
     @Override
-    public List<Bill> getUnpaidBillsByBankId(HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
-
+    public List<Bill> getUnpaidBillsByBankId(int bankId) {
         return billRepository.getUnpaidBillsByBankId(bankId);
     }
 
@@ -43,7 +34,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void payBills(List<String> bills, HttpServletRequest request) {
+    public void payBills(List<String> bills, int bankId) {
         List<Integer> billsToBePaid = bills.stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
@@ -59,7 +50,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
-                                                                   HttpServletRequest request) {
+                                                                   int bankId) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = null, endDate = null;
         try {
@@ -69,47 +60,28 @@ public class BillServiceImpl implements BillService {
             System.out.println(pe.getMessage());
         }
 
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
-
         return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, subscriberId, startDate, endDate);
     }
 
     @Override
-    public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
-
+    public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(int bankId) {
         return billRepository.getSubscribersPaymentsHistoryDescendingByBankId(bankId);
     }
 
     @Override
     public List<com.wolverineteam.ngpuppies.models.Service> getSubscriberPaidServicesByBankId(String subscriberId,
-                                                                                    HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
+                                                                                    int bankId) {
 
         return billRepository.getSubscriberPaidServicesByBankId(bankId, subscriberId);
     }
 
     @Override
-    public List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
-
+    public List<BillDTO> getTenBiggestPaymentsByBankId(int bankId) {
         return billRepository.getTenBiggestPaymentsByBankId(bankId);
     }
 
     @Override
-    public List<BillDTO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
-
+    public List<BillDTO> getTenMostRecentPaymentsByBankId(int bankId) {
         return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }
 }

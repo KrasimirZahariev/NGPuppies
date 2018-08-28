@@ -9,20 +9,20 @@ import java.util.List;
 
 public interface BillService {
 
-    List<Bill> getUnpaidBillsByBankId(HttpServletRequest request);
+    List<Bill> getUnpaidBillsByBankId(int bankId);
 
     void createBill(Bill bill);
 
-    void payBills(List<String> bills, HttpServletRequest request);
+    void payBills(List<String> bills, int bankId);
 
     List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
-                                                            HttpServletRequest request);
+                                                            int bankId);
 
-    List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request);
+    List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(int bankId);
 
-    List<Service> getSubscriberPaidServicesByBankId(String subscriberId, HttpServletRequest request);
+    List<Service> getSubscriberPaidServicesByBankId(String subscriberId, int bankId);
 
-    List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request);
+    List<BillDTO> getTenBiggestPaymentsByBankId(int bankId);
 
-    List<BillDTO> getTenMostRecentPaymentsByBankId(HttpServletRequest request);
+    List<BillDTO> getTenMostRecentPaymentsByBankId(int bankId);
 }

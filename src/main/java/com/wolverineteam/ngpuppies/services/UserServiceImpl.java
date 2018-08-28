@@ -36,17 +36,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getById(id);
     }
 
-    public String getUsernameFromToken(HttpServletRequest request) {
-
-        String header = request.getHeader("Authorization");
-
-        return Jwts.parser()
-                .setSigningKey(JwtSecurityConstants.SECRET.getBytes())
-                .parseClaimsJws(header.replace("Bearer ", ""))
-                .getBody()
-                .getSubject();
-    }
-
     @Override
     public List<User> getAll() {
         return userRepository.getAll();

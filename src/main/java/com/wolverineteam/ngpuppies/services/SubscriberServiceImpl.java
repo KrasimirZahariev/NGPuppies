@@ -15,18 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 public class SubscriberServiceImpl implements SubscriberService {
 
     private SubscriberRepository subscriberRepository;
-    private UserService userService;
 
     @Autowired
-    public SubscriberServiceImpl(SubscriberRepository subscriberRepository, UserService userService) {
+    public SubscriberServiceImpl(SubscriberRepository subscriberRepository) {
         this.subscriberRepository = subscriberRepository;
-        this.userService = userService;
     }
 
-    public SubscriberDTO getSubscriberById(String subscriberId, HttpServletRequest request) {
-        String userName = userService.getUsernameFromToken(request);
-        User user = userService.loadUserByUsername(userName);
-        int bankId = user.getUserId();
+    public SubscriberDTO getSubscriberById(String subscriberId, int bankId) {
         return subscriberRepository.getSubscriberById(subscriberId, bankId);
     }
 }

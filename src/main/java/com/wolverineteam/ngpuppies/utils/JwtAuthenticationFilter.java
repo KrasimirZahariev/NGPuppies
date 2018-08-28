@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private static final int EXPIRATION_DURATION = 1200000;
     private final AuthenticationManager authenticationManager;
 
-    JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
