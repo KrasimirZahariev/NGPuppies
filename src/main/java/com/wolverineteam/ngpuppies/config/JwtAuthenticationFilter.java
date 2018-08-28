@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.Date;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private static final int EXPIRATION_DURATION = 1200000;
 
+    private static final int EXPIRATION_DURATION = 1200000;
     private final AuthenticationManager authenticationManager;
 
     JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -27,17 +27,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
         try {
-            User user = new ObjectMapper()
-                    .readValue(request.getInputStream(), User.class);
+            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
                             user.getPassword(),
-                            user.getAuthorities())
-            );
+                            user.getAuthorities()));
+
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult){
+                                            Authentication authResult) {
         String token = Jwts.builder()
                 .setSubject(((User) authResult.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DURATION))
