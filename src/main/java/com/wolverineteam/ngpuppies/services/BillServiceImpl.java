@@ -4,12 +4,11 @@ import com.wolverineteam.ngpuppies.data.base.BillRepository;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.services.base.BillService;
+import com.wolverineteam.ngpuppies.utils.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,15 +50,9 @@ public class BillServiceImpl implements BillService {
     @Override
     public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
                                                                    int bankId) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null, endDate = null;
-        try {
-            startDate = new Date(format.parse(timeInterval.get(0)).getTime());
-            endDate = new Date(format.parse(timeInterval.get(1)).getTime());
-        } catch (ParseException pe) {
-            System.out.println(pe.getMessage());
-        }
 
+        Date startDate = new DateParser().getDateFromString(timeInterval.get(0));
+        Date endDate = new DateParser().getDateFromString(timeInterval.get(1));
         return billRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(bankId, subscriberId, startDate, endDate);
     }
 
