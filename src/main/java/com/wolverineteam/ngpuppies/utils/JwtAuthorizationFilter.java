@@ -1,4 +1,4 @@
-package com.wolverineteam.ngpuppies.config;
+package com.wolverineteam.ngpuppies.utils;
 
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.UserService;

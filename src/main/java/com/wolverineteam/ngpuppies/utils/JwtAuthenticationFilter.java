@@ -1,4 +1,4 @@
-package com.wolverineteam.ngpuppies.config;
+package com.wolverineteam.ngpuppies.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

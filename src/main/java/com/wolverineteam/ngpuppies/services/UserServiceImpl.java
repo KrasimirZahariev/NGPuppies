@@ -1,6 +1,6 @@
 package com.wolverineteam.ngpuppies.services;
 
-import com.wolverineteam.ngpuppies.config.JwtSecurityConstants;
+import com.wolverineteam.ngpuppies.utils.JwtSecurityConstants;
 import com.wolverineteam.ngpuppies.data.base.RoleRepository;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.models.Role;
@@ -8,8 +8,6 @@ import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.UserService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

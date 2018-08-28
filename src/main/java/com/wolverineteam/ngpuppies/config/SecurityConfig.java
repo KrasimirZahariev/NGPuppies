@@ -1,6 +1,8 @@
 package com.wolverineteam.ngpuppies.config;
 
 import com.wolverineteam.ngpuppies.services.base.UserService;
+import com.wolverineteam.ngpuppies.utils.JwtAuthenticationFilter;
+import com.wolverineteam.ngpuppies.utils.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
