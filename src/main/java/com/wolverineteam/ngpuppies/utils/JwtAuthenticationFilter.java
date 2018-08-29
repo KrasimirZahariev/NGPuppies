@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -54,10 +56,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS256, JwtSecurityConstants.SECRET.getBytes())
                 .compact();
 
-        System.out.println(token);
-
-       //response.getWriter().append("{\"Authorization\": \"Bearer " + token + "\"}");
+        System.out.println("Generated token - " + token);
         response.setContentType("application/json");
         response.addHeader("Authorization", "Bearer " + token);
+
+        String userRole = ((List<Role>) authResult.getAuthorities()).get(0).getRole();
+        System.out.println(userRole);
+
+        try {
+            response.getWriter()
+                    .append("{\"Authorization\": \"Bearer ").append(token).append("\"")
+                    .append(", \"Role\": \"").append(userRole)
+                    .append("\"}\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
