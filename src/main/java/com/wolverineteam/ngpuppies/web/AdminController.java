@@ -40,9 +40,9 @@ public class AdminController {
     }
 
     //this front-end form should be tested too
-    @PutMapping("users/update/{id}")
-    public void updateUser(@PathVariable("id") String userId,@Valid @RequestBody User user) {
-        userService.update(userId, user);
+    @PutMapping("users/update/")
+    public void updateUser(@Valid @RequestBody User user) {
+        userService.update(user);
     }
 
     @GetMapping("users/")
@@ -50,11 +50,6 @@ public class AdminController {
         System.out.println(request.getRemoteAddr());
         System.out.println();
         return userService.getAll();
-    }
-
-    @DeleteMapping("users/delete/{id}")
-    public void deleteUser(@PathVariable("id") String userId) {
-        userService.delete(userId);
     }
 
     //front-end for testing

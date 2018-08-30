@@ -66,7 +66,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(int id, User modifiedUser) {
+    public void update(User modifiedUser) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.update(modifiedUser);
@@ -81,18 +81,6 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(user);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void delete(int id) {
-        User user = getById(id);
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -14,9 +14,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> getAll();
 
-    void update(String userId, User user);
+    void update(User user);
 
     void create(User user);
-
-    void delete(String id);
 }

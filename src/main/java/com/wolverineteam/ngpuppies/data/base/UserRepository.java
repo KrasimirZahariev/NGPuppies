@@ -12,9 +12,7 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    void update(int id, User user);
+    void update(User user);
 
     void create(User user);
-
-    void delete(int id);
 }

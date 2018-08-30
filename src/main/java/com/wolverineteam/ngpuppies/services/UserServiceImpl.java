@@ -42,14 +42,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(String userId, User user) {
-        int id = Integer.parseInt(userId);
-        User modifiedUser = getById(id);
+    public void update(User user) {
+        User modifiedUser = loadUserByUsername(user.getUsername());
         modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         modifiedUser.setUsername(user.getUsername());
         modifiedUser.setEik(user.getEik());
-        modifiedUser.setRoles(user.getRoles());
-        userRepository.update(id, modifiedUser);
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepository.loadRoleByRoleName(user.getRoles().get(0).getRole()));
+        modifiedUser.setRoles(roles);
+        userRepository.update(modifiedUser);
     }
 
     @Override
@@ -59,12 +60,6 @@ public class UserServiceImpl implements UserService {
         roles.add(roleRepository.loadRoleByRoleName(user.getRoles().get(0).getRole()));
         user.setRoles(roles);
         userRepository.create(user);
-    }
-
-    @Override
-    public void delete(String userId) {
-        int id = Integer.parseInt(userId);
-        userRepository.delete(id);
     }
 
     @Override
