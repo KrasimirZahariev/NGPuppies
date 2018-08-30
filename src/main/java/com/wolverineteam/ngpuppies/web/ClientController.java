@@ -35,10 +35,10 @@ public class ClientController {
         return billService.getUnpaidBillsByBankId(bankId);
     }
 
-    @PutMapping("bills/pay/{bills}")
-    public void payBills(@PathVariable("bills") List<String> bills, HttpServletRequest request) {
+    @PostMapping("bills/pay/")
+    public void payBills(@RequestBody List<String> billsId, HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
-        billService.payBills(bills, bankId);
+        billService.payBills(billsId, bankId);
     }
 
     @GetMapping("subscribers/{subscriberId}")
