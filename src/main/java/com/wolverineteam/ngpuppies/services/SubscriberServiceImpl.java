@@ -24,4 +24,9 @@ public class SubscriberServiceImpl implements SubscriberService {
     public SubscriberDTO getSubscriberById(String subscriberId, int bankId) {
         return subscriberRepository.getSubscriberById(subscriberId, bankId);
     }
+
+    @Override
+    public SubscriberDTO getAllSubscribersByBankId(int bankId) {
+        return subscriberRepository.getAllSubscribersByBankId(bankId);
+    }
 }

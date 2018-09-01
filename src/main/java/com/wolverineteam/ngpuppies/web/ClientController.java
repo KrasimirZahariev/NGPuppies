@@ -48,6 +48,13 @@ public class ClientController {
         return subscriberService.getSubscriberById(subscriberId, bankId);
     }
 
+    @GetMapping("subscribers/")
+    public SubscriberDTO getAllSubscribersByBankId(
+                                           HttpServletRequest request) {
+        int bankId = jwtParser.getBankIdByUsernameFromToken(request);
+        return subscriberService.getAllSubscribersByBankId(bankId);
+    }
+
     //front-end probably for validation
     @GetMapping("bills/payments-descending/")
     public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {

@@ -44,4 +44,26 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
         return subscribers.get(0);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public SubscriberDTO getAllSubscribersByBankId(int bankId) {
+        List<SubscriberDTO> subscribers = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "select s.phoneNumber as phoneNumber, s.firstName as firstName, " +
+                    "s.lastName as lastName, s.egn as egn " +
+                    "from Subscriber s " +
+                    "where s.bank.id = :bankId";
+            subscribers = session.createQuery(query)
+                    .setParameter("bankId", bankId)
+                    .setResultTransformer(Transformers.aliasToBean(SubscriberDTO.class))
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return subscribers.get(0);
+    }
 }
