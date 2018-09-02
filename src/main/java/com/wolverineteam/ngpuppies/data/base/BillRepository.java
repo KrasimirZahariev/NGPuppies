@@ -1,6 +1,6 @@
 package com.wolverineteam.ngpuppies.data.base;
 
-import com.wolverineteam.ngpuppies.data.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 
@@ -20,12 +20,12 @@ public interface BillRepository {
 
     List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(int bankId);
 
-    List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String subscriberId,
+    List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String subscriberId,
                                                             Date startDate, Date endDate);
 
     List<Service> getSubscriberPaidServicesByBankId(int bankId, String subscriberId);
 
-    List<BillDTO> getTenBiggestPaymentsByBankId(int bankId);
+    List<BillDAO> getTenBiggestPaymentsByBankId(int bankId);
 
-    List<BillDTO> getTenMostRecentPaymentsByBankId(int bankId);
+    List<BillDAO> getTenMostRecentPaymentsByBankId(int bankId);
 }

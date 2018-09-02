@@ -1,10 +1,9 @@
 package com.wolverineteam.ngpuppies.web;
 
-import com.wolverineteam.ngpuppies.data.dto.BillDTO;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDAO;
+import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
-import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import com.wolverineteam.ngpuppies.utils.JwtParser;
@@ -42,14 +41,14 @@ public class ClientController {
     }
 
     @GetMapping("subscribers/{subscriberId}")
-    public SubscriberDTO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
+    public SubscriberDAO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
                                            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return subscriberService.getSubscriberById(subscriberId, bankId);
     }
 
     @GetMapping("subscribers/")
-    public SubscriberDTO getAllSubscribersByBankId(
+    public SubscriberDAO getAllSubscribersByBankId(
                                            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return subscriberService.getAllSubscribersByBankId(bankId);
@@ -63,7 +62,7 @@ public class ClientController {
     }
 
     @GetMapping("bills/{subscriberId}/{timeInterval}")
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(
+    public List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(
             @PathVariable("timeInterval") List<String> timeInterval,
             @PathVariable("subscriberId") String subscriberId,
             HttpServletRequest request) {
@@ -80,13 +79,13 @@ public class ClientController {
     }
 
     @GetMapping("bills/top-payments/")
-    public List<BillDTO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDAO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getTenBiggestPaymentsByBankId(bankId);
     }
 
     @GetMapping("bills/recent-payments/")
-    public List<BillDTO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDAO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getTenMostRecentPaymentsByBankId(bankId);
     }

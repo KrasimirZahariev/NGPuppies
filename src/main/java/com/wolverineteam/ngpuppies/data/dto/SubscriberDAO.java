@@ -1,13 +1,13 @@
 package com.wolverineteam.ngpuppies.data.dto;
 
-public class SubscriberDTO {
+public class SubscriberDAO {
 
     private String phoneNumber;
     private String firstName;
     private String lastName;
     private String egn;
 
-    public SubscriberDTO() {
+    public SubscriberDAO() {
 
     }
 

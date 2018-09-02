@@ -2,7 +2,7 @@ package com.wolverineteam.ngpuppies.data.dto;
 
 import java.sql.Date;
 
-public class BillDTO {
+public class BillDAO {
 
     private int billId;
     private String firstName;
@@ -18,7 +18,7 @@ public class BillDTO {
     private Date endDate;
     private Date paymentDate;
 
-    public BillDTO() {
+    public BillDAO() {
 
     }
 

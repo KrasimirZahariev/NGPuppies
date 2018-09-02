@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
-import com.wolverineteam.ngpuppies.data.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;
@@ -64,7 +64,7 @@ public class BillRepositoryImpl implements BillRepository {
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is NULL";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
-                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(BillDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class BillRepositoryImpl implements BillRepository {
                     "order by b.paymentDate DESC ";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
-                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(BillDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -117,9 +117,9 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String phoneNumber,
+    public List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(int bankId, String phoneNumber,
                                                                    Date startDate, Date endDate) {
-        List<BillDTO> records = new ArrayList<>();
+        List<BillDAO> records = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select s.firstName as firstName, s.lastName as lastName, " +
@@ -135,7 +135,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .setParameter("endDate", endDate)
                     .setParameter("bankId", bankId)
                     .setParameter("phoneNumber", phoneNumber)
-                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(BillDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -169,8 +169,8 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<BillDTO> getTenBiggestPaymentsByBankId(int bankId) {
-        List<BillDTO> bills = new ArrayList<>();
+    public List<BillDAO> getTenBiggestPaymentsByBankId(int bankId) {
+        List<BillDAO> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select b.subscriber.phoneNumber as phoneNumber, " +
@@ -186,7 +186,7 @@ public class BillRepositoryImpl implements BillRepository {
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
-                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(BillDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -199,8 +199,8 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<BillDTO> getTenMostRecentPaymentsByBankId(int bankId) {
-        List<BillDTO> bills = new ArrayList<>();
+    public List<BillDAO> getTenMostRecentPaymentsByBankId(int bankId) {
+        List<BillDAO> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select b.id as billId, b.service.service as service, " +
@@ -215,7 +215,7 @@ public class BillRepositoryImpl implements BillRepository {
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
-                    .setResultTransformer(Transformers.aliasToBean(BillDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(BillDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {

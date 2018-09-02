@@ -1,11 +1,10 @@
 package com.wolverineteam.ngpuppies.data.base;
 
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDTO;
-import com.wolverineteam.ngpuppies.models.Subscriber;
+import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
 
 public interface SubscriberRepository {
 
-    SubscriberDTO getSubscriberById(String subscriberId, int bankId);
+    SubscriberDAO getSubscriberById(String subscriberId, int bankId);
 
-    SubscriberDTO getAllSubscribersByBankId(int bankId);
+    SubscriberDAO getAllSubscribersByBankId(int bankId);
 }

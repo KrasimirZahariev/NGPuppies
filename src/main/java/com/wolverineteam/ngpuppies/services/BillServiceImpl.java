@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
-import com.wolverineteam.ngpuppies.data.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.utils.DateParser;
@@ -48,7 +48,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDTO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
+    public List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(List<String> timeInterval, String subscriberId,
                                                                    int bankId) {
 
         Date startDate = new DateParser().getDateFromString(timeInterval.get(0));
@@ -69,12 +69,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDTO> getTenBiggestPaymentsByBankId(int bankId) {
+    public List<BillDAO> getTenBiggestPaymentsByBankId(int bankId) {
         return billRepository.getTenBiggestPaymentsByBankId(bankId);
     }
 
     @Override
-    public List<BillDTO> getTenMostRecentPaymentsByBankId(int bankId) {
+    public List<BillDAO> getTenMostRecentPaymentsByBankId(int bankId) {
         return billRepository.getTenMostRecentPaymentsByBankId(bankId);
     }
 }

@@ -1,8 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDTO;
-import com.wolverineteam.ngpuppies.models.Subscriber;
+import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -24,8 +23,8 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public SubscriberDTO getSubscriberById(String subscriberId, int bankId) {
-        List<SubscriberDTO> subscribers = new ArrayList<>();
+    public SubscriberDAO getSubscriberById(String subscriberId, int bankId) {
+        List<SubscriberDAO> subscribers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select s.phoneNumber as phoneNumber, s.firstName as firstName, " +
@@ -35,7 +34,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
             subscribers = session.createQuery(query)
                     .setParameter("subscriberId", subscriberId)
                     .setParameter("bankId", bankId)
-                    .setResultTransformer(Transformers.aliasToBean(SubscriberDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(SubscriberDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -47,8 +46,8 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public SubscriberDTO getAllSubscribersByBankId(int bankId) {
-        List<SubscriberDTO> subscribers = new ArrayList<>();
+    public SubscriberDAO getAllSubscribersByBankId(int bankId) {
+        List<SubscriberDAO> subscribers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             String query = "select s.phoneNumber as phoneNumber, s.firstName as firstName, " +
@@ -57,7 +56,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
                     "where s.bank.id = :bankId";
             subscribers = session.createQuery(query)
                     .setParameter("bankId", bankId)
-                    .setResultTransformer(Transformers.aliasToBean(SubscriberDTO.class))
+                    .setResultTransformer(Transformers.aliasToBean(SubscriberDAO.class))
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
