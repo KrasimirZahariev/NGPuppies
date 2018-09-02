@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
+import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,14 @@ public class SubscriberServiceImpl implements SubscriberService {
         this.subscriberRepository = subscriberRepository;
     }
 
-    public SubscriberDAO getSubscriberById(String subscriberId, int bankId) {
-        return subscriberRepository.getSubscriberById(subscriberId, bankId);
+    @Override
+    public SubscriberDAO getSubscriberDAOById(String subscriberId, int bankId) {
+        return subscriberRepository.getSubscriberDAOById(subscriberId, bankId);
+    }
+
+    @Override
+    public Subscriber getSubscriberById(String id, int bankId) {
+        return null;
     }
 
     @Override

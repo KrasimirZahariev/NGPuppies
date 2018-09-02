@@ -52,7 +52,7 @@ public class BillServiceImpl implements BillService {
         newBill.setAmount(bill.getAmount());
         Currency currency = currencyRepository.loadCurrencyByCurrencyName(bill.getCurrency());
         newBill.setCurrency(currency);
-        
+
         billRepository.createBill(newBill);
     }
 
