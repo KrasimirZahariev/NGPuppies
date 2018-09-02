@@ -44,7 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         User modifiedUser = loadUserByUsername(user.getUsername());
-        modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        if (user.getPassword() != null) {
+            modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        
         modifiedUser.setUsername(user.getUsername());
         modifiedUser.setEik(user.getEik());
         List<Role> roles = new ArrayList<>();
