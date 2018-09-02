@@ -1,4 +1,4 @@
-package com.wolverineteam.ngpuppies.services.dto;
+package com.wolverineteam.ngpuppies.data.dto;
 
 import java.sql.Date;
 

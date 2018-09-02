@@ -3,7 +3,7 @@ package com.wolverineteam.ngpuppies.services.base;
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
-import com.wolverineteam.ngpuppies.services.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 
 import java.util.List;
 

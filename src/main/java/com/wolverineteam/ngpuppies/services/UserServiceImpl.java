@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.services;
 
+import com.wolverineteam.ngpuppies.data.dto.UserDTO;
 import com.wolverineteam.ngpuppies.utils.JwtSecurityConstants;
 import com.wolverineteam.ngpuppies.data.base.RoleRepository;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
+    public void update(UserDTO user) {
         User modifiedUser = loadUserByUsername(user.getUsername());
 
         if (user.getPassword() != null) {
@@ -50,20 +51,23 @@ public class UserServiceImpl implements UserService {
         }
         
         modifiedUser.setUsername(user.getUsername());
-        modifiedUser.setEik(user.getEik());
+        modifiedUser.setEik(user.getEIK());
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.loadRoleByRoleName(user.getRoles().get(0).getRole()));
+        roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
         modifiedUser.setRoles(roles);
         userRepository.update(modifiedUser);
     }
 
     @Override
-    public void create(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public void create(UserDTO user) {
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        newUser.setEik(user.getEIK());
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.loadRoleByRoleName(user.getRoles().get(0).getRole()));
-        user.setRoles(roles);
-        userRepository.create(user);
+        roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
+        newUser.setRoles(roles);
+        userRepository.create(newUser);
     }
 
     @Override

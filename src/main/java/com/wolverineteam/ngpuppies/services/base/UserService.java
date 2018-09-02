@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.services.base;
 
+import com.wolverineteam.ngpuppies.data.dto.UserDTO;
 import com.wolverineteam.ngpuppies.models.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -14,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> getAll();
 
-    void update(User user);
+    void update(UserDTO user);
 
-    void create(User user);
+    void create(UserDTO user);
 }

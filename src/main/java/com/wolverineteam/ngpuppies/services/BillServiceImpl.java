@@ -9,7 +9,7 @@ import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.services.base.BillService;
-import com.wolverineteam.ngpuppies.services.dto.BillDTO;
+import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.utils.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

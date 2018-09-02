@@ -28,6 +28,7 @@ public class User implements UserDetails {
     @Column(name = "Password")
     private String password;
 
+    @NotNull
     @Digits(integer = 20,fraction = 0,message = "EIK number can contain only digits!")
     @Column(name = "EIK")
     private String eik;
