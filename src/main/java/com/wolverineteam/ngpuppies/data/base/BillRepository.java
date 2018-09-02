@@ -6,6 +6,7 @@ import com.wolverineteam.ngpuppies.models.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 
 public interface BillRepository {
@@ -15,6 +16,8 @@ public interface BillRepository {
     void createBill(Bill bill);
 
     List<Bill> getUnpaidBillsByBankId(int bankId);
+
+    Set<Integer> getSetOfUnpaidBillsByBankId(int bankId);
 
     void payBills(List<Integer> bills);
 

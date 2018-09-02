@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,15 +59,11 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void payBills(List<String> bills, int bankId) {
+        Set<Integer> billsCheck = billRepository.getSetOfUnpaidBillsByBankId(bankId);
         List<Integer> billsToBePaid = bills.stream()
+                .filter(billsCheck::contains)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-
-        //TODO:first get all unpaid bills by bank id and check if the given IDs are contained there
-
-//        String userName = userService.getUsernameFromToken(request);
-//        User user = userService.loadUserByUsername(userName);
-//        int bankId = user.getUserId();
 
         billRepository.payBills(billsToBePaid);
     }

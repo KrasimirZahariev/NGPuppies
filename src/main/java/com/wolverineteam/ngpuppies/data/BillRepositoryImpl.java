@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class BillRepositoryImpl implements BillRepository {
@@ -71,6 +73,27 @@ public class BillRepositoryImpl implements BillRepository {
             System.out.println(e.getMessage());
         }
         return bills;
+    }
+
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Set<Integer> getSetOfUnpaidBillsByBankId(int bankId) {
+        List<Integer> bills = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "select b.id as billId " +
+                    "from Bill as b " +
+                    "where b.subscriber.bank.userId = :bankId and b.paymentDate is NULL";
+            bills = session.createQuery(query)
+                    .setParameter("bankId", bankId)
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return new HashSet<>(bills);
     }
 
     @Override

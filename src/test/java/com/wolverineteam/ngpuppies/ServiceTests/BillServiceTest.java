@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.ServiceTests;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
+import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.Subscriber;
@@ -45,19 +46,20 @@ public class BillServiceTest {
 
         when(mockBillRepository.getUnpaidBillsByBankId(1)).thenReturn(bills);
 
-        List<Bill> result = billService.getUnpaidBillsByBankId("1");
+        List<Bill> result = billService.getUnpaidBillsByBankId(1);
 
         Assert.assertEquals(1, result.size());
     }
 
     @Test
     public void createBill_ReturnNewBill() {
-        Bill testBill = new Bill();
+        BillDTO testBill = new BillDTO();
+        Bill testBill2 = new Bill();
 
         doNothing().when(mockBillRepository).createBill(isA(Bill.class));
         billService.createBill(testBill);
 
-        verify(mockBillRepository, times(1)).createBill(testBill);
+        verify(mockBillRepository, times(1)).createBill(testBill2);
     }
 
     @Test
@@ -73,7 +75,7 @@ public class BillServiceTest {
                 .collect(Collectors.toList());
 
         doNothing().when(mockBillRepository).payBills(isA(List.class));
-        billService.payBills(billsToBePaid);
+        billService.payBills(billsToBePaid,1);
 
         verify(mockBillRepository, times(1)).payBills(billsToBePaidParsed);
     }
