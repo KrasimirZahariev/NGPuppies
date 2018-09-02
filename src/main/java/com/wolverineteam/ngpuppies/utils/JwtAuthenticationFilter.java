@@ -59,6 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("Generated token - " + token);
         response.setContentType("application/json");
         response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("Access-Control-Allow-Methods","GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Origin", "*");
 
         String userRole = ((List<Role>) authResult.getAuthorities()).get(0).getRole();
         System.out.println(userRole);

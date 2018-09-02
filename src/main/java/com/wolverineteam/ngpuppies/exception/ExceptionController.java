@@ -17,7 +17,7 @@ public class ExceptionController {
         ExceptionResponse eR = new ExceptionResponse();
         eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         eR.setDescription(ex.getMessage());
-        logger.error(eR);
+        logger.error(eR.getDescription());
         return new ResponseEntity<ExceptionResponse>(eR,HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
