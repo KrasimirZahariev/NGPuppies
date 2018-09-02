@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.ServiceTests;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
+import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.SubscriberServiceImpl;
 import junit.framework.Assert;

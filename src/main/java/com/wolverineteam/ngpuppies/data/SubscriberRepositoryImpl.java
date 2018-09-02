@@ -1,7 +1,8 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
+import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
+import com.wolverineteam.ngpuppies.models.Subscriber;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -23,7 +24,22 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public SubscriberDAO getSubscriberById(String subscriberId, int bankId) {
+    public Subscriber getSubscriberById(String subscriberId, int bankId) {
+        Subscriber subscriber = null;
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            subscriber = session.get(Subscriber.class,subscriberId);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return subscriber;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public SubscriberDAO getSubscriberDAOById(String subscriberId, int bankId) {
         List<SubscriberDAO> subscribers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

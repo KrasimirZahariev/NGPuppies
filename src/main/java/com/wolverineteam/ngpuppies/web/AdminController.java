@@ -6,6 +6,7 @@ import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.RoleService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
+import com.wolverineteam.ngpuppies.services.dto.BillDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class AdminController {
 
     //front-end for testing
     @PostMapping("bills/create/")
-    public void createBill(@Valid @RequestBody Bill bill) {
+    public void createBill(@Valid @RequestBody BillDTO bill) {
         billService.createBill(bill);
     }
 }

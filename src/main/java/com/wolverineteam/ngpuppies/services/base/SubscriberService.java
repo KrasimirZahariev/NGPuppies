@@ -1,6 +1,6 @@
 package com.wolverineteam.ngpuppies.services.base;
 
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
+import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 
 public interface SubscriberService {
 

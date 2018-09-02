@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.web;
 
-import com.wolverineteam.ngpuppies.data.dto.BillDAO;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
+import com.wolverineteam.ngpuppies.data.dao.BillDAO;
+import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.services.base.BillService;

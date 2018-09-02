@@ -1,9 +1,15 @@
 package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
-import com.wolverineteam.ngpuppies.data.dto.BillDAO;
+import com.wolverineteam.ngpuppies.data.base.CurrencyRepository;
+import com.wolverineteam.ngpuppies.data.base.ServiceRepository;
+import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
+import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
+import com.wolverineteam.ngpuppies.models.Currency;
+import com.wolverineteam.ngpuppies.models.Subscriber;
 import com.wolverineteam.ngpuppies.services.base.BillService;
+import com.wolverineteam.ngpuppies.services.dto.BillDTO;
 import com.wolverineteam.ngpuppies.utils.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +22,16 @@ import java.util.stream.Collectors;
 public class BillServiceImpl implements BillService {
 
     private BillRepository billRepository;
+    private SubscriberRepository subscriberRepository;
+    private ServiceRepository serviceRepository;
+    private CurrencyRepository currencyRepository;
 
     @Autowired
-    public BillServiceImpl(BillRepository billRepository) {
+    public BillServiceImpl(BillRepository billRepository, SubscriberRepository subscriberRepository, ServiceRepository serviceRepository, CurrencyRepository currencyRepository) {
         this.billRepository = billRepository;
+        this.subscriberRepository = subscriberRepository;
+        this.serviceRepository = serviceRepository;
+        this.currencyRepository = currencyRepository;
     }
 
     @Override
@@ -28,8 +40,20 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void createBill(Bill bill) {
-        billRepository.createBill(bill);
+    public void createBill(BillDTO bill) {
+        Bill newBill = new Bill();
+        com.wolverineteam.ngpuppies.models.Service newService = serviceRepository.loadServiceByServiceName(bill.getService());
+        newBill.setService(newService);
+        int bankId = Integer.parseInt(bill.getBank());
+        Subscriber newSubscriber = subscriberRepository.getSubscriberById(bill.getPhoneNumber(),bankId);
+        newBill.setSubscriber(newSubscriber);
+        newBill.setStartDate(bill.getStartDate());
+        newBill.setEndDate(bill.getEndDate());
+        newBill.setAmount(bill.getAmount());
+        Currency currency = currencyRepository.loadCurrencyByCurrencyName(bill.getCurrency());
+        newBill.setCurrency(currency);
+        
+        billRepository.createBill(newBill);
     }
 
     @Override
@@ -38,7 +62,7 @@ public class BillServiceImpl implements BillService {
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
-                //TODO:first get all unpaid bills by bank id and check if the given IDs are contained there
+        //TODO:first get all unpaid bills by bank id and check if the given IDs are contained there
 
 //        String userName = userService.getUsernameFromToken(request);
 //        User user = userService.loadUserByUsername(userName);
@@ -63,7 +87,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<com.wolverineteam.ngpuppies.models.Service> getSubscriberPaidServicesByBankId(String subscriberId,
-                                                                                    int bankId) {
+                                                                                              int bankId) {
 
         return billRepository.getSubscriberPaidServicesByBankId(bankId, subscriberId);
     }

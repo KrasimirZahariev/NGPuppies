@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
-import com.wolverineteam.ngpuppies.data.dto.BillDAO;
+import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;

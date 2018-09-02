@@ -1,7 +1,7 @@
 package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
-import com.wolverineteam.ngpuppies.data.dto.SubscriberDAO;
+import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

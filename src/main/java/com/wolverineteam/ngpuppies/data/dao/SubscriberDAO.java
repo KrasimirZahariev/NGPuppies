@@ -1,4 +1,4 @@
-package com.wolverineteam.ngpuppies.data.dto;
+package com.wolverineteam.ngpuppies.data.dao;
 
 public class SubscriberDAO {
 

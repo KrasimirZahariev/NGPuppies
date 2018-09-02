@@ -1,6 +1,6 @@
 package com.wolverineteam.ngpuppies.data.base;
 
-import com.wolverineteam.ngpuppies.data.dto.BillDAO;
+import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 
