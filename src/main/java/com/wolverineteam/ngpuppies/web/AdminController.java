@@ -3,6 +3,7 @@ package com.wolverineteam.ngpuppies.web;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
 import com.wolverineteam.ngpuppies.models.Currency;
+import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.*;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
@@ -63,6 +64,11 @@ public class AdminController {
     @GetMapping("currencies/")
     public List<Currency> getAllCurrencies() {
         return currencyService.getAll();
+    }
+
+    @GetMapping("services/")
+    public List<Service> getAllServices() {
+        return serviceService.getAll();
     }
 
     //front-end for testing

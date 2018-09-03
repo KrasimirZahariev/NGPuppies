@@ -8,6 +8,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class ServiceRepositoryImpl implements ServiceRepository {
 
@@ -32,5 +35,18 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         }
 
         return service;
+    }
+
+    @Override
+    public List<Service> getAll() {
+        List<Service> services = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            services = session.createQuery("from Service", Service.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return services;
     }
 }
