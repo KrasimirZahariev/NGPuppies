@@ -58,7 +58,7 @@ public class BillServiceImpl implements BillService {
     public void payBills(List<String> bills, int bankId) {
         Set<Integer> billsCheck = billRepository.getSetOfUnpaidBillsByBankId(bankId);
         List<Integer> billsToBePaid = bills.stream()
-                .filter(billsCheck::contains)
+                .filter(x -> !billsCheck.contains(x))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 

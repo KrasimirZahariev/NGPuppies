@@ -23,10 +23,13 @@ public class SubscriberServiceTest {
 
     @Test
     public void getSubscriberWhenSubscriberIdGiven_ReturnCorrectSubscriber() {
-        Mockito.when(mockSubscriberRepository.getSubscriberById("1",1))
-                .thenReturn(new SubscriberDAO("0123456789", "TestSubscriber1", "TestSubscriber1", "12345678", new User()));
+        SubscriberDAO mockSubs = new SubscriberDAO();
+        mockSubs.setPhoneNumber("0123456789");
 
-        SubscriberDAO result = SubscriberService.getSubscriberById("1",1);
+        Mockito.when(mockSubscriberRepository.getSubscriberDAOById("1",1))
+                .thenReturn(mockSubs);
+
+        SubscriberDAO result = SubscriberService.getSubscriberDAOById("1",1);
 
         Assert.assertEquals("0123456789", result.getPhoneNumber());
     }

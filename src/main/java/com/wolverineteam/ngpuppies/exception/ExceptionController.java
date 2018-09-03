@@ -12,13 +12,13 @@ public class ExceptionController {
     private Log logger = LogFactory.getLog(ExceptionController.class);
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<ExceptionResponse>generalException (Exception ex)throws Exception{
+    public ResponseEntity generalException (Exception ex)throws Exception{
 
         ExceptionResponse eR = new ExceptionResponse();
         eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         eR.setDescription(ex.getMessage());
         logger.error(eR.getDescription());
-        return new ResponseEntity<ExceptionResponse>(eR,HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage();
 
     }
 }

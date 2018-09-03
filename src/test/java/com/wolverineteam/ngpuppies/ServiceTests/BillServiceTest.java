@@ -1,10 +1,9 @@
 package com.wolverineteam.ngpuppies.ServiceTests;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
+import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
-import com.wolverineteam.ngpuppies.models.Bill;
-import com.wolverineteam.ngpuppies.models.Service;
-import com.wolverineteam.ngpuppies.models.Subscriber;
+import com.wolverineteam.ngpuppies.models.*;
 import com.wolverineteam.ngpuppies.services.BillServiceImpl;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import org.junit.Assert;
@@ -54,8 +53,20 @@ public class BillServiceTest {
     @Test
     public void createBill_ReturnNewBill() {
         BillDTO testBill = new BillDTO();
-        Bill testBill2 = new Bill();
+      //  testBill.setPhoneNumber("123");
+      //  testBill.setService("TV");
+      //  testBill.setStartDate("11/08/2018");
+      //  testBill.setEndDate("11/09/2018");
+      //  testBill.setAmount(100);
+      //  testBill.setCurrency("BGN");
 
+        Bill testBill2 = new Bill();
+      //  testBill2.setSubscriber(new Subscriber("123","firstName","lastName","0000",new User()));
+      //  testBill2.setService(new Service("TV"));
+      //  testBill2.setStartDate(new Date(java.util.Date.parse("11/08/2018")));
+      //  testBill2.setEndDate(new Date(java.util.Date.parse("11/09/2018")));
+      //  testBill2.setAmount(100);
+      //  testBill2.setCurrency(new Currency("BGN",1));
         doNothing().when(mockBillRepository).createBill(isA(Bill.class));
         billService.createBill(testBill);
 
@@ -70,9 +81,11 @@ public class BillServiceTest {
         billsToBePaid.add("3");
         billsToBePaid.add("4");
 
-        List<Integer> billsToBePaidParsed = billsToBePaid.stream()
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
+        List<Integer> billsToBePaidParsed = new ArrayList<>();
+        billsToBePaidParsed.add(2);
+        billsToBePaidParsed.add(1);
+        billsToBePaidParsed.add(3);
+        billsToBePaidParsed.add(4);
 
         doNothing().when(mockBillRepository).payBills(isA(List.class));
         billService.payBills(billsToBePaid,1);
@@ -81,14 +94,19 @@ public class BillServiceTest {
     }
 
     @Test
+    public void getMaxAndAvgPaymentsInTimeInterval_ReturnCorrectDate(){
+
+    }
+
+    @Test
     public void getSubscriberPaymentsHistoryDescendingByBankId_ReturnCorrectBills() {
         Bill testBill = new Bill();
         List<Bill> mockBillsList = new ArrayList<>();
         mockBillsList.add(testBill);
 
-        when(mockBillRepository.getSubscriberPaymentsHistoryDescendingByBankId(1, 1)).thenReturn(mockBillsList);
+        when(mockBillRepository.getSubscribersPaymentsHistoryDescendingByBankId(1)).thenReturn(mockBillsList);
 
-        List<Bill> result = billService.getSubscriberPaymentsHistoryDescendingByBankId("1", "1");
+        List<Bill> result = billService.getSubscribersPaymentsHistoryDescendingByBankId(1);
 
         Assert.assertEquals(1, result.size());
 
@@ -100,24 +118,24 @@ public class BillServiceTest {
         Service testService = new Service();
         mockServices.add(testService);
 
-        when(mockBillRepository.getPaidServicesByBankId(1)).thenReturn(mockServices);
+        when(mockBillRepository.getSubscriberPaidServicesByBankId(1,"0123456789")).thenReturn(mockServices);
 
-        List<Service> result = mockBillRepository.getPaidServicesByBankId(1);
+        List<Service> result = mockBillRepository.getSubscriberPaidServicesByBankId(1,"0123456789");
 
         Assert.assertEquals(1, result.size());
     }
 
     @Test
     public void getTenMostRecentPaymentsByBankId_ReturnCorrectBills() {
-        List<Bill> mockBillList = new ArrayList<>();
-        Bill testBill1 = new Bill();
-        Bill testBill2 = new Bill();
+        List<BillDAO> mockBillList = new ArrayList<>();
+        BillDAO testBill1 = new BillDAO();
+        BillDAO testBill2 = new BillDAO();
         mockBillList.add(testBill1);
         mockBillList.add(testBill2);
 
         when(mockBillRepository.getTenMostRecentPaymentsByBankId(1)).thenReturn(mockBillList);
 
-        List<Bill> result = billService.getTenMostRecentPaymentsByBankId("1");
+        List<BillDAO> result = billService.getTenMostRecentPaymentsByBankId(1);
 
         Assert.assertEquals(2, result.size());
     }
