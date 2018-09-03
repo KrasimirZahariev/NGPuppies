@@ -7,6 +7,8 @@ import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SubscriberServiceImpl implements SubscriberService {
 
@@ -30,5 +32,10 @@ public class SubscriberServiceImpl implements SubscriberService {
     @Override
     public SubscriberDAO getAllSubscribersByBankId(int bankId) {
         return subscriberRepository.getAllSubscribersByBankId(bankId);
+    }
+
+    @Override
+    public List<SubscriberDAO> getAllTelecomsSubscribers() {
+        return subscriberRepository.getAllTelecomsSubscribers();
     }
 }

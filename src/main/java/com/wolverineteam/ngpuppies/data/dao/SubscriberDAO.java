@@ -6,6 +6,7 @@ public class SubscriberDAO {
     private String firstName;
     private String lastName;
     private String egn;
+    private String bankName;
 
     public SubscriberDAO() {
 
@@ -41,5 +42,13 @@ public class SubscriberDAO {
 
     public void setEgn(String egn) {
         this.egn = egn;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }

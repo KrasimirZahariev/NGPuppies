@@ -81,4 +81,23 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
         return subscribers.get(0);
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<SubscriberDAO> getAllTelecomsSubscribers() {
+        List<SubscriberDAO> subscribers = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            String query = "select s.phoneNumber as phoneNumber, s.bank.username as bankName " +
+                    "from Subscriber s";
+            subscribers = session.createQuery(query)
+                    .setResultTransformer(Transformers.aliasToBean(SubscriberDAO.class))
+                    .list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return subscribers;
+    }
 }
