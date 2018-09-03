@@ -12,8 +12,8 @@ public class UserDTO {
     private String password;
 
     @NotNull(message = "Cannot be null!")
-    @Digits(integer = 20,fraction = 0,message = "EIK number can contain only digits!")
-    private String EIK;
+    @Digits(integer = 20,fraction = 0,message = "eik number can contain only digits!")
+    private String eik;
 
     private String role;
 
@@ -37,12 +37,12 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getEIK() {
-        return EIK;
+    public String getEik() {
+        return eik;
     }
 
-    public void setEIK(String EIK) {
-        this.EIK = EIK;
+    public void setEik(String eik) {
+        this.eik = eik;
     }
 
     public String getRole() {

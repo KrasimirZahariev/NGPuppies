@@ -1,19 +1,16 @@
 package com.wolverineteam.ngpuppies.services;
 
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
-import com.wolverineteam.ngpuppies.utils.JwtSecurityConstants;
 import com.wolverineteam.ngpuppies.data.base.RoleRepository;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.UserService;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         
         modifiedUser.setUsername(user.getUsername());
-        modifiedUser.setEik(user.getEIK());
+        modifiedUser.setEik(user.getEik());
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
         modifiedUser.setRoles(roles);
@@ -63,7 +60,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        newUser.setEik(user.getEIK());
+        newUser.setEik(user.getEik());
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
         newUser.setRoles(roles);
