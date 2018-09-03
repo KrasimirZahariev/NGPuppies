@@ -1,11 +1,16 @@
 package com.wolverineteam.ngpuppies.ServiceTests;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
+import com.wolverineteam.ngpuppies.data.base.CurrencyRepository;
+import com.wolverineteam.ngpuppies.data.base.ServiceRepository;
+import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import com.wolverineteam.ngpuppies.models.*;
 import com.wolverineteam.ngpuppies.services.BillServiceImpl;
 import com.wolverineteam.ngpuppies.services.base.BillService;
+import jdk.nashorn.internal.parser.DateParser;
+import net.bytebuddy.description.method.ParameterList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +24,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +36,15 @@ public class BillServiceTest {
 
     @Mock
     BillRepository mockBillRepository;
+
+    @Mock
+    ServiceRepository serviceRepository;
+
+    @Mock
+    SubscriberRepository subscriberRepository;
+
+    @Mock
+    CurrencyRepository currencyRepository;
 
     @InjectMocks
     BillServiceImpl billService;
@@ -53,20 +68,33 @@ public class BillServiceTest {
     @Test
     public void createBill_ReturnNewBill() {
         BillDTO testBill = new BillDTO();
-      //  testBill.setPhoneNumber("123");
-      //  testBill.setService("TV");
-      //  testBill.setStartDate("11/08/2018");
-      //  testBill.setEndDate("11/09/2018");
-      //  testBill.setAmount(100);
-      //  testBill.setCurrency("BGN");
+        testBill.setPhoneNumber("123");
+        testBill.setService("TV");
+        testBill.setStartDate("2018-08-11");
+        testBill.setEndDate("2018-09-11");
+        testBill.setAmount(100);
+        testBill.setCurrency("BGN");
+
+        Date startDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-08-11");
+        Date endDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-09-11");
+        Subscriber mockSubs = new Subscriber();
+        mockSubs.setPhoneNumber("123");
+        Service mockService = new Service("TV");
+        Currency mockCurrency = new Currency("BGN",1);
+
+        when(serviceRepository.loadServiceByServiceName("TV")).thenReturn(mockService);
+        when(subscriberRepository.getSubscriberById("123")).thenReturn(mockSubs);
+        when(currencyRepository.loadCurrencyByCurrencyName("BGN")).thenReturn(mockCurrency);
 
         Bill testBill2 = new Bill();
-      //  testBill2.setSubscriber(new Subscriber("123","firstName","lastName","0000",new User()));
-      //  testBill2.setService(new Service("TV"));
-      //  testBill2.setStartDate(new Date(java.util.Date.parse("11/08/2018")));
-      //  testBill2.setEndDate(new Date(java.util.Date.parse("11/09/2018")));
-      //  testBill2.setAmount(100);
-      //  testBill2.setCurrency(new Currency("BGN",1));
+        testBill2.setSubscriber(mockSubs);
+        testBill2.setService(mockService);
+        testBill2.setStartDate(startDate);
+        testBill2.setEndDate(endDate);
+        testBill2.setAmount(100);
+        testBill2.setCurrency(mockCurrency);
+
+
         doNothing().when(mockBillRepository).createBill(isA(Bill.class));
         billService.createBill(testBill);
 
@@ -87,6 +115,7 @@ public class BillServiceTest {
         billsToBePaidParsed.add(3);
         billsToBePaidParsed.add(4);
 
+        when(mockBillRepository.getSetOfUnpaidBillsByBankId(1)).thenReturn(new HashSet<>(billsToBePaidParsed));
         doNothing().when(mockBillRepository).payBills(isA(List.class));
         billService.payBills(billsToBePaid,1);
 
@@ -94,8 +123,25 @@ public class BillServiceTest {
     }
 
     @Test
-    public void getMaxAndAvgPaymentsInTimeInterval_ReturnCorrectDate(){
+    public void getMaxAndAvgPaymentsInTimeInterval_ReturnCorrectData(){
+        List<BillDAO> listBills = new ArrayList<>();
+        listBills.add(new BillDAO());
+        listBills.add(new BillDAO());
+        listBills.add(new BillDAO());
 
+        List<String> timeInterval = new ArrayList<>();
+        timeInterval.add("2018-08-11");
+        timeInterval.add("2018-09-11");
+
+        Date startDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-08-11");
+        Date endDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-09-11");
+        when(mockBillRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(1,"0123456789",
+                startDate,endDate)).thenReturn(listBills);
+
+        List<BillDAO> result = billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval,"0123456789",
+                1);
+
+        Assert.assertEquals(3,result.size());
     }
 
     @Test
@@ -123,6 +169,20 @@ public class BillServiceTest {
         List<Service> result = mockBillRepository.getSubscriberPaidServicesByBankId(1,"0123456789");
 
         Assert.assertEquals(1, result.size());
+    }
+
+    @Test
+    public void getTenBiggestPayers_ReturnCorrectPayers(){
+        List<BillDAO> listBills = new ArrayList<>();
+        listBills.add(new BillDAO());
+        listBills.add(new BillDAO());
+        listBills.add(new BillDAO());
+
+        when(mockBillRepository.getTenBiggestPayersByBankId(1)).thenReturn(listBills);
+
+        List<BillDAO> result = billService.getTenBiggestPayersByBankId(1);
+
+        Assert.assertEquals(3,result.size());
     }
 
     @Test

@@ -79,9 +79,9 @@ public class ClientController {
     }
 
     @GetMapping("bills/top-payments/")
-    public List<BillDAO> getTenBiggestPaymentsByBankId(HttpServletRequest request) {
+    public List<BillDAO> getTenBiggestPayersByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
-        return billService.getTenBiggestPaymentsByBankId(bankId);
+        return billService.getTenBiggestPayersByBankId(bankId);
     }
 
     @GetMapping("bills/recent-payments/")

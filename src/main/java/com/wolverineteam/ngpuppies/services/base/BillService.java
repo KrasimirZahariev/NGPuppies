@@ -22,7 +22,7 @@ public interface BillService {
 
     List<Service> getSubscriberPaidServicesByBankId(String subscriberId, int bankId);
 
-    List<BillDAO> getTenBiggestPaymentsByBankId(int bankId);
+    List<BillDAO> getTenBiggestPayersByBankId(int bankId);
 
     List<BillDAO> getTenMostRecentPaymentsByBankId(int bankId);
 }

@@ -58,8 +58,8 @@ public class BillServiceImpl implements BillService {
     public void payBills(List<String> bills, int bankId) {
         Set<Integer> billsCheck = billRepository.getSetOfUnpaidBillsByBankId(bankId);
         List<Integer> billsToBePaid = bills.stream()
-                .filter(x -> !billsCheck.contains(x))
                 .map(Integer::parseInt)
+                .filter(billsCheck::contains)
                 .collect(Collectors.toList());
 
         billRepository.payBills(billsToBePaid);
@@ -87,8 +87,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<BillDAO> getTenBiggestPaymentsByBankId(int bankId) {
-        return billRepository.getTenBiggestPaymentsByBankId(bankId);
+    public List<BillDAO> getTenBiggestPayersByBankId(int bankId) {
+        return billRepository.getTenBiggestPayersByBankId(bankId);
     }
 
     @Override

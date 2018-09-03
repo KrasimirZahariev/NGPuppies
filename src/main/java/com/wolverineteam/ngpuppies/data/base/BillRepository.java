@@ -28,7 +28,7 @@ public interface BillRepository {
 
     List<Service> getSubscriberPaidServicesByBankId(int bankId, String subscriberId);
 
-    List<BillDAO> getTenBiggestPaymentsByBankId(int bankId);
+    List<BillDAO> getTenBiggestPayersByBankId(int bankId);
 
     List<BillDAO> getTenMostRecentPaymentsByBankId(int bankId);
 }

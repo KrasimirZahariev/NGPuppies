@@ -192,7 +192,7 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<BillDAO> getTenBiggestPaymentsByBankId(int bankId) {
+    public List<BillDAO> getTenBiggestPayersByBankId(int bankId) {
         List<BillDAO> bills = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
