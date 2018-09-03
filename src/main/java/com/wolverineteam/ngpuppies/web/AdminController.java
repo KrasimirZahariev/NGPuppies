@@ -2,10 +2,9 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
+import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.User;
-import com.wolverineteam.ngpuppies.services.base.BillService;
-import com.wolverineteam.ngpuppies.services.base.SubscriberService;
-import com.wolverineteam.ngpuppies.services.base.UserService;
+import com.wolverineteam.ngpuppies.services.base.*;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +20,17 @@ public class AdminController {
     private UserService userService;
     private BillService billService;
     private SubscriberService subscriberService;
+    private ServiceService serviceService;
+    private CurrencyService currencyService;
 
     @Autowired
-    public AdminController(UserService userService, BillService billService, SubscriberService subscriberService) {
+    public AdminController(UserService userService, BillService billService, SubscriberService subscriberService,
+                           ServiceService serviceService, CurrencyService currencyService) {
         this.userService = userService;
         this.billService = billService;
         this.subscriberService = subscriberService;
+        this.serviceService = serviceService;
+        this.currencyService = currencyService;
     }
 
     @GetMapping("users/{username}")
@@ -54,6 +58,11 @@ public class AdminController {
     @GetMapping("subscribers/")
     public List<SubscriberDAO> getAllTelecomsSubscribers() {
         return subscriberService.getAllTelecomsSubscribers();
+    }
+
+    @GetMapping("currencies/")
+    public List<Currency> getAllCurrencies() {
+        return currencyService.getAll();
     }
 
     //front-end for testing
