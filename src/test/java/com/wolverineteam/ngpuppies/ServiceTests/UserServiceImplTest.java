@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.ServiceTests;
 
+import com.wolverineteam.ngpuppies.data.base.RoleRepository;
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
 import com.wolverineteam.ngpuppies.models.Role;
@@ -12,21 +13,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
 
     @Mock
     UserRepository mockUserRepository;
+
+    @Mock
+    RoleRepository roleRepository;
+
+    @Mock
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -60,12 +66,15 @@ public class UserServiceImplTest {
     @Test
     public void UpdateUserWhenUpdatedUserGiven_ReturnCorrectUpdatedUser() {
         List<Role> roles = new ArrayList<>();
-        roles.add(new Role("ROLE_ADMIN"));
-        User mockUser = new User("123","0000",roles,"456");
+        Role mockRole = new Role("ROLE_ADMIN");
+        roles.add(mockRole);
+        User mockUser = new User("mockUser",bCryptPasswordEncoder.encode("0000"),roles,"456");
 
+        when(mockUserRepository.loadUserByUsername("mockUser")).thenReturn(mockUser);
+        when(roleRepository.loadRoleByRoleName("ROLE_ADMIN")).thenReturn(mockRole);
 
         UserDTO mockUser2 = new UserDTO();
-        mockUser2.setUsername("123");
+        mockUser2.setUsername("mockUser");
         mockUser2.setRole("ROLE_ADMIN");
         mockUser2.setEik("456");
         mockUser2.setPassword("0000");
@@ -80,14 +89,17 @@ public class UserServiceImplTest {
     @Test
     public void CreateNewUserWhenGivenUser_ReturnsCorrectNewUser() {
         List<Role> roles = new ArrayList<>();
-        roles.add(new Role("ROLE_ADMIN"));
-        User mockUser = new User("MockUser1","UsersPass",roles,"12345678");
+        Role mockRole = new Role("ROLE_ADMIN");
+        roles.add(mockRole);
+        User mockUser = new User("mockUser",bCryptPasswordEncoder.encode("0000"),roles,"456");
+
+        when(roleRepository.loadRoleByRoleName("ROLE_ADMIN")).thenReturn(mockRole);
 
         UserDTO mockUser1 = new UserDTO();
-        mockUser1.setPassword("UsersPass");
-        mockUser1.setUsername("MockUser1");
-        mockUser1.setEik("12345678");
+        mockUser1.setUsername("mockUser");
         mockUser1.setRole("ROLE_ADMIN");
+        mockUser1.setEik("456");
+        mockUser1.setPassword("0000");
 
         doNothing().when(mockUserRepository).create(isA(User.class));
         userService.create(mockUser1);
@@ -95,6 +107,15 @@ public class UserServiceImplTest {
         verify(mockUserRepository, times(1)).create(mockUser);
     }
 
+    @Test
+    public void loadUserByUsername_ReturnCorrectUser(){
+        Mockito.when(mockUserRepository.loadUserByUsername("mockUser"))
+                .thenReturn(new User("mockUser","0000",new ArrayList<>(),"123456"));
+
+        User result = userService.loadUserByUsername("mockUser");
+
+        Assert.assertEquals("mockUser", result.getUsername());
+    }
    // @Test
    // public void DeleteUserWhenGivenId_ReturnDeleteUser() {
    //     User mockUser1 = new User("MockUser1", "UsersPass", new ArrayList<>(), "12345678");
