@@ -25,7 +25,7 @@ public class SubscriberServiceImpl implements SubscriberService {
     }
 
     @Override
-    public Subscriber getSubscriberById(String id, int bankId) {
+    public Subscriber getSubscriberById(String id) {
         return null;
     }
 

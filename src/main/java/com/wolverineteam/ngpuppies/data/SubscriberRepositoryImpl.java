@@ -23,12 +23,11 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Subscriber getSubscriberById(String subscriberId, int bankId) {
+    public Subscriber getSubscriberById(String subscriberId) {
         Subscriber subscriber = null;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            subscriber = session.get(Subscriber.class,subscriberId);
+            subscriber = session.get(Subscriber.class, subscriberId);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

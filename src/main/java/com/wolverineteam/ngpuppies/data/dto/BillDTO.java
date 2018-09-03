@@ -1,18 +1,28 @@
 package com.wolverineteam.ngpuppies.data.dto;
 
-import java.sql.Date;
-
 public class BillDTO {
-    private String phoneNumber;
-    private String service;
-    private String bank;
-    private Date startDate;
-    private Date endDate;
-    private String currency;
-    private double amount;
+
+    private String phoneNumber; //will be mapped to Subscriber
+    private String service;     //will be mapped to Service
+    private String startDate; //parse this
+    private String endDate;   //parse this
+    private String currency; //mapped to currency load currency by name
+    private double amount;  //
+    private String paymentDate;     //parse this
 
     public BillDTO() {
 
+    }
+
+    public BillDTO(String phoneNumber, String service, String startDate,
+                   String endDate, String currency, double amount) {
+        this.phoneNumber = phoneNumber;
+        this.service = service;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.currency = currency;
+        this.amount = amount;
+        this.paymentDate = null;
     }
 
     public String getPhoneNumber() {
@@ -23,14 +33,6 @@ public class BillDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public String getService() {
         return service;
     }
@@ -39,6 +41,37 @@ public class BillDTO {
         this.service = service;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public double getAmount() {
         return amount;
@@ -46,29 +79,5 @@ public class BillDTO {
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
     }
 }

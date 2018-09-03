@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SubscriberService {
 
-    Subscriber getSubscriberById(String id, int bankId);
+    Subscriber getSubscriberById(String id);
 
     SubscriberDAO getSubscriberDAOById(String id, int bankId);
 

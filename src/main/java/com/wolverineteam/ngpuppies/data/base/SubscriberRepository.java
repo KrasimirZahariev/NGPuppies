@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SubscriberRepository {
 
-    Subscriber getSubscriberById(String subscriberId, int bankId);
+    Subscriber getSubscriberById(String subscriberId);
 
     SubscriberDAO getSubscriberDAOById(String subscriberId, int bankId);
 

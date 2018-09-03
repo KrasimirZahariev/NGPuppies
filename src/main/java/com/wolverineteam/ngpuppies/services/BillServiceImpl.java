@@ -43,16 +43,13 @@ public class BillServiceImpl implements BillService {
     @Override
     public void createBill(BillDTO bill) {
         Bill newBill = new Bill();
-        com.wolverineteam.ngpuppies.models.Service newService = serviceRepository.loadServiceByServiceName(bill.getService());
-        newBill.setService(newService);
-        int bankId = Integer.parseInt(bill.getBank());
-        Subscriber newSubscriber = subscriberRepository.getSubscriberById(bill.getPhoneNumber(),bankId);
-        newBill.setSubscriber(newSubscriber);
-        newBill.setStartDate(bill.getStartDate());
-        newBill.setEndDate(bill.getEndDate());
+        newBill.setService(serviceRepository.loadServiceByServiceName(bill.getService()));
+        newBill.setSubscriber(subscriberRepository.getSubscriberById(bill.getPhoneNumber()));
+        newBill.setCurrency(currencyRepository.loadCurrencyByCurrencyName(bill.getCurrency()));
+        newBill.setStartDate(new DateParser().getDateFromString(bill.getStartDate()));
+        newBill.setEndDate(new DateParser().getDateFromString(bill.getEndDate()));
         newBill.setAmount(bill.getAmount());
-        Currency currency = currencyRepository.loadCurrencyByCurrencyName(bill.getCurrency());
-        newBill.setCurrency(currency);
+        newBill.setPaymentDate(null);
 
         billRepository.createBill(newBill);
     }
