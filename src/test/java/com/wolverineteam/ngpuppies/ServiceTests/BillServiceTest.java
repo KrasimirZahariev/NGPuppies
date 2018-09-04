@@ -199,5 +199,4 @@ public class BillServiceTest {
 
         Assert.assertEquals(2, result.size());
     }
-    
 }
