@@ -30,16 +30,16 @@ public class SubscriberServiceTest {
         SubscriberDAO mockSubs = new SubscriberDAO();
         mockSubs.setPhoneNumber("0123456789");
 
-        Mockito.when(mockSubscriberRepository.getSubscriberDAOById("1",1))
+        Mockito.when(mockSubscriberRepository.getSubscriberDAOById("1", 1))
                 .thenReturn(mockSubs);
 
-        SubscriberDAO result = subscriberService.getSubscriberDAOById("1",1);
+        SubscriberDAO result = subscriberService.getSubscriberDAOById("1", 1);
 
         Assert.assertEquals("0123456789", result.getPhoneNumber());
     }
 
     @Test
-    public void getSubscriberById_ReturnCorrectSubscriber(){
+    public void getSubscriberById_ReturnCorrectSubscriber() {
         Subscriber mockSubs = new Subscriber();
         mockSubs.setPhoneNumber("0123456789");
         mockSubs.setFirstName("MockUser");
@@ -56,20 +56,20 @@ public class SubscriberServiceTest {
     }
 
     @Test
-    public void getAllSubscribersByBankId_ReturnCorrectSubscribers(){
+    public void getAllSubscribersByBankId_ReturnCorrectSubscribers() {
         Mockito.when(mockSubscriberRepository.getAllSubscribersByBankId(1)).thenReturn(Arrays.asList(
-           new SubscriberDAO(),
-           new SubscriberDAO(),
-           new SubscriberDAO()
+                new SubscriberDAO(),
+                new SubscriberDAO(),
+                new SubscriberDAO()
         ));
 
         List<SubscriberDAO> result = subscriberService.getAllSubscribersByBankId(1);
 
-        org.junit.Assert.assertEquals(3,result.size());
+        org.junit.Assert.assertEquals(3, result.size());
     }
 
     @Test
-    public void getAllTelecomsSubscribers_ReturnAllSubscribers(){
+    public void getAllTelecomsSubscribers_ReturnAllSubscribers() {
         Mockito.when(mockSubscriberRepository.getAllTelecomsSubscribers()).thenReturn(Arrays.asList(
                 new SubscriberDAO(),
                 new SubscriberDAO(),
@@ -78,6 +78,6 @@ public class SubscriberServiceTest {
 
         List<SubscriberDAO> result = subscriberService.getAllTelecomsSubscribers();
 
-        org.junit.Assert.assertEquals(3,result.size());
+        org.junit.Assert.assertEquals(3, result.size());
     }
 }
