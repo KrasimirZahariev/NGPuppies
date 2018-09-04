@@ -11,7 +11,7 @@ public interface SubscriberRepository {
 
     SubscriberDAO getSubscriberDAOById(String subscriberId, int bankId);
 
-    SubscriberDAO getAllSubscribersByBankId(int bankId);
+    List<SubscriberDAO> getAllSubscribersByBankId(int bankId);
 
     List<SubscriberDAO> getAllTelecomsSubscribers();
 }

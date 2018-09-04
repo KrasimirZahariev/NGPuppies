@@ -61,7 +61,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public SubscriberDAO getAllSubscribersByBankId(int bankId) {
+    public List<SubscriberDAO> getAllSubscribersByBankId(int bankId) {
         List<SubscriberDAO> subscribers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -78,7 +78,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
             System.out.println(e.getMessage());
         }
 
-        return subscribers.get(0);
+        return subscribers;
     }
 
     @SuppressWarnings("unchecked")

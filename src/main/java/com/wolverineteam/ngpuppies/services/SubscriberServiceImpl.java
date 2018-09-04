@@ -26,11 +26,11 @@ public class SubscriberServiceImpl implements SubscriberService {
 
     @Override
     public Subscriber getSubscriberById(String id) {
-        return null;
+        return subscriberRepository.getSubscriberById(id);
     }
 
     @Override
-    public SubscriberDAO getAllSubscribersByBankId(int bankId) {
+    public List<SubscriberDAO>  getAllSubscribersByBankId(int bankId) {
         return subscriberRepository.getAllSubscribersByBankId(bankId);
     }
 

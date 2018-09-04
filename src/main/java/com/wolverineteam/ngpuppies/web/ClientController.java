@@ -48,7 +48,7 @@ public class ClientController {
     }
 
     @GetMapping("subscribers/")
-    public SubscriberDAO getAllSubscribersByBankId(
+    public List<SubscriberDAO> getAllSubscribersByBankId(
                                            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return subscriberService.getAllSubscribersByBankId(bankId);
