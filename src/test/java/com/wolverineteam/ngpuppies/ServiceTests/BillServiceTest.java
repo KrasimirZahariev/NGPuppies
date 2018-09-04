@@ -65,41 +65,41 @@ public class BillServiceTest {
         Assert.assertEquals(1, result.size());
     }
 
-   // @Test
-   // public void createBill_ReturnNewBill() {
-   //     BillDTO testBill = new BillDTO();
-   //     testBill.setPhoneNumber("123");
-   //     testBill.setService("TV");
-   //     testBill.setStartDate("2018-08-11");
-   //     testBill.setEndDate("2018-09-11");
-   //     testBill.setAmount(100);
-   //     testBill.setCurrency("BGN");
-//
-   //     Date startDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-08-11");
-   //     Date endDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-09-11");
-   //     Subscriber mockSubs = new Subscriber();
-   //     mockSubs.setPhoneNumber("123");
-   //     Service mockService = new Service("TV");
-   //     Currency mockCurrency = new Currency("BGN", 1);
-//
-   //     when(serviceRepository.loadServiceByServiceName("TV")).thenReturn(mockService);
-   //     when(subscriberRepository.getSubscriberById("123")).thenReturn(mockSubs);
-   //     when(currencyRepository.loadCurrencyByCurrencyName("BGN")).thenReturn(mockCurrency);
-//
-   //     Bill testBill2 = new Bill();
-   //     testBill2.setSubscriber(mockSubs);
-   //     testBill2.setService(mockService);
-   //     testBill2.setStartDate(startDate);
-   //     testBill2.setEndDate(endDate);
-   //     testBill2.setAmount(100);
-   //     testBill2.setCurrency(mockCurrency);
-//
-//
-   //     doNothing().when(mockBillRepository).createBill(isA(Bill.class));
-   //     billService.createBill(testBill);
-//
-   //     verify(mockBillRepository, times(1)).createBill(testBill2);
-   // }
+    @Test
+    public void createBill_ReturnNewBill() {
+        BillDTO testBill = new BillDTO();
+        testBill.setPhoneNumber("123");
+        testBill.setService("TV");
+        testBill.setStartDate("2018-08-11");
+        testBill.setEndDate("2018-09-11");
+        testBill.setAmount(100);
+        testBill.setCurrency("BGN");
+
+        Date startDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-08-11");
+        Date endDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-09-11");
+        Subscriber mockSubs = new Subscriber();
+        mockSubs.setPhoneNumber("123");
+        Service mockService = new Service("TV");
+        Currency mockCurrency = new Currency("BGN", 1);
+
+        when(serviceRepository.loadServiceByServiceName("TV")).thenReturn(mockService);
+        when(subscriberRepository.getSubscriberById("123")).thenReturn(mockSubs);
+        when(currencyRepository.loadCurrencyByCurrencyName("BGN")).thenReturn(mockCurrency);
+
+        Bill testBill2 = new Bill();
+        testBill2.setSubscriber(mockSubs);
+        testBill2.setService(mockService);
+        testBill2.setStartDate(startDate);
+        testBill2.setEndDate(endDate);
+        testBill2.setAmount(100);
+        testBill2.setCurrency(mockCurrency);
+
+
+        doNothing().when(mockBillRepository).createBill(isA(Bill.class));
+        billService.createBill(testBill);
+
+        verify(mockBillRepository, times(1)).createBill(isA(Bill.class));
+    }
 
     @Test
     public void payBills_whenBillsIdIsGiven_ReturnPaidBills() {

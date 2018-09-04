@@ -82,31 +82,31 @@ public class UserServiceImplTest {
         doNothing().when(mockUserRepository).update(isA(User.class));
         userService.update( mockUser2);
 
-        Mockito.verify(mockUserRepository, times(1)).update( mockUser);
+        Mockito.verify(mockUserRepository, times(1)).update( isA(User.class));
 
     }
 
-  //  @Test
-  //  public void CreateNewUserWhenGivenUser_ReturnsCorrectNewUser() {
-  //      List<Role> roles = new ArrayList<>();
-  //      Role mockRole = new Role("ROLE_ADMIN");
-  //      roles.add(mockRole);
-  //      User mockUser = new User("mockUser",bCryptPasswordEncoder.encode("0000"),roles,"456");
-//
-  //      when(roleRepository.loadRoleByRoleName("ROLE_ADMIN")).thenReturn(mockRole);
-//
-  //      UserDTO mockUser1 = new UserDTO();
-  //      mockUser1.setUsername("mockUser");
-  //      mockUser1.setRole("ROLE_ADMIN");
-  //      mockUser1.setEik("456");
-  //      mockUser1.setPassword("0000");
-//
-  //      doNothing().when(mockUserRepository).create(isA(User.class));
-  //      userService.create(mockUser1);
-//
-  //      verify(mockUserRepository, times(1)).create(mockUser);
-  //  }
-//
+    @Test
+    public void CreateNewUserWhenGivenUser_ReturnsCorrectNewUser() {
+        List<Role> roles = new ArrayList<>();
+        Role mockRole = new Role("ROLE_ADMIN");
+        roles.add(mockRole);
+        User mockUser = new User("mockUser",bCryptPasswordEncoder.encode("0000"),roles,"456");
+
+        when(roleRepository.loadRoleByRoleName("ROLE_ADMIN")).thenReturn(mockRole);
+
+        UserDTO mockUser1 = new UserDTO();
+        mockUser1.setUsername("mockUser");
+        mockUser1.setRole("ROLE_ADMIN");
+        mockUser1.setEik("456");
+        mockUser1.setPassword("0000");
+
+        doNothing().when(mockUserRepository).create(isA(User.class));
+        userService.create(mockUser1);
+
+        verify(mockUserRepository, times(1)).create(isA(User.class));
+    }
+
     @Test
     public void loadUserByUsername_ReturnCorrectUser(){
         Mockito.when(mockUserRepository.loadUserByUsername("mockUser"))
