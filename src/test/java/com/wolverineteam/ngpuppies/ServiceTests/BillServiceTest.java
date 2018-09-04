@@ -80,7 +80,7 @@ public class BillServiceTest {
         Subscriber mockSubs = new Subscriber();
         mockSubs.setPhoneNumber("123");
         Service mockService = new Service("TV");
-        Currency mockCurrency = new Currency("BGN",1);
+        Currency mockCurrency = new Currency("BGN", 1);
 
         when(serviceRepository.loadServiceByServiceName("TV")).thenReturn(mockService);
         when(subscriberRepository.getSubscriberById("123")).thenReturn(mockSubs);
@@ -117,13 +117,13 @@ public class BillServiceTest {
 
         when(mockBillRepository.getSetOfUnpaidBillsByBankId(1)).thenReturn(new HashSet<>(billsToBePaidParsed));
         doNothing().when(mockBillRepository).payBills(isA(List.class));
-        billService.payBills(billsToBePaid,1);
+        billService.payBills(billsToBePaid, 1);
 
         verify(mockBillRepository, times(1)).payBills(billsToBePaidParsed);
     }
 
     @Test
-    public void getMaxAndAvgPaymentsInTimeInterval_ReturnCorrectData(){
+    public void getMaxAndAvgPaymentsInTimeInterval_ReturnCorrectData() {
         List<BillDAO> listBills = new ArrayList<>();
         listBills.add(new BillDAO());
         listBills.add(new BillDAO());
@@ -135,13 +135,13 @@ public class BillServiceTest {
 
         Date startDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-08-11");
         Date endDate = new com.wolverineteam.ngpuppies.utils.DateParser().getDateFromString("2018-09-11");
-        when(mockBillRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(1,"0123456789",
-                startDate,endDate)).thenReturn(listBills);
+        when(mockBillRepository.getMaxAndAvgPaymentInTimeIntervalByBankId(1, "0123456789",
+                startDate, endDate)).thenReturn(listBills);
 
-        List<BillDAO> result = billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval,"0123456789",
+        List<BillDAO> result = billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, "0123456789",
                 1);
 
-        Assert.assertEquals(3,result.size());
+        Assert.assertEquals(3, result.size());
     }
 
     @Test
@@ -164,15 +164,15 @@ public class BillServiceTest {
         Service testService = new Service();
         mockServices.add(testService);
 
-        when(mockBillRepository.getSubscriberPaidServicesByBankId(1,"0123456789")).thenReturn(mockServices);
+        when(mockBillRepository.getSubscriberPaidServicesByBankId(1, "0123456789")).thenReturn(mockServices);
 
-        List<Service> result = mockBillRepository.getSubscriberPaidServicesByBankId(1,"0123456789");
+        List<Service> result = mockBillRepository.getSubscriberPaidServicesByBankId(1, "0123456789");
 
         Assert.assertEquals(1, result.size());
     }
 
     @Test
-    public void getTenBiggestPayers_ReturnCorrectPayers(){
+    public void getTenBiggestPayers_ReturnCorrectPayers() {
         List<BillDAO> listBills = new ArrayList<>();
         listBills.add(new BillDAO());
         listBills.add(new BillDAO());
@@ -182,7 +182,7 @@ public class BillServiceTest {
 
         List<BillDAO> result = billService.getTenBiggestPayersByBankId(1);
 
-        Assert.assertEquals(3,result.size());
+        Assert.assertEquals(3, result.size());
     }
 
     @Test
