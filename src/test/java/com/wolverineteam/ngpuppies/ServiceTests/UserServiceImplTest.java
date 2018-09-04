@@ -61,7 +61,6 @@ public class UserServiceImplTest {
         List<User> result = userService.getAll();
 
         Assert.assertEquals(5, result.size());
-        
     }
 
     @Test
