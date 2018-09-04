@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() != null) {
             modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-        
+
         modifiedUser.setUsername(user.getUsername());
         modifiedUser.setEik(user.getEik());
         List<Role> roles = new ArrayList<>();
