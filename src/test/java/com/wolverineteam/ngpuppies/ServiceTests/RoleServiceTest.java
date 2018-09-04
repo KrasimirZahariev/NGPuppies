@@ -21,7 +21,7 @@ public class RoleServiceTest {
     RoleServiceImpl roleService;
 
     @Test
-    public void loadRoleByRoleName_ReturnCorrectRole(){
+    public void loadRoleByRoleName_ReturnCorrectRole() {
         Mockito.when(roleRepository.loadRoleByRoleName("ROLE_ADMIN"))
                 .thenReturn(new Role("ROLE_ADMIN"));
 
