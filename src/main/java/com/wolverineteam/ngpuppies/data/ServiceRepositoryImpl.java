@@ -28,7 +28,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
             session.beginTransaction();
             String query = "from Service as s where  service = :serviceName";
             Query q = session.createQuery(query).setParameter("serviceName", serviceName);
-            service = (Service)q.uniqueResult();
+            service = (Service) q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
