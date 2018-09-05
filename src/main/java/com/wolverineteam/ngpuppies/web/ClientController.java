@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/client/")
@@ -54,7 +52,18 @@ public class ClientController {
                                            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
 
+        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
+                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
 
+        if (!subs.contains(subscriberId)){
+            throw new SubscriberNotFountException("This subscriber does not exist!");
+        }else
+        {
+            HashSet<Subscriber> bankSubs = new HashSet<>(userService.getById(bankId).getSubscribers());
+            if (!bankSubs.contains(subscriberService.getSubscriberById(subscriberId))){
+                throw new SubscriberNotFountException("Yod don't have access to this subscriber details!");
+            }
+        }
 
         return subscriberService.getSubscriberDAOById(subscriberId, bankId);
     }
