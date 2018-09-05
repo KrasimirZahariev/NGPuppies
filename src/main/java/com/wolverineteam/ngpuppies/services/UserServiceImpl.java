@@ -41,17 +41,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO user) {
-        User modifiedUser = userRepository.getById(Integer.parseInt(user.getUserId()));
-        if (user.getPassword() != null) {
-            modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        User oldUser = userRepository.getById(Integer.parseInt(user.getUserId()));
+
+        if (!oldUser.getRoles().get(0).getRole().equals(user.getRole())) {
+            List<Role> roles = new ArrayList<>();
+            roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
+            oldUser.setRoles(roles);
         }
 
-        modifiedUser.setUsername(user.getUsername());
-        modifiedUser.setEik(user.getEik());
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.loadRoleByRoleName(user.getRole()));
-        modifiedUser.setRoles(roles);
-        userRepository.update(modifiedUser);
+        if (user.getPassword() != null) {
+            oldUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+
+        oldUser.setUsername(user.getUsername());
+        oldUser.setEik(user.getEik());
+        userRepository.update(oldUser);
     }
 
     @Override
