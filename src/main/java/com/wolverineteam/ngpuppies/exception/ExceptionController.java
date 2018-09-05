@@ -46,4 +46,14 @@ public class ExceptionController {
         System.out.println(ex);
         return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(value = MissingOrNotCorrectArgumentException.class)
+    public ResponseEntity<ExceptionResponse> missingOrNotCorrectArgumentException(MissingOrNotCorrectArgumentException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
 }

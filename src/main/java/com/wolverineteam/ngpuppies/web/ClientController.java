@@ -3,6 +3,7 @@ package com.wolverineteam.ngpuppies.web;
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.exception.ForbiddenSubscriberException;
+import com.wolverineteam.ngpuppies.exception.MissingOrNotCorrectArgumentException;
 import com.wolverineteam.ngpuppies.exception.SubscriberNotFountException;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
@@ -51,6 +52,7 @@ public class ClientController {
     @GetMapping("subscribers/{subscriberId}")
     public SubscriberDAO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
                                            HttpServletRequest request) throws ForbiddenSubscriberException {
+
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
 
         HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
@@ -61,8 +63,10 @@ public class ClientController {
 
         }else
         {
+
             HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
                     .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
             if (!bankSubs.contains(subscriberId)){
                 throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
             }
@@ -79,7 +83,7 @@ public class ClientController {
     }
 
     //front-end probably for validation
-    @GetMapping("bills/payments-descending/")
+    @GetMapping("bills/payments-descending")
     public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getSubscribersPaymentsHistoryDescendingByBankId(bankId);
@@ -89,9 +93,31 @@ public class ClientController {
     public List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(
             @PathVariable("timeInterval") List<String> timeInterval,
             @PathVariable("subscriberId") String subscriberId,
-            HttpServletRequest request) {
+            HttpServletRequest request) throws ForbiddenSubscriberException, MissingOrNotCorrectArgumentException {
 
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
+
+        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
+                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
+        if (!subs.contains(subscriberId)){
+            throw new SubscriberNotFountException("This subscriber does not exist!");
+
+        }else
+        {
+
+            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
+                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
+            if (!bankSubs.contains(subscriberId)){
+                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
+            }
+        }
+
+        if (timeInterval.size()!=2){
+            throw new MissingOrNotCorrectArgumentException("The argument is invalid or missing!");
+        }
+
         return billService.getMaxAndAvgPaymentInTimeIntervalByBankId(timeInterval, subscriberId, bankId);
     }
 
