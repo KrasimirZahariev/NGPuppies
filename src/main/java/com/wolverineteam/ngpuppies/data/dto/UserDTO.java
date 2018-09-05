@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 public class UserDTO {
 
+    private String userId;
+
     @NotNull(message = "Cannot be null!")
     private String username;
 
@@ -51,5 +53,13 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

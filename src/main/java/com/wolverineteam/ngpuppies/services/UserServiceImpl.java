@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO user) {
-        User modifiedUser = loadUserByUsername(user.getUsername());
-
+        User modifiedUser = userRepository.getById(Integer.parseInt(user.getUserId()));
         if (user.getPassword() != null) {
             modifiedUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
