@@ -51,6 +51,12 @@ public class AdminController {
         userService.update(user);
     }
 
+    @DeleteMapping("users/delete/{id}")
+    public void deleteUser(@PathVariable("id") String stringId) {
+        int userId = Integer.parseInt(stringId);
+        userService.deleteUser(userId);
+    }
+
     @GetMapping("users/")
     public List<User> getAllUsers(HttpServletRequest request) {
         return userService.getAll();

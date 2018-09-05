@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService {
     void update(UserDTO user);
 
     void create(UserDTO user);
+
+    void deleteUser(int userId);
 }

@@ -33,6 +33,10 @@ public class User implements UserDetails {
     @Column(name = "EIK")
     private String eik;
 
+    @NotNull
+    @Column(name = "Enabled")
+    private boolean enabled;
+
     @JsonIgnore
     @OneToMany(mappedBy = "bank")
     private List<Subscriber> subscribers;
@@ -46,6 +50,7 @@ public class User implements UserDetails {
 
     public User() {
         this.roles = new ArrayList<>();
+        this.enabled = true;
     }
 
     public User(String username, String password, List<Role> roles, String eik) {
@@ -55,16 +60,9 @@ public class User implements UserDetails {
         this.eik = eik;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
     @Override
@@ -84,16 +82,27 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
     }
 
     public String getPassword() {
