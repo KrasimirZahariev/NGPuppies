@@ -52,12 +52,13 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            users = session.createQuery("from User", User.class).list();
+            users = session.createQuery("from User where enabled = true ").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
