@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
+import com.wolverineteam.ngpuppies.exception.ForbiddenSubscriberException;
 import com.wolverineteam.ngpuppies.exception.SubscriberNotFountException;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
@@ -49,7 +50,7 @@ public class ClientController {
 
     @GetMapping("subscribers/{subscriberId}")
     public SubscriberDAO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
-                                           HttpServletRequest request) {
+                                           HttpServletRequest request) throws ForbiddenSubscriberException {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
 
         HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
@@ -57,11 +58,13 @@ public class ClientController {
 
         if (!subs.contains(subscriberId)){
             throw new SubscriberNotFountException("This subscriber does not exist!");
+
         }else
         {
-            HashSet<Subscriber> bankSubs = new HashSet<>(userService.getById(bankId).getSubscribers());
-            if (!bankSubs.contains(subscriberService.getSubscriberById(subscriberId))){
-                throw new SubscriberNotFountException("Yod don't have access to this subscriber details!");
+            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
+                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+            if (!bankSubs.contains(subscriberId)){
+                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
             }
         }
 

@@ -15,25 +15,35 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class ExceptionController {
     private Log logger = LogFactory.getLog(ExceptionController.class);
 
-//    @ExceptionHandler(value = Exception.class)
-//    public ResponseEntity<ExceptionResponse> generalException (Exception ex)throws Exception{
-//
-//        ExceptionResponse eR = new ExceptionResponse();
-//        eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-//        eR.setDescription(ex.getMessage());
-//        logger.error(eR.getDescription());
-//        System.out.println(ex);
-//        return new ResponseEntity<>(eR,HttpStatus.BAD_REQUEST);
-//
-//    }
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ExceptionResponse> generalException (Exception ex)throws Exception{
+
+        ExceptionResponse eR = new ExceptionResponse();
+        eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        eR.setDescription(ex.getMessage());
+        logger.error(eR.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(eR,HttpStatus.BAD_REQUEST);
+
+    }
 
     @ExceptionHandler(value = SubscriberNotFountException.class)
-    public  ResponseEntity<ExceptionResponse> subscriberNotFound (SubscriberNotFountException ex, WebRequest request){
+    public  ResponseEntity<ExceptionResponse> subscriberNotFound (SubscriberNotFountException ex){
         ExceptionResponse response = new ExceptionResponse();
         response.setCode(HttpStatus.NOT_FOUND.value());
         response.setDescription(ex.getMessage());
         logger.error(response.getDescription());
         System.out.println(ex);
         return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = ForbiddenSubscriberException.class)
+    public ResponseEntity<ExceptionResponse> forbiddenSubscriber (ForbiddenSubscriberException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.FORBIDDEN.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
     }
 }
