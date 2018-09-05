@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull
+    @UniqueElements
     @Digits(integer = 20,fraction = 0,message = "EIK number can contain only digits!")
     @Column(name = "EIK")
     private String eik;

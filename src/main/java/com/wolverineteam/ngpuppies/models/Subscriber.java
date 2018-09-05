@@ -1,10 +1,12 @@
 package com.wolverineteam.ngpuppies.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -13,15 +15,18 @@ public class Subscriber {
 
     @NotNull
     @Digits(integer = 20,fraction = 0, message = "Thephone number can contain only digits!")
+    @UniqueElements
     @Id
     @Column(name = "PhoneNumber")
     private String phoneNumber;
 
     @NotNull
+    @Pattern(regexp = "[^0-9]*", message = "Name should contains only alphabetic characters!")
     @Column(name = "FirstName")
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "[^0-9]*", message = "Name should contains only alphabetic characters!")
     @Column(name = "LastName")
     private String lastName;
 

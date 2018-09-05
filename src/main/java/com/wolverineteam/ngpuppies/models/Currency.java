@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -17,6 +18,7 @@ public class Currency {
     private int currencyId;
 
     @NotNull
+    @UniqueElements
     @Column(name = "Currency")
     private String currency;
 
