@@ -1,5 +1,7 @@
 package com.wolverineteam.ngpuppies.data.dto;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
@@ -14,9 +16,11 @@ public class UserDTO {
     private String password;
 
     @NotNull(message = "Cannot be null!")
+    @UniqueElements
     @Digits(integer = 20,fraction = 0,message = "eik number can contain only digits!")
     private String eik;
 
+    @NotNull
     private String role;
 
     public UserDTO(){
