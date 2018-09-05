@@ -2,16 +2,23 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
+import com.wolverineteam.ngpuppies.exception.SubscriberNotFountException;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
+import com.wolverineteam.ngpuppies.models.Subscriber;
+import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
+import com.wolverineteam.ngpuppies.services.base.UserService;
 import com.wolverineteam.ngpuppies.utils.JwtParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/client/")
@@ -19,13 +26,15 @@ public class ClientController {
 
     private SubscriberService subscriberService;
     private BillService billService;
+    private UserService userService;
     private JwtParser jwtParser;
 
     @Autowired
-    public ClientController(SubscriberService subscriberService, BillService billService, JwtParser jwtParser) {
+    public ClientController(SubscriberService subscriberService, BillService billService, JwtParser jwtParser, UserService userService) {
         this.subscriberService = subscriberService;
         this.billService = billService;
         this.jwtParser = jwtParser;
+        this.userService = userService;
     }
 
     @GetMapping("bills/unpaid/")
@@ -44,6 +53,9 @@ public class ClientController {
     public SubscriberDAO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
                                            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
+
+
+
         return subscriberService.getSubscriberDAOById(subscriberId, bankId);
     }
 

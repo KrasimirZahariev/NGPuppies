@@ -69,9 +69,8 @@ public class UserServiceImplTest {
         Role mockRole = new Role("ROLE_ADMIN");
         roles.add(mockRole);
         User mockUser = new User("mockUser",bCryptPasswordEncoder.encode("0000"),roles,"456");
-
+        mockUser.setUserId(1);
         when(mockUserRepository.getById(1)).thenReturn(mockUser);
-        when(roleRepository.loadRoleByRoleName("ROLE_ADMIN")).thenReturn(mockRole);
 
         UserDTO mockUser2 = new UserDTO();
         mockUser2.setUserId("1");
