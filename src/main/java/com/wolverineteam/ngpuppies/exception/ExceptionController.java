@@ -8,19 +8,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableWebMvc
+
 @ControllerAdvice
+@EnableWebMvc
 public class ExceptionController {
     private Log logger = LogFactory.getLog(ExceptionController.class);
 
-  //  @ExceptionHandler(value = Exception.class)
-  //  public ResponseEntity generalException (Exception ex)throws Exception{
-//
-  //      ExceptionResponse eR = new ExceptionResponse();
-  //      eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-  //      eR.setDescription(ex.getMessage());
-  //      logger.error(eR.getDescription());
-  //      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-//
-  //  }
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ExceptionResponse> generalException (Exception ex)throws Exception{
+
+        ExceptionResponse eR = new ExceptionResponse();
+        eR.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        eR.setDescription(ex.getMessage());
+        logger.error(eR.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<ExceptionResponse>(eR,HttpStatus.BAD_REQUEST);
+
+    }
 }
