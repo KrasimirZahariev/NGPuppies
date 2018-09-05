@@ -48,33 +48,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
                                     /** DISABLE TOKEN SECURITY */
-//        http
-//            .authorizeRequests()
-//            .anyRequest()
-//            .permitAll()
-//            .and()
-//            .cors()
-//            .and()
-//            .csrf()
-//            .disable();
+        http
+            .authorizeRequests()
+            .anyRequest()
+            .permitAll()
+            .and()
+            .cors()
+            .and()
+            .csrf()
+            .disable();
 
 
                                     /** ENABLE TOKEN SECURITY */
 
-        http
-            .cors()
-            .and()
-            .csrf()
-            .disable()
-            .authorizeRequests()
-            .antMatchers("/login").permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/client/**").hasRole("USER")
-            .anyRequest().authenticated()
-            .and()
-            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userService))
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http
+//            .cors()
+//            .and()
+//            .csrf()
+//            .disable()
+//            .authorizeRequests()
+//            .antMatchers("/login").permitAll()
+//            .antMatchers("/admin/**").hasRole("ADMIN")
+//            .antMatchers("/client/**").hasRole("USER")
+//            .anyRequest().authenticated()
+//            .and()
+//            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+//            .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userService))
+//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 }
 
         @Override

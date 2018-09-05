@@ -83,7 +83,7 @@ public class ClientController {
     }
 
     //front-end probably for validation
-    @GetMapping("bills/payments-descending")
+    @GetMapping("bills/payments-descending/")
     public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getSubscribersPaymentsHistoryDescendingByBankId(bankId);
