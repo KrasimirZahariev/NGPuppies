@@ -82,7 +82,7 @@ public class UserServiceImplTest {
         doNothing().when(mockUserRepository).update(isA(User.class));
         userService.update( mockUser2);
 
-        Mockito.verify(mockUserRepository, times(1)).update( mockUser);
+        Mockito.verify(mockUserRepository, times(1)).update( isA(User.class));
 
     }
 
@@ -104,7 +104,7 @@ public class UserServiceImplTest {
         doNothing().when(mockUserRepository).create(isA(User.class));
         userService.create(mockUser1);
 
-        verify(mockUserRepository, times(1)).create(mockUser);
+        verify(mockUserRepository, times(1)).create(isA(User.class));
     }
 
     @Test
