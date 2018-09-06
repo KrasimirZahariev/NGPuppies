@@ -45,17 +45,17 @@ public class AdminController {
     //when we create front-end we should check this one for retrieving the error messages in the form
     @PostMapping("users/create/")
     public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) throws FieldCantBeNullException {
-        if (user.getUsername() == null) {
-            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        if (user.getUsername().equals("")) {
+            throw new FieldCantBeNullException("Username can't be null!");
         }
-        if (user.getPassword() == null) {
-            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        if (user.getPassword().equals("")) {
+            throw new FieldCantBeNullException(result.getObjectName().concat("Password can't be null!"));
         }
-        if (user.getEik() == null) {
-            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        if (user.getEik().equals("")) {
+            throw new FieldCantBeNullException(result.getObjectName().concat("Eik can't be null!"));
         }
-        if (user.getRole() == null) {
-            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        if (user.getRole().equals("")) {
+            throw new FieldCantBeNullException(result.getObjectName().concat("Role can't be null!"));
         }
 
         userService.create(user);
