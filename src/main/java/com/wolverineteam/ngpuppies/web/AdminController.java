@@ -8,6 +8,7 @@ import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.*;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,13 +42,19 @@ public class AdminController {
 
     //when we create front-end we should check this one for retrieving the error messages in the form
     @PostMapping("users/create/")
-    public void createUser(@Valid @RequestBody UserDTO user) {
+    public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) {
+        if (result.hasErrors()) {
+            return;
+        }
         userService.create(user);
     }
 
     //this front-end form should be tested too
     @PutMapping("users/update/")
-    public void updateUser(@Valid @RequestBody UserDTO user) {
+    public void updateUser(@Valid @RequestBody UserDTO user, BindingResult result) {
+        if (result.hasErrors()) {
+            return;
+        }
         userService.update(user);
     }
 
@@ -79,7 +86,11 @@ public class AdminController {
 
     //front-end for testing
     @PostMapping("bills/create/")
-    public void createBill(@Valid @RequestBody BillDTO bill) {
+    public void createBill(@Valid @RequestBody BillDTO bill, BindingResult result) {
+        if (result.hasErrors()) {
+            return;
+        }
+
         billService.createBill(bill);
     }
 }
