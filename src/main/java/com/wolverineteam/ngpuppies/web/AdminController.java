@@ -49,13 +49,13 @@ public class AdminController {
             throw new FieldCantBeNullException("Username can't be null!");
         }
         if (user.getPassword().equals("")) {
-            throw new FieldCantBeNullException(result.getObjectName().concat("Password can't be null!"));
+            throw new FieldCantBeNullException("Password can't be null!");
         }
         if (user.getEik().equals("")) {
-            throw new FieldCantBeNullException(result.getObjectName().concat("Eik can't be null!"));
+            throw new FieldCantBeNullException("Eik can't be null!");
         }
         if (user.getRole().equals("")) {
-            throw new FieldCantBeNullException(result.getObjectName().concat("Role can't be null!"));
+            throw new FieldCantBeNullException("Role can't be null!");
         }
 
         userService.create(user);
