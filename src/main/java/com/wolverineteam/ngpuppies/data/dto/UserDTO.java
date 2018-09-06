@@ -16,7 +16,7 @@ public class UserDTO {
     private String password;
 
     @NotNull(message = "Cannot be null!")
-    @UniqueElements
+
     @Digits(integer = 20,fraction = 0,message = "eik number can contain only digits!")
     private String eik;
 

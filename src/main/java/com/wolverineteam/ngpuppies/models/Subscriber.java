@@ -15,7 +15,6 @@ public class Subscriber {
 
     @NotNull
     @Digits(integer = 20,fraction = 0, message = "Thephone number can contain only digits!")
-    @UniqueElements
     @Id
     @Column(name = "PhoneNumber")
     private String phoneNumber;

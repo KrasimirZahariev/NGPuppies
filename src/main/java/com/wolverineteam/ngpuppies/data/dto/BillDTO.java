@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 public class BillDTO {
 
-    @UniqueElements
     @Digits(integer = 20,fraction = 0,message = "The phone number should contain only digits!")
     private String phoneNumber; //will be mapped to Subscriber
 

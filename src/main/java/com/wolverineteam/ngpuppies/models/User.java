@@ -30,7 +30,6 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull
-    @UniqueElements
     @Digits(integer = 20,fraction = 0,message = "EIK number can contain only digits!")
     @Column(name = "EIK")
     private String eik;

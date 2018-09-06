@@ -18,7 +18,6 @@ public class Currency {
     private int currencyId;
 
     @NotNull
-    @UniqueElements
     @Column(name = "Currency")
     private String currency;
 
