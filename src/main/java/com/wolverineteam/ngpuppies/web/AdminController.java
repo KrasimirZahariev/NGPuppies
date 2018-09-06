@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
+import com.wolverineteam.ngpuppies.exception.FieldCantBeNullException;
 import com.wolverineteam.ngpuppies.exception.ForbiddenSubscriberException;
 import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.Service;
@@ -43,10 +44,20 @@ public class AdminController {
 
     //when we create front-end we should check this one for retrieving the error messages in the form
     @PostMapping("users/create/")
-    public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) throws ForbiddenSubscriberException {
-        if (result.hasErrors()) {
-            throw new ForbiddenSubscriberException("Fuck off user!");
+    public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) throws FieldCantBeNullException {
+        if (user.getUsername() == null) {
+            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
         }
+        if (user.getPassword() == null) {
+            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        }
+        if (user.getEik() == null) {
+            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        }
+        if (user.getRole() == null) {
+            throw new FieldCantBeNullException(result.getObjectName().concat(" can't be null!"));
+        }
+
         userService.create(user);
     }
 

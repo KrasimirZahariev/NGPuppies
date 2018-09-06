@@ -56,4 +56,14 @@ public class ExceptionController {
         System.out.println(ex);
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = FieldCantBeNullException.class)
+    public ResponseEntity<ExceptionResponse> fieldCantBeNullException(FieldCantBeNullException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
 }
