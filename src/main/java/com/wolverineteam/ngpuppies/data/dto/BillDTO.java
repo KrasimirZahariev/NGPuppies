@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.Digits;
@@ -60,6 +61,7 @@ public class BillDTO {
         this.service = service;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public String getStartDate() {
         return startDate;
     }
@@ -68,6 +70,7 @@ public class BillDTO {
         this.startDate = startDate;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public String getEndDate() {
         return endDate;
     }
@@ -76,6 +79,7 @@ public class BillDTO {
         this.endDate = endDate;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public String getPaymentDate() {
         return paymentDate;
     }

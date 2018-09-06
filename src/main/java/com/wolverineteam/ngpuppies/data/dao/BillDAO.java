@@ -1,5 +1,7 @@
 package com.wolverineteam.ngpuppies.data.dao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 
 public class BillDAO {
@@ -22,7 +24,13 @@ public class BillDAO {
 
     }
 
+    public int getBillId() {
+        return billId;
+    }
 
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -48,60 +56,12 @@ public class BillDAO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public Double getAvg() {
-        return avg;
-    }
-
-    public void setAvg(Double avg) {
-        this.avg = avg;
-    }
-
-    public Double getMax() {
-        return max;
-    }
-
-    public void setMax(Double max) {
-        this.max = max;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public Double getSumm() {
-        return summ;
-    }
-
-    public void setSumm(Double summ) {
-        this.summ = summ;
-    }
-
     public String getService() {
         return service;
     }
 
     public void setService(String service) {
         this.service = service;
-    }
-
-    public int getBillId() {
-        return billId;
-    }
-
-    public void setBillId(int billId) {
-        this.billId = billId;
     }
 
     public double getAmount() {
@@ -112,6 +72,48 @@ public class BillDAO {
         this.amount = amount;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public double getAvg() {
+        return avg;
+    }
+
+    public void setAvg(double avg) {
+        this.avg = avg;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public void setMax(double max) {
+        this.max = max;
+    }
+
+    public double getSumm() {
+        return summ;
+    }
+
+    public void setSumm(double summ) {
+        this.summ = summ;
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date getEndDate() {
         return endDate;
     }
@@ -120,11 +122,12 @@ public class BillDAO {
         this.endDate = endDate;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    public Date getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

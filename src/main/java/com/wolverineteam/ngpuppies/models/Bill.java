@@ -1,12 +1,9 @@
 package com.wolverineteam.ngpuppies.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Entity
@@ -85,6 +82,7 @@ public class Bill {
         this.subscriber = subscriber;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date getStartDate() {
         return startDate;
     }
@@ -93,6 +91,7 @@ public class Bill {
         this.startDate = startDate;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date getEndDate() {
         return endDate;
     }
@@ -117,6 +116,7 @@ public class Bill {
         this.currency = currency;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date getPaymentDate() {
         return paymentDate;
     }
