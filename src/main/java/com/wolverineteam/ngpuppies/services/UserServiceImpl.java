@@ -78,6 +78,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changePassword(UserDTO userDTO) {
+        User user = loadUserByUsername(userDTO.getUsername());
+
+        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepository.loadRoleByRoleName("ROLE_ADMIN"));
+        user.setRoles(roles);
+
+        userRepository.update(user);
+    }
+
+    @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.loadUserByUsername(username);
     }

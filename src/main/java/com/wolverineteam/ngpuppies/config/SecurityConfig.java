@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/login").permitAll()
             .antMatchers("/admin/**").hasRole("ADMIN")
             .antMatchers("/client/**").hasRole("USER")
+            .antMatchers("/change-password/**").hasRole("CHANGE")
             .anyRequest().authenticated()
             .and()
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
