@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
+import com.wolverineteam.ngpuppies.exception.ForbiddenSubscriberException;
 import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.User;
@@ -42,9 +43,9 @@ public class AdminController {
 
     //when we create front-end we should check this one for retrieving the error messages in the form
     @PostMapping("users/create/")
-    public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) {
+    public void createUser(@Valid @RequestBody UserDTO user, BindingResult result) throws ForbiddenSubscriberException {
         if (result.hasErrors()) {
-            return;
+            throw new ForbiddenSubscriberException("Fuck off user!");
         }
         userService.create(user);
     }
