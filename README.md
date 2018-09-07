@@ -24,4 +24,4 @@ Payment System
       - generate payment with a given amount for any subscriber associated with any client
       - to change their username and password.
 
-      The application is Bright Consulting’s final project assignment for the Spring MVC course and is created by Borislav Borisov (https://github.com/borislavvb) and Krasimir Zahariev (https://github.com/KrasimirZahariev), both students at Telerik Academy Alpha – Java.
+        The application is Bright Consulting’s final project assignment for the Spring MVC course and is created by Borislav Borisov ( https://github.com/borislavvb ) and Krasimir Zahariev ( https://github.com/KrasimirZahariev ), both students at Telerik Academy Alpha – Java.
