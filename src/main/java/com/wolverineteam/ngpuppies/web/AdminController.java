@@ -2,9 +2,7 @@ package com.wolverineteam.ngpuppies.web;
 
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
-import com.wolverineteam.ngpuppies.exception.EikCanContainOnlyDigitsException;
-import com.wolverineteam.ngpuppies.exception.FieldCantBeNullException;
-import com.wolverineteam.ngpuppies.exception.InvalidRoleException;
+import com.wolverineteam.ngpuppies.exception.*;
 import com.wolverineteam.ngpuppies.models.Currency;
 import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.Service;
@@ -49,14 +47,36 @@ public class AdminController {
     }
 
     @PostMapping("users/create/")
-    public void createUser(@RequestBody UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException {
+    public void createUser(@RequestBody UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException, EikAlreadyExistException {
+
+        HashSet<String> users = userService.getAll().stream()
+                .map(User::getUsername).collect(Collectors.toCollection(HashSet::new));
+        if (users.contains(user.getUsername())) {
+            throw new UsernameAlreadyExistException("This username already exist!");
+        }
+
+        HashSet<String> eiks = userService.getAll().stream()
+                .map(User::getEik).collect(Collectors.toCollection(HashSet::new));
+        if (eiks.contains(user.getEik())) {
+            throw new EikAlreadyExistException("This eik already exist");
+        }
 
         checkerForUserDtoExceptions(user);
         userService.create(user);
     }
 
     @PutMapping("users/update/")
-    public void updateUser(@RequestBody UserDTO user) throws EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException {
+    public void updateUser(@RequestBody UserDTO user) throws EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException {
+
+        HashSet<String> users = userService.getAll().stream()
+                .map(User::getUsername).collect(Collectors.toCollection(HashSet::new));
+
+        if (users.contains(user.getUsername())) {
+            if (!user.getEik().equals(userService.loadUserByUsername(user.getUsername()).getEik())) {
+                throw new UsernameAlreadyExistException("This username already exist!");
+            }
+        }
+
 
         checkerForUserDtoExceptions(user);
         userService.update(user);
@@ -97,14 +117,29 @@ public class AdminController {
         billService.createBill(bill);
     }
 
-    private void checkerForUserDtoExceptions(UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException {
+    private void checkerForUserDtoExceptions(UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException, UsernameInvalidInputException, PasswordInvalidInputException {
+
 
         if (user.getUsername().equals("")) {
             throw new FieldCantBeNullException("Username can't be null!");
         }
 
+        for (int i = 0; i < user.getUsername().length(); i++) {
+            if (Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i))) {
+            } else {
+                throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
+            }
+        }
+
         if (user.getPassword().equals("")) {
             throw new FieldCantBeNullException("Password can't be null!");
+        }
+
+        for (int i = 0; i < user.getPassword().length(); i++) {
+            if (Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i))) {
+            } else {
+                throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
+            }
         }
 
         if (user.getEik().equals("")) {
