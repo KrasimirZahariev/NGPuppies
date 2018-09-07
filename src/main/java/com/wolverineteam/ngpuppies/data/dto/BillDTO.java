@@ -8,26 +8,19 @@ import javax.validation.constraints.NotNull;
 
 public class BillDTO {
 
-    @Digits(integer = 20,fraction = 0,message = "The phone number should contain only digits!")
-    private String phoneNumber; //will be mapped to Subscriber
+    private String phoneNumber;
 
-    @NotNull
-    private String service;     //will be mapped to Service
+    private String service;
 
-    @NotNull
-    private String startDate; //parse this
+    private String startDate;
 
-    @NotNull
-    private String endDate;   //parse this
+    private String endDate;
 
-    @NotNull
-    private String currency; //mapped to currency load currency by name
+    private String currency;
 
-    @NotNull
-    @Digits(integer = 20,fraction = 00,message ="The Amount should contain only digir and must be in this format 0.00!")
-    private double amount;  //
+    private double amount;
 
-    private String paymentDate;     //parse this
+    private String paymentDate;
 
     public BillDTO() {
 
@@ -60,7 +53,7 @@ public class BillDTO {
         this.service = service;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public String getStartDate() {
         return startDate;
     }
@@ -69,7 +62,7 @@ public class BillDTO {
         this.startDate = startDate;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public String getEndDate() {
         return endDate;
     }
@@ -78,7 +71,7 @@ public class BillDTO {
         this.endDate = endDate;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public String getPaymentDate() {
         return paymentDate;
     }

@@ -9,18 +9,12 @@ public class UserDTO {
 
     private String userId;
 
-    @NotNull(message = "Cannot be null!")
     private String username;
 
-    @NotNull(message = "Cannot be null!")
     private String password;
 
-    @NotNull(message = "Cannot be null!")
-
-    @Digits(integer = 20,fraction = 0,message = "eik number can contain only digits!")
     private String eik;
 
-    @NotNull
     private String role;
 
     public UserDTO(){

@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
@@ -59,6 +58,26 @@ public class ExceptionController {
 
     @ExceptionHandler(value = FieldCantBeNullException.class)
     public ResponseEntity<ExceptionResponse> fieldCantBeNullException(FieldCantBeNullException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = EikCanContainOnlyDigitsException.class)
+    public ResponseEntity<ExceptionResponse> eikCanContainOnlyDigitsException(EikCanContainOnlyDigitsException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = InvalidRoleException.class)
+    public ResponseEntity<ExceptionResponse> invalidRoleException(InvalidRoleException ex){
         ExceptionResponse response = new ExceptionResponse();
         response.setCode(HttpStatus.BAD_REQUEST.value());
         response.setDescription(ex.getMessage());

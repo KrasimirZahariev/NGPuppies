@@ -51,33 +51,16 @@ public class ClientController {
 
     @GetMapping("subscribers/{subscriberId}")
     public SubscriberDAO getSubscriberById(@PathVariable("subscriberId") String subscriberId,
-                                           HttpServletRequest request) throws ForbiddenSubscriberException {
+                                           HttpServletRequest request) throws ForbiddenSubscriberException, SubscriberNotFountException {
 
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
-
-        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
-                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
-
-        if (!subs.contains(subscriberId)){
-            throw new SubscriberNotFountException("This subscriber does not exist!");
-
-        }else
-        {
-
-            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
-                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
-
-            if (!bankSubs.contains(subscriberId)){
-                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
-            }
-        }
-
+        checkerCorrectDescriberException(subscriberId, bankId);
         return subscriberService.getSubscriberDAOById(subscriberId, bankId);
     }
 
     @GetMapping("subscribers/")
     public List<SubscriberDAO> getAllSubscribersByBankId(
-                                           HttpServletRequest request) {
+            HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return subscriberService.getAllSubscribersByBankId(bankId);
     }
@@ -93,28 +76,13 @@ public class ClientController {
     public List<BillDAO> getMaxAndAvgPaymentInTimeIntervalByBankId(
             @PathVariable("timeInterval") List<String> timeInterval,
             @PathVariable("subscriberId") String subscriberId,
-            HttpServletRequest request) throws ForbiddenSubscriberException, MissingOrNotCorrectArgumentException {
+            HttpServletRequest request) throws ForbiddenSubscriberException, MissingOrNotCorrectArgumentException, SubscriberNotFountException {
 
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
 
-        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
-                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+        checkerCorrectDescriberException(subscriberId, bankId);
 
-        if (!subs.contains(subscriberId)){
-            throw new SubscriberNotFountException("This subscriber does not exist!");
-
-        }else
-        {
-
-            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
-                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
-
-            if (!bankSubs.contains(subscriberId)){
-                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
-            }
-        }
-
-        if (timeInterval.size()!=2){
+        if (timeInterval.size() != 2) {
             throw new MissingOrNotCorrectArgumentException("The argument is invalid or missing!");
         }
 
@@ -138,5 +106,24 @@ public class ClientController {
     public List<BillDAO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getTenMostRecentPaymentsByBankId(bankId);
+    }
+
+    private void checkerCorrectDescriberException(String subscriberId, int bankId) throws ForbiddenSubscriberException, SubscriberNotFountException {
+
+        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
+                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
+        if (!subs.contains(subscriberId)) {
+            throw new SubscriberNotFountException("This subscriber does not exist!");
+
+        } else {
+
+            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
+                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
+            if (!bankSubs.contains(subscriberId)) {
+                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
+            }
+        }
     }
 }

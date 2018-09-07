@@ -8,6 +8,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
 
@@ -32,5 +35,18 @@ public class RoleRepositoryImpl implements RoleRepository {
         }
 
         return role;
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        List<Role> roles = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            roles = session.createQuery("from Role ", Role.class).list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return roles;
     }
 }
