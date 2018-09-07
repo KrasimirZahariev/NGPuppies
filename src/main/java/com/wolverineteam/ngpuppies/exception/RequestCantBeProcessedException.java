@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class RequestCantBeProcessedException extends Exception{
+public class RequestCantBeProcessedException extends RuntimeException{
 
     public RequestCantBeProcessedException(String ex){
         super(ex);

@@ -147,13 +147,15 @@ public class BillRepositoryImpl implements BillRepository {
             session.beginTransaction();
             String query = "select s.firstName as firstName, s.lastName as lastName, " +
                     "s.phoneNumber as phoneNumber, b.currency.currency as currency, " +
-                    "avg(b.amount) as avg, max(b.amount) as max " +
+                    "avg(b.amount*(case when b.currency.currency != 'BGN' " +
+                    "then  b.currency.exchangeRate else 1 end)) as avg, max(b.amount*(case when b.currency.currency != 'BGN' " +
+                    "then  b.currency.exchangeRate else 1 end)) as max " +
                     "from Bill as b " +
                     "join Subscriber as s on b.subscriber = s.phoneNumber " +
                     "where b.paymentDate >= :startDate and b.paymentDate <= :endDate and s.bank.userId = :bankId " +
                     "and s.phoneNumber = :phoneNumber and b.paymentDate is not null " +
                     "group by b.subscriber";
-            records  = session.createQuery(query)
+            records = session.createQuery(query)
                     .setParameter("startDate", startDate)
                     .setParameter("endDate", endDate)
                     .setParameter("bankId", bankId)
@@ -217,7 +219,7 @@ public class BillRepositoryImpl implements BillRepository {
         }
 
         return bills;
-}
+    }
 
 
     @Override
