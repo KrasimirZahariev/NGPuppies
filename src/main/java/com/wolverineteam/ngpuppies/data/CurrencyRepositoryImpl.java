@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.CurrencyRepository;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.Currency;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,7 +30,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             currency = session.get(Currency.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return currency;
@@ -42,10 +43,10 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             session.beginTransaction();
             String query = "from Currency as r where  r.currency = :currencyName";
             Query q = session.createQuery(query).setParameter("currencyName", currencyName);
-            currency = (Currency)q.uniqueResult();
+            currency = (Currency) q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return currency;
@@ -59,7 +60,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             currencies = session.createQuery("from Currency", Currency.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
         return currencies;
     }
@@ -73,7 +74,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             session.update(oldCurrency);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 
@@ -84,7 +85,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             session.save(currency);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 
@@ -96,7 +97,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             session.delete(currency);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 }

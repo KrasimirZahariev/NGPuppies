@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.UserRepository;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,10 +30,10 @@ public class UserRepositoryImpl implements UserRepository {
             String query = "from User as u " +
                     "where  u.username = :username";
             Query q = session.createQuery(query).setParameter("username", username);
-            user = (User)q.uniqueResult();
+            user = (User) q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return user;
@@ -46,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
             user = session.get(User.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return user;
@@ -61,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
             users = session.createQuery("from User where enabled = true ").list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
         return users;
     }
@@ -73,7 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
             session.update(modifiedUser);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 
@@ -84,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository {
             session.save(user);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 }

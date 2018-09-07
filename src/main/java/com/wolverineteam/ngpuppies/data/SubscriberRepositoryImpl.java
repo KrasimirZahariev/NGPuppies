@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.SubscriberRepository;
 import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.Subscriber;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,7 +31,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
             subscriber = session.get(Subscriber.class, subscriberId);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return subscriber;
@@ -53,7 +54,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return subscribers.get(0);
@@ -75,7 +76,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return subscribers;
@@ -94,7 +95,7 @@ public class SubscriberRepositoryImpl implements SubscriberRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return subscribers;

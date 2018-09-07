@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.RoleRepository;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,10 +29,10 @@ public class RoleRepositoryImpl implements RoleRepository {
             String query = "from Role as r " +
                     "where  r.role = :roleName";
             Query q = session.createQuery(query).setParameter("roleName", roleName);
-            role = (Role)q.uniqueResult();
+            role = (Role) q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return role;
@@ -45,7 +46,7 @@ public class RoleRepositoryImpl implements RoleRepository {
             roles = session.createQuery("from Role ", Role.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
         return roles;
     }

@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.ServiceRepository;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
             service = (Service) q.uniqueResult();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return service;
@@ -45,7 +46,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
             services = session.createQuery("from Service", Service.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
         return services;
     }

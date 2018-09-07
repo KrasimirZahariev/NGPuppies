@@ -2,6 +2,7 @@ package com.wolverineteam.ngpuppies.data;
 
 import com.wolverineteam.ngpuppies.data.base.BillRepository;
 import com.wolverineteam.ngpuppies.data.dao.BillDAO;
+import com.wolverineteam.ngpuppies.exception.RequestCantBeProcessedException;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
 import org.hibernate.Session;
@@ -34,7 +35,7 @@ public class BillRepositoryImpl implements BillRepository {
             bill = session.get(Bill.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return bill;
@@ -47,7 +48,7 @@ public class BillRepositoryImpl implements BillRepository {
             session.save(bill);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 
@@ -70,7 +71,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
         return bills;
     }
@@ -90,7 +91,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return new HashSet<>(bills);
@@ -108,7 +109,7 @@ public class BillRepositoryImpl implements BillRepository {
                 session.getTransaction().commit();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
     }
 
@@ -132,7 +133,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return bills;
@@ -164,7 +165,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return records;
@@ -186,7 +187,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return bills;
@@ -215,7 +216,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return bills;
@@ -244,7 +245,7 @@ public class BillRepositoryImpl implements BillRepository {
                     .list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new RequestCantBeProcessedException("The request cant be processed right now. Please try again later!");
         }
 
         return bills;
