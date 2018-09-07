@@ -9,10 +9,12 @@ import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.*;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
+import com.wolverineteam.ngpuppies.utils.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,7 +116,7 @@ public class AdminController {
     }
 
     @PostMapping("bills/create/")
-    public void createBill(@RequestBody BillDTO bill) throws SubscriberNotFountException, ServiceDoesNotExistException, CurrencyDoesNotExistException, FieldCantBeNullException {
+    public void createBill(@RequestBody BillDTO bill) throws SubscriberNotFountException, ServiceDoesNotExistException, CurrencyDoesNotExistException, FieldCantBeNullException, InvalidTimePeriodException {
         HashSet<String> subscribers = subscriberService.getAllTelecomsSubscribers().stream()
                 .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
 
@@ -146,6 +148,13 @@ public class AdminController {
 
         if (bill.getAmount()==0){
             throw new FieldCantBeNullException("The amount can't be 0!");
+        }
+
+        Date startDate = new DateParser().getDateFromString(bill.getStartDate());
+        Date endDate = new DateParser().getDateFromString(bill.getEndDate());
+
+        if (startDate.after(endDate)||startDate.equals(endDate)){
+            throw new InvalidTimePeriodException("The start date can't be after or equal to the end date!");
         }
 
 

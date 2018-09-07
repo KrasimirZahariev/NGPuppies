@@ -166,4 +166,14 @@ public class ExceptionController {
         System.out.println(ex);
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = InvalidTimePeriodException.class)
+    public ResponseEntity<ExceptionResponse> invalidTimePeriodException (InvalidTimePeriodException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
 }
