@@ -10,11 +10,9 @@ import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.*;
 import com.wolverineteam.ngpuppies.data.dto.BillDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,14 +75,21 @@ public class AdminController {
             }
         }
 
-
         checkerForUserDtoExceptions(user);
         userService.update(user);
     }
 
     @DeleteMapping("users/delete/{id}")
-    public void deleteUser(@PathVariable("id") String stringId) {
+    public void deleteUser(@PathVariable("id") String stringId) throws UserDoesNotExistException {
         int userId = Integer.parseInt(stringId);
+
+        HashSet<Integer> users = userService.getAll().stream()
+                .map(User::getUserId).collect(Collectors.toCollection(HashSet::new));
+
+        if (!users.contains(userId)) {
+            throw new UserDoesNotExistException("This user does not exist!");
+        }
+
         userService.deleteUser(userId);
     }
 
@@ -109,10 +114,40 @@ public class AdminController {
     }
 
     @PostMapping("bills/create/")
-    public void createBill(@Valid @RequestBody BillDTO bill, BindingResult result) {
-        if (result.hasErrors()) {
-            return;
+    public void createBill(@RequestBody BillDTO bill) throws SubscriberNotFountException, ServiceDoesNotExistException, CurrencyDoesNotExistException, FieldCantBeNullException {
+        HashSet<String> subscribers = subscriberService.getAllTelecomsSubscribers().stream()
+                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
+
+        if (!subscribers.contains(bill.getPhoneNumber())) {
+            throw new SubscriberNotFountException("The subscriber does not exist!");
         }
+
+        HashSet<String> services = serviceService.getAll().stream()
+                .map(Service::getService).collect(Collectors.toCollection(HashSet::new));
+
+        if (!services.contains(bill.getService())) {
+            throw new ServiceDoesNotExistException("This service does not exist!");
+        }
+
+        HashSet<String> currencies = currencyService.getAll().stream()
+                .map(Currency::getCurrency).collect(Collectors.toCollection(HashSet::new));
+
+        if (!currencies.contains(bill.getCurrency())) {
+            throw new CurrencyDoesNotExistException("This currency does not exist!");
+        }
+
+        if (bill.getStartDate().equals("")){
+            throw new FieldCantBeNullException("The Start date can't be null!");
+        }
+
+        if (bill.getEndDate().equals("")){
+            throw new FieldCantBeNullException("The End Date can't be null!");
+        }
+
+        if (bill.getAmount()==0){
+            throw new FieldCantBeNullException("The amount can't be 0!");
+        }
+
 
         billService.createBill(bill);
     }

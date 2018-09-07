@@ -1,5 +1,6 @@
 package com.wolverineteam.ngpuppies.exception;
 
+import com.wolverineteam.ngpuppies.models.Currency;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -118,6 +119,46 @@ public class ExceptionController {
 
     @ExceptionHandler(value = EikAlreadyExistException.class)
     public ResponseEntity<ExceptionResponse> eikAlreadyExistException (EikAlreadyExistException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = UserDoesNotExistException.class)
+    public ResponseEntity<ExceptionResponse> userDoesNotExistException (UserDoesNotExistException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = ServiceDoesNotExistException.class)
+    public ResponseEntity<ExceptionResponse> serviceDoesNotExistException (ServiceDoesNotExistException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = CurrencyDoesNotExistException.class)
+    public ResponseEntity<ExceptionResponse> currencyDoesNotExistException (CurrencyDoesNotExistException ex){
+        ExceptionResponse response = new ExceptionResponse();
+        response.setCode(HttpStatus.BAD_REQUEST.value());
+        response.setDescription(ex.getMessage());
+        logger.error(response.getDescription());
+        System.out.println(ex);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = RequestCantBeProcessedException.class)
+    public ResponseEntity<ExceptionResponse> requestCantBeProcessedException (RequestCantBeProcessedException ex){
         ExceptionResponse response = new ExceptionResponse();
         response.setCode(HttpStatus.BAD_REQUEST.value());
         response.setDescription(ex.getMessage());
