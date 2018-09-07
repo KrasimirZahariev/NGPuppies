@@ -61,7 +61,7 @@ public class BillRepositoryImpl implements BillRepository {
             String query = "select b.id as billId, b.service.service as service, " +
                     "b.subscriber.phoneNumber as phoneNumber, b.subscriber.firstName as firstName, " +
                     "b.subscriber.lastName as lastName, b.startDate as startDate, " +
-                    "b.endDate as endDate, b.amount as amount, " +
+                    "b.endDate as endDate, round(b.amount,2) as amount, " +
                     "b.currency.currency as currency " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is NULL";
@@ -121,7 +121,7 @@ public class BillRepositoryImpl implements BillRepository {
             session.beginTransaction();
             String query = "select b.id as billId, b.service.service as service, " +
                     "b.subscriber.phoneNumber as phoneNumber, b.subscriber.firstName as firstName, " +
-                    "b.subscriber.lastName as lastName, b.amount as amount, " +
+                    "b.subscriber.lastName as lastName, round(b.amount,2) as amount, " +
                     "b.currency.currency as currency, b.paymentDate as paymentDate " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId " +
@@ -203,12 +203,12 @@ public class BillRepositoryImpl implements BillRepository {
                     "b.subscriber.firstName as firstName, " +
                     "b.subscriber.lastName as lastName, " +
                     "'BGN' as currency, " +
-                    "sum(b.amount*(case when b.currency.currency != 'BGN' " +
-                    "then  b.currency.exchangeRate else 1 end)) as summ " +
+                    "round(sum(b.amount*(case when b.currency.currency != 'BGN' " +
+                    "then  b.currency.exchangeRate else 1 end)),2) as summ " +
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "group by b.subscriber " +
-                    "order by summ DESC";
+                    "order by round(summ,2) DESC";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
@@ -231,7 +231,7 @@ public class BillRepositoryImpl implements BillRepository {
             session.beginTransaction();
             String query = "select b.id as billId, b.service.service as service, " +
                     "b.subscriber.phoneNumber as phoneNumber, b.subscriber.firstName as firstName, " +
-                    "b.subscriber.lastName as lastName, b.amount as amount, " +
+                    "b.subscriber.lastName as lastName, round(b.amount,2) as amount, " +
                     "b.currency.currency as currency, b.paymentDate as paymentDate " +
                     "from Bill as b " +
                     "join fetch Subscriber as s on b.subscriber = s.phoneNumber " +
