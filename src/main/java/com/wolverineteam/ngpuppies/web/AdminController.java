@@ -67,7 +67,7 @@ public class AdminController {
 
     @PutMapping("users/update/")
     public void updateUser(@RequestBody UserDTO user) throws EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException {
-                
+
         checkerForUserDtoExceptions(user);
         userService.update(user);
     }
@@ -129,22 +129,22 @@ public class AdminController {
             throw new CurrencyDoesNotExistException("This currency does not exist!");
         }
 
-        if (bill.getStartDate().equals("")){
+        if (bill.getStartDate().equals("")) {
             throw new FieldCantBeNullException("The Start date can't be null!");
         }
 
-        if (bill.getEndDate().equals("")){
+        if (bill.getEndDate().equals("")) {
             throw new FieldCantBeNullException("The End Date can't be null!");
         }
 
-        if (bill.getAmount()==0){
+        if (bill.getAmount() == 0) {
             throw new FieldCantBeNullException("The amount can't be 0!");
         }
 
         Date startDate = new DateParser().getDateFromString(bill.getStartDate());
         Date endDate = new DateParser().getDateFromString(bill.getEndDate());
 
-        if (startDate.after(endDate)||startDate.equals(endDate)){
+        if (startDate.after(endDate) || startDate.equals(endDate)) {
             throw new InvalidTimePeriodException("The start date can't be after or equal to the end date!");
         }
 
@@ -159,34 +159,34 @@ public class AdminController {
             throw new FieldCantBeNullException("Username can't be null!");
         }
 
-        for (int i = 0; i < user.getUsername().length(); i++) {
-            if (Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i))) {
-            } else {
-                throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
-            }
-        }
+      //  for (int i = 0; i < user.getUsername().length(); i++) {
+      //      if (!(Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i)))) {
+      //      } else {
+      //          throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
+      //      }
+      //  }
 
         if (user.getPassword().equals("")) {
             throw new FieldCantBeNullException("Password can't be null!");
         }
 
-        for (int i = 0; i < user.getPassword().length(); i++) {
-            if (Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i))) {
-            } else {
-                throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
-            }
-        }
+     //   for (int i = 0; i < user.getPassword().length(); i++) {
+     //       if (!(Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i)))) {
+     //       } else {
+     //           throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
+     //       }
+     //   }
 
         if (user.getEik().equals("")) {
             throw new FieldCantBeNullException("Eik can't be null!");
 
         }
 
-        for (int i = 0; i < user.getEik().length(); i++) {
-            if (!Character.isDigit(user.getEik().charAt(i))) {
-                throw new EikCanContainOnlyDigitsException("Eik number can contain only digits!");
-            }
-        }
+      //  for (int i = 0; i < user.getEik().length(); i++) {
+      //      if (!(Character.isDigit(user.getEik().charAt(i)))) {
+      //          throw new EikCanContainOnlyDigitsException("Eik number can contain only digits!");
+      //      }
+      //  }
 
         if (user.getRole().equals("")) {
             throw new FieldCantBeNullException("Role can't be null!");

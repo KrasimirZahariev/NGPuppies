@@ -21,20 +21,15 @@ public class User implements UserDetails {
     @Column(name = "UserID")
     private int userId;
 
-    @NotNull
     @Column(name = "Username")
     private String username;
 
-    @NotNull
     @Column(name = "Password")
     private String password;
 
-    @NotNull
-    @Digits(integer = 20,fraction = 0,message = "EIK number can contain only digits!")
     @Column(name = "EIK")
     private String eik;
 
-    @NotNull
     @Column(name = "Enabled")
     private boolean enabled;
 
