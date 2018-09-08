@@ -208,7 +208,7 @@ public class BillRepositoryImpl implements BillRepository {
                     "from Bill as b " +
                     "where b.subscriber.bank.userId = :bankId and b.paymentDate is Not NULL " +
                     "group by b.subscriber " +
-                    "order by round(summ,2) DESC";
+                    "order by summ DESC";
             bills = session.createQuery(query)
                     .setParameter("bankId", bankId)
                     .setMaxResults(10)
