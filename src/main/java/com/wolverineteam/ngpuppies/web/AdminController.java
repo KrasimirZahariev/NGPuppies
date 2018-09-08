@@ -67,16 +67,7 @@ public class AdminController {
 
     @PutMapping("users/update/")
     public void updateUser(@RequestBody UserDTO user) throws EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException {
-
-        HashSet<String> users = userService.getAll().stream()
-                .map(User::getUsername).collect(Collectors.toCollection(HashSet::new));
-
-        if (users.contains(user.getUsername())) {
-            if (!user.getEik().equals(userService.loadUserByUsername(user.getUsername()).getEik())) {
-                throw new UsernameAlreadyExistException("This username already exist!");
-            }
-        }
-
+                
         checkerForUserDtoExceptions(user);
         userService.update(user);
     }
