@@ -16,7 +16,7 @@ public class Service {
     private int serviceId;
 
     @NotNull
-    @Column(name = "Service")
+    @Column(name = "Service", unique = true)
     private String service;
 
     @JsonIgnore

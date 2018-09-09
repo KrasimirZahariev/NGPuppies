@@ -1,6 +1,7 @@
 package com.wolverineteam.ngpuppies.services.base;
 
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
+import com.wolverineteam.ngpuppies.exception.*;
 import com.wolverineteam.ngpuppies.models.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -22,4 +23,6 @@ public interface UserService extends UserDetailsService {
     void deleteUser(int userId);
 
     void changePassword(UserDTO userDTO);
+
+    void checkForUserDtoExceptions(UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException, UsernameInvalidInputException, PasswordInvalidInputException;
 }

@@ -7,8 +7,6 @@ import com.wolverineteam.ngpuppies.exception.MissingOrNotCorrectArgumentExceptio
 import com.wolverineteam.ngpuppies.exception.SubscriberNotFountException;
 import com.wolverineteam.ngpuppies.models.Bill;
 import com.wolverineteam.ngpuppies.models.Service;
-import com.wolverineteam.ngpuppies.models.Subscriber;
-import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.BillService;
 import com.wolverineteam.ngpuppies.services.base.SubscriberService;
 import com.wolverineteam.ngpuppies.services.base.UserService;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/client/")
@@ -54,7 +51,7 @@ public class ClientController {
                                            HttpServletRequest request) throws ForbiddenSubscriberException, SubscriberNotFountException {
 
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
-        checkerCorrectDescriberException(subscriberId, bankId);
+        subscriberService.checkCorrectSubscriberException(subscriberId, bankId);
         return subscriberService.getSubscriberDAOById(subscriberId, bankId);
     }
 
@@ -65,7 +62,6 @@ public class ClientController {
         return subscriberService.getAllSubscribersByBankId(bankId);
     }
 
-    //front-end probably for validation
     @GetMapping("bills/payments-descending/")
     public List<Bill> getSubscribersPaymentsHistoryDescendingByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
@@ -80,7 +76,7 @@ public class ClientController {
 
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
 
-        checkerCorrectDescriberException(subscriberId, bankId);
+        subscriberService.checkCorrectSubscriberException(subscriberId, bankId);
 
         if (timeInterval.size() != 2) {
             throw new MissingOrNotCorrectArgumentException("The argument is invalid or missing!");
@@ -106,24 +102,5 @@ public class ClientController {
     public List<BillDAO> getTenMostRecentPaymentsByBankId(HttpServletRequest request) {
         int bankId = jwtParser.getBankIdByUsernameFromToken(request);
         return billService.getTenMostRecentPaymentsByBankId(bankId);
-    }
-
-    private void checkerCorrectDescriberException(String subscriberId, int bankId) throws ForbiddenSubscriberException, SubscriberNotFountException {
-
-        HashSet<String> subs = subscriberService.getAllTelecomsSubscribers().stream()
-                .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
-
-        if (!subs.contains(subscriberId)) {
-            throw new SubscriberNotFountException("This subscriber does not exist!");
-
-        } else {
-
-            HashSet<String> bankSubs = subscriberService.getAllSubscribersByBankId(bankId).stream()
-                    .map(SubscriberDAO::getPhoneNumber).collect(Collectors.toCollection(HashSet::new));
-
-            if (!bankSubs.contains(subscriberId)) {
-                throw new ForbiddenSubscriberException("Yod don't have access to these subscribers details!");
-            }
-        }
     }
 }

@@ -18,7 +18,7 @@ public class Currency {
     private int currencyId;
 
     @NotNull
-    @Column(name = "Currency")
+    @Column(name = "Currency",unique = true)
     private String currency;
 
     @NotNull

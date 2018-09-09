@@ -4,7 +4,6 @@ import com.wolverineteam.ngpuppies.data.dao.SubscriberDAO;
 import com.wolverineteam.ngpuppies.data.dto.UserDTO;
 import com.wolverineteam.ngpuppies.exception.*;
 import com.wolverineteam.ngpuppies.models.Currency;
-import com.wolverineteam.ngpuppies.models.Role;
 import com.wolverineteam.ngpuppies.models.Service;
 import com.wolverineteam.ngpuppies.models.User;
 import com.wolverineteam.ngpuppies.services.base.*;
@@ -28,17 +27,15 @@ public class AdminController {
     private SubscriberService subscriberService;
     private ServiceService serviceService;
     private CurrencyService currencyService;
-    private RoleService roleService;
 
     @Autowired
     public AdminController(UserService userService, BillService billService, SubscriberService subscriberService,
-                           ServiceService serviceService, CurrencyService currencyService, RoleService roleService) {
+                           ServiceService serviceService, CurrencyService currencyService) {
         this.userService = userService;
         this.billService = billService;
         this.subscriberService = subscriberService;
         this.serviceService = serviceService;
         this.currencyService = currencyService;
-        this.roleService = roleService;
     }
 
     @GetMapping("users/{username}")
@@ -47,7 +44,9 @@ public class AdminController {
     }
 
     @PostMapping("users/create/")
-    public void createUser(@RequestBody UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException, EikAlreadyExistException {
+    public void createUser(@RequestBody UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException,
+            InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException,
+            UsernameAlreadyExistException, EikAlreadyExistException {
 
         HashSet<String> users = userService.getAll().stream()
                 .map(User::getUsername).collect(Collectors.toCollection(HashSet::new));
@@ -61,14 +60,15 @@ public class AdminController {
             throw new EikAlreadyExistException("This eik already exist");
         }
 
-        checkerForUserDtoExceptions(user);
+        userService.checkForUserDtoExceptions(user);
         userService.create(user);
     }
 
     @PutMapping("users/update/")
-    public void updateUser(@RequestBody UserDTO user) throws EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException, PasswordInvalidInputException, UsernameInvalidInputException, UsernameAlreadyExistException {
-
-        checkerForUserDtoExceptions(user);
+    public void updateUser(@RequestBody UserDTO user) throws PasswordInvalidInputException,
+            EikCanContainOnlyDigitsException, FieldCantBeNullException, InvalidRoleException,
+            UsernameInvalidInputException {
+        userService.checkForUserDtoExceptions(user);
         userService.update(user);
     }
 
@@ -148,53 +148,7 @@ public class AdminController {
             throw new InvalidTimePeriodException("The start date can't be after or equal to the end date!");
         }
 
-
         billService.createBill(bill);
     }
 
-    private void checkerForUserDtoExceptions(UserDTO user) throws FieldCantBeNullException, EikCanContainOnlyDigitsException, InvalidRoleException, UsernameInvalidInputException, PasswordInvalidInputException {
-
-
-        if (user.getUsername().equals("")) {
-            throw new FieldCantBeNullException("Username can't be null!");
-        }
-
-        for (int i = 0; i < user.getUsername().length(); i++) {
-            if (!(Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i)))) {
-
-                throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
-            }
-        }
-
-        if (user.getPassword().equals("")) {
-            throw new FieldCantBeNullException("Password can't be null!");
-        }
-
-        for (int i = 0; i < user.getPassword().length(); i++) {
-            if (!((Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i))))) {
-                throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
-            }
-        }
-
-        if (user.getEik().equals("")) {
-            throw new FieldCantBeNullException("Eik can't be null!");
-
-        }
-
-        for (int i = 0; i < user.getEik().length(); i++) {
-            if (!(Character.isDigit(user.getEik().charAt(i)))) {
-                throw new EikCanContainOnlyDigitsException("Eik number can contain only digits!");
-            }
-        }
-
-        if (user.getRole().equals("")) {
-            throw new FieldCantBeNullException("Role can't be null!");
-        }
-
-        HashSet<String> roles = roleService.getAllRoles().stream()
-                .map(Role::getRole).collect(Collectors.toCollection(HashSet::new));
-        if (!roles.contains(user.getRole())) {
-            throw new InvalidRoleException("Invalid role!");
-        }
-    }
 }

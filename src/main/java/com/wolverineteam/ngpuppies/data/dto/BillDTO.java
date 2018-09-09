@@ -1,10 +1,6 @@
 package com.wolverineteam.ngpuppies.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.UniqueElements;
-
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 
 public class BillDTO {
 

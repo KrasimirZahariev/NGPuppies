@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @Column(name = "Password")
     private String password;
 
-    @Column(name = "EIK")
+    @Column(name = "EIK", unique = true)
     private String eik;
 
     @Column(name = "Enabled")

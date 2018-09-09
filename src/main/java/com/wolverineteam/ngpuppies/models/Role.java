@@ -18,7 +18,7 @@ public class Role implements GrantedAuthority {
     private int roleId;
 
     @NotNull
-    @Column(name = "Role")
+    @Column(name = "Role", unique = true)
     private String role;
 
     @JsonIgnore

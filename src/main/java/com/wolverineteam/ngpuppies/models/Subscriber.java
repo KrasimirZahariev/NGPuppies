@@ -13,14 +13,11 @@ import java.util.List;
 @Table(name = "subscribers")
 public class Subscriber {
 
-    @NotNull
-    @Digits(integer = 20,fraction = 0, message = "Thephone number can contain only digits!")
     @Id
-    @Column(name = "PhoneNumber")
+    @Column(name = "PhoneNumber", unique = true)
     private String phoneNumber;
 
     @NotNull
-    @Pattern(regexp = "[^0-9]*", message = "Name should contains only alphabetic characters!")
     @Column(name = "FirstName")
     private String firstName;
 
@@ -31,7 +28,7 @@ public class Subscriber {
 
     @NotNull
     @Digits(integer = 15,fraction = 0, message = "EGN can contatin only digits!")
-    @Column(name = "EGN")
+    @Column(name = "EGN", unique = true)
     private String egn;
 
     @ManyToOne
