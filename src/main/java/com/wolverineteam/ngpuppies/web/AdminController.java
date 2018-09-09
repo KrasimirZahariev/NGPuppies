@@ -159,34 +159,33 @@ public class AdminController {
             throw new FieldCantBeNullException("Username can't be null!");
         }
 
-      //  for (int i = 0; i < user.getUsername().length(); i++) {
-      //      if (!(Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i)))) {
-      //      } else {
-      //          throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
-      //      }
-      //  }
+        for (int i = 0; i < user.getUsername().length(); i++) {
+            if (!(Character.isDigit(user.getUsername().charAt(i)) || Character.isAlphabetic(user.getUsername().charAt(i)))) {
+
+                throw new UsernameInvalidInputException("The Username can contain only numeric and alphabetic symbols!");
+            }
+        }
 
         if (user.getPassword().equals("")) {
             throw new FieldCantBeNullException("Password can't be null!");
         }
 
-     //   for (int i = 0; i < user.getPassword().length(); i++) {
-     //       if (!(Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i)))) {
-     //       } else {
-     //           throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
-     //       }
-     //   }
+        for (int i = 0; i < user.getPassword().length(); i++) {
+            if (!((Character.isDigit(user.getPassword().charAt(i)) || Character.isAlphabetic(user.getPassword().charAt(i))))) {
+                throw new PasswordInvalidInputException("The Password can contain only numeric and alphabetic symbols!");
+            }
+        }
 
         if (user.getEik().equals("")) {
             throw new FieldCantBeNullException("Eik can't be null!");
 
         }
 
-      //  for (int i = 0; i < user.getEik().length(); i++) {
-      //      if (!(Character.isDigit(user.getEik().charAt(i)))) {
-      //          throw new EikCanContainOnlyDigitsException("Eik number can contain only digits!");
-      //      }
-      //  }
+        for (int i = 0; i < user.getEik().length(); i++) {
+            if (!(Character.isDigit(user.getEik().charAt(i)))) {
+                throw new EikCanContainOnlyDigitsException("Eik number can contain only digits!");
+            }
+        }
 
         if (user.getRole().equals("")) {
             throw new FieldCantBeNullException("Role can't be null!");
